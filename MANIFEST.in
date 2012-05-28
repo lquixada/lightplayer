@@ -1,0 +1,2 @@
+recursive-include lightbox/media *
+recursive-include lightbox/templates *
