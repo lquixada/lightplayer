@@ -1,3 +1,5 @@
+$.fn.tipTip = function () {};
+window.facebookParse = function () {};
 
 beforeEach(function() {
     // Prevents jquery animations
@@ -5,7 +7,7 @@ beforeEach(function() {
 
     // Prevents embedding flash player (speeds up the tests!)
     spyOn( $.fn, 'player' );
-
+    
     // Prevents calling tipTip plugin
     spyOn( $.fn, 'tipTip' );
     
@@ -369,7 +371,7 @@ describe("Pop Player", function() {
                         nextPage: 'http://www.globo.com/4',
                         list: [
                             { id: 789, title: 'Titulo 3', views: '300' },
-                            { id: 012, title: 'Titulo 4', views: '400' }
+                            { id: 12, title: 'Titulo 4', views: '400' }
                         ]
                     };
 
@@ -464,7 +466,7 @@ describe("Pop Player", function() {
                         nextPage: 'http://www.globo.com/4',
                         list: [
                             { id: 789, title: 'Titulo 3', views: '300' },
-                            { id: 012, title: 'Titulo 4', views: '400' }
+                            { id: 12, title: 'Titulo 4', views: '400' }
                         ]
                     };
 

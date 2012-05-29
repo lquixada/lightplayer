@@ -20,7 +20,6 @@ popplayer = {
         } );
 
         this._setTitle( json );
-        
 
         this._animateIn( function () {
             var list = $.isArray( json )? json: json.list;
