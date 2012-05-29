@@ -18,12 +18,12 @@ beforeEach(function() {
     spyOn( $, 'ajax' );
 
     // Prevents css3 animations on open
-    spyOn( popplayer, '_animateIn' ).andCallFake( function ( callback ) {
+    spyOn( lightplayer, '_animateIn' ).andCallFake( function ( callback ) {
         callback();
     });
 
     // Prevents css3 animations on close
-    spyOn( popplayer, '_animateOut' ).andCallFake( function ( callback ) {
+    spyOn( lightplayer, '_animateOut' ).andCallFake( function ( callback ) {
         callback();
     });
 
@@ -42,20 +42,20 @@ beforeEach(function() {
 afterEach(function() { 
     $.fx.off = false;
 
-    $( 'div.pop-player' ).remove();
+    $( 'div.lightplayer' ).remove();
     $( document ).unbind();
 });
 
 
-describe("Pop Player", function() {
+describe("Light Player", function() {
     
     describe("one video", function() {
         beforeEach(function() {
             this.json = [{ id: 123, title: 'Titulo 1', description: 'Descricao 1', views: '100', url: 'http://www.globo.com' }];
 
-            popplayer.open( this.json );
+            lightplayer.open( this.json );
 
-            this.divContainer = popplayer.div;
+            this.divContainer = lightplayer.div;
         });
 
         describe("open", function() {
@@ -88,21 +88,21 @@ describe("Pop Player", function() {
             });
 
             it("should close", function() {
-                popplayer.close();
+                lightplayer.close();
 
-                expect( $( 'div.pop-player' ).size() ).toBe( 0 );
+                expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
             });
 
             it("should close clicking on the button", function() {
                 this.divContainer.find( 'a.close' ).click();
 
-                expect( $( 'div.pop-player' ).size() ).toBe( 0 );
+                expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
             });
 
             it("should close on Esc key", function() {
                 this.simulateEscKey();
 
-                expect( $( 'div.pop-player' ).size() ).toBe( 0 );
+                expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
             });
 
             it("should dettach Esc key event from document", function() {
@@ -116,7 +116,7 @@ describe("Pop Player", function() {
             it("should close clicking on overlay (container)", function() {
                 this.divContainer.find( 'div.widget-container' ).click();
                 
-                expect( $( 'div.pop-player' ).size() ).toBe( 0 );
+                expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
             });
             
         });
@@ -132,31 +132,31 @@ describe("Pop Player", function() {
         });
 
         it("should customize the title", function() {
-            popplayer.open( this.json );
+            lightplayer.open( this.json );
 
-            expect( popplayer.div.find( 'h5' ).html().toLowerCase() ).toBe( '<span>Titulo</span> do Modal'.toLowerCase() );
+            expect( lightplayer.div.find( 'h5' ).html().toLowerCase() ).toBe( '<span>Titulo</span> do Modal'.toLowerCase() );
         });
 
         it("should have the title 'mais videos' if none provided", function() {
             delete this.json.title;
 
-            popplayer.open( this.json );
+            lightplayer.open( this.json );
             
-            expect( popplayer.div.find( 'h5' ).html().toLowerCase() ).toBe( '<span>mais</span> videos'.toLowerCase() );
+            expect( lightplayer.div.find( 'h5' ).html().toLowerCase() ).toBe( '<span>mais</span> videos'.toLowerCase() );
         });
 
         it("should customize the subtitle", function() {
-            popplayer.open( this.json );
+            lightplayer.open( this.json );
 
-            expect( popplayer.div.find( 'em.subtitulo' ).html() ).toBe( this.json.subtitle );
+            expect( lightplayer.div.find( 'em.subtitulo' ).html() ).toBe( this.json.subtitle );
         });
 
         it("should have the subtitle empty if none provided", function() {
             delete this.json.subtitle;
 
-            popplayer.open( this.json );
+            lightplayer.open( this.json );
             
-            expect( popplayer.div.find( 'em.subtitulo' ).html() ).toBe( '' );
+            expect( lightplayer.div.find( 'em.subtitulo' ).html() ).toBe( '' );
         });
     });
     
@@ -170,10 +170,10 @@ describe("Pop Player", function() {
                     { id: 456, title: 'Titulo 2', description: 'Descricao 2', views: '200' }
                 ]; 
 
-                popplayer.open( this.json );
+                lightplayer.open( this.json );
 
-                this.divContainer = popplayer.div;
-                this.ul = popplayer.ul;
+                this.divContainer = lightplayer.div;
+                this.ul = lightplayer.ul;
             });
 
             it("should have two videos", function() {
@@ -220,9 +220,9 @@ describe("Pop Player", function() {
                     { id: 456, title: 'Titulo 2', views: '200', current: true }
                 ]; 
 
-                popplayer.open( this.json );
+                lightplayer.open( this.json );
 
-                this.divContainer = popplayer.div;
+                this.divContainer = lightplayer.div;
             });
 
             it("should mark the first item as current", function() {
@@ -245,12 +245,12 @@ describe("Pop Player", function() {
                     ]
                 };
 
-                popplayer.open( this.json );
+                lightplayer.open( this.json );
 
-                this.divContainer = popplayer.div;
+                this.divContainer = lightplayer.div;
 
-                this.nextButton = popplayer.navigation.aNext;
-                this.ul = popplayer.ul;
+                this.nextButton = lightplayer.navigation.aNext;
+                this.ul = lightplayer.ul;
             });
 
             it("should store the next page url", function() {
@@ -280,10 +280,10 @@ describe("Pop Player", function() {
                     ]
                 };
 
-                popplayer.open( this.json );
+                lightplayer.open( this.json );
 
-                this.divContainer = popplayer.div;
-                this.nextButton = popplayer.navigation.aNext;
+                this.divContainer = lightplayer.div;
+                this.nextButton = lightplayer.navigation.aNext;
 
                 expect( this.nextButton ).toHaveClass( 'loading' );
                 expect( this.nextButton ).toHaveClass( 'visible' );
@@ -298,10 +298,10 @@ describe("Pop Player", function() {
                     ]
                 };
 
-                popplayer.open( this.json );
+                lightplayer.open( this.json );
 
-                this.divContainer = popplayer.div;
-                this.prevButton = popplayer.navigation.aPrev;
+                this.divContainer = lightplayer.div;
+                this.prevButton = lightplayer.navigation.aPrev;
 
                 expect( this.prevButton ).toHaveClass( 'loading' );
                 expect( this.prevButton ).toHaveClass( 'visible' );
@@ -319,12 +319,12 @@ describe("Pop Player", function() {
                     ]
                 };
 
-                popplayer.open( this.json );
+                lightplayer.open( this.json );
 
-                this.divContainer = popplayer.div;
+                this.divContainer = lightplayer.div;
 
-                this.nextButton = popplayer.navigation.aNext;
-                this.ul = popplayer.ul;
+                this.nextButton = lightplayer.navigation.aNext;
+                this.ul = lightplayer.ul;
             });
 
             it("should show next button if next page available", function() {
@@ -344,12 +344,12 @@ describe("Pop Player", function() {
             it("should not make a request if there is no next page", function() {
                 this.json.nextPage = '';
 
-                popplayer.open( this.json );
+                lightplayer.open( this.json );
                 
                 spyOn( $, 'getJSON' );
 
                 // at this point, the this.nextButton reference is outdated
-                popplayer.navigation.aNext.click();
+                lightplayer.navigation.aNext.click();
                 
                 expect( $.getJSON ).not.toHaveBeenCalled();
             });
@@ -415,12 +415,12 @@ describe("Pop Player", function() {
                     ]
                 };
 
-                popplayer.open( this.json );
+                lightplayer.open( this.json );
 
-                this.divContainer = popplayer.div;
+                this.divContainer = lightplayer.div;
 
-                this.prevButton = popplayer.navigation.aPrev;
-                this.ul = popplayer.ul;
+                this.prevButton = lightplayer.navigation.aPrev;
+                this.ul = lightplayer.ul;
             });
 
             it("should show prev button if prev page available", function() {
@@ -439,12 +439,12 @@ describe("Pop Player", function() {
             it("should not make a request if there is no prev page", function() {
                 this.json.prevPage = '';
 
-                popplayer.open( this.json );
+                lightplayer.open( this.json );
                 
                 spyOn( $, 'getJSON' );
 
                 // at this point, the this.nextButton reference is outdated
-                popplayer.navigation.aPrev.click();
+                lightplayer.navigation.aPrev.click();
                 
                 expect( $.getJSON ).not.toHaveBeenCalled();
             });
@@ -505,7 +505,7 @@ describe("Pop Player", function() {
 });
 
 
-describe("Pop Player Navigation", function() {
+describe("Light Player Navigation", function() {
 
     describe("with one item", function() {
         beforeEach(function() {
@@ -513,12 +513,12 @@ describe("Pop Player Navigation", function() {
         { id: 123, title: 'Titulo 1', views: '100' }
         ]; 
 
-        popplayer.open( this.json );
+        lightplayer.open( this.json );
 
-        this.divContainer = popplayer.div;
+        this.divContainer = lightplayer.div;
 
-        this.prevButton = popplayer.navigation.aPrev;
-        this.nextButton = popplayer.navigation.aNext;
+        this.prevButton = lightplayer.navigation.aPrev;
+        this.nextButton = lightplayer.navigation.aNext;
         });
 
         it("should disable navigation", function() {
@@ -535,16 +535,16 @@ describe("Pop Player Navigation", function() {
             { id: 789, title: 'Titulo 3', views: '300' }
         ]; 
 
-        popplayer.open( this.json );
+        lightplayer.open( this.json );
 
-        this.divContainer = popplayer.div;
+        this.divContainer = lightplayer.div;
 
-        this.li1 = popplayer.ul.find( 'li:eq(0)' );
-        this.li2 = popplayer.ul.find( 'li:eq(1)' );
-        this.li3 = popplayer.ul.find( 'li:eq(2)' );
+        this.li1 = lightplayer.ul.find( 'li:eq(0)' );
+        this.li2 = lightplayer.ul.find( 'li:eq(1)' );
+        this.li3 = lightplayer.ul.find( 'li:eq(2)' );
 
-        this.prevButton = popplayer.navigation.aPrev;
-        this.nextButton = popplayer.navigation.aNext;
+        this.prevButton = lightplayer.navigation.aPrev;
+        this.nextButton = lightplayer.navigation.aNext;
         });
 
 
@@ -702,7 +702,7 @@ describe("Pop Player Navigation", function() {
             it("should dettach Left key event from document", function() {
                 expect( $( document ).data( 'events' ) ).toBeDefined();
 
-                popplayer.close();
+                lightplayer.close();
 
                 expect( $( document ).data( 'events' ) ).not.toBeDefined();
             });
@@ -714,7 +714,7 @@ describe("Pop Player Navigation", function() {
 }); // describe("navigation")
 
 
-describe("Pop Player Social", function() {
+describe("Light Player Social", function() {
     beforeEach(function() {
         this.json = [{
             id: 123,
@@ -725,10 +725,10 @@ describe("Pop Player Social", function() {
             shortUrl: 'http://glo.bo/abc'
         }];
 
-        popplayer.open( this.json );
+        lightplayer.open( this.json );
 
-        this.divContainer = popplayer.div;
-        this.divSocial = popplayer.social.div;
+        this.divContainer = lightplayer.div;
+        this.divSocial = lightplayer.social.div;
     });
 
     it("should have a share box", function() {
@@ -758,10 +758,10 @@ describe("Pop Player Social", function() {
             
             delete this.json[0].shortUrl;
 
-            popplayer.close();
-            popplayer.open( this.json );
+            lightplayer.close();
+            lightplayer.open( this.json );
 
-            expect( popplayer.social.div.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
+            expect( lightplayer.social.div.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
         
         it("should have a facebook share button with title", function() {
@@ -786,10 +786,10 @@ describe("Pop Player Social", function() {
             
             delete this.json[0].shortUrl;
 
-            popplayer.close();
-            popplayer.open( this.json );
+            lightplayer.close();
+            lightplayer.open( this.json );
 
-            expect( popplayer.social.div.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedUrl );
+            expect( lightplayer.social.div.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
 
         it("should have a twitter share button with title", function() {
@@ -816,10 +816,10 @@ describe("Pop Player Social", function() {
         it("should use the regular url if shorten url is not provided", function() {
             delete this.json[0].shortUrl;
 
-            popplayer.close();
-            popplayer.open( this.json );
+            lightplayer.close();
+            lightplayer.open( this.json );
 
-            expect( popplayer.social.div.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( this.json[0].url );
+            expect( lightplayer.social.div.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( this.json[0].url );
         });
 
         it("should have an orkut share button with title", function() {
@@ -842,13 +842,13 @@ describe("Pop Player Social", function() {
         });
 
         it("should not display a field for shortened url when there isn't one", function() {
-            popplayer.close();
+            lightplayer.close();
 
             delete this.json[0].shortUrl;
 
-            popplayer.open( this.json );
+            lightplayer.open( this.json );
             
-            expect( $( 'div.pop-player' ).find( 'input.globo-url' ).size() ).toBe( 0 );
+            expect( $( 'div.lightplayer' ).find( 'input.globo-url' ).size() ).toBe( 0 );
         });
     });
 });

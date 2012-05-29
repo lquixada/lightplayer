@@ -1,10 +1,10 @@
 ;(function ( $ ) {
 
-popplayer = {
+lightplayer = {
     open: function ( json ) {
         var that = this;
 
-        $( document ).trigger( 'modal-opened.popplayer' );
+        $( document ).trigger( 'modal-opened.lightplayer' );
 
         this.div = this._renderModal( json );
         this.ul  = this.div.find( 'ul' );
@@ -33,7 +33,7 @@ popplayer = {
     close: function () {
         var that = this;
 
-        $( document ).trigger( 'modal-closed.popplayer' );
+        $( document ).trigger( 'modal-closed.lightplayer' );
         
         this._removePlayers();
 
@@ -41,7 +41,7 @@ popplayer = {
             that.div.remove(); 
         });
 
-        $( document ).unbind( 'keydown.pop-player' );
+        $( document ).unbind( 'keydown.lightplayer' );
     },
 
     // private
@@ -131,7 +131,7 @@ popplayer = {
             sitePage: sitePage,
             autoPlay: true,
             complete: function () {
-                $( document ).trigger( 'video-ended.popplayer' );
+                $( document ).trigger( 'video-ended.lightplayer' );
 
                 that._goNext();
             }
@@ -139,7 +139,7 @@ popplayer = {
         
         eventName = (this.justOpened? 'video-autoplayed-onopen': 'video-autoplayed-onplaylist');
 
-        $( document ).trigger( eventName+'.popplayer' );
+        $( document ).trigger( eventName+'.lightplayer' );
 
         this.justOpened = false;
     },
@@ -168,12 +168,12 @@ popplayer = {
             .delegate( 'a.prev.visible:not(.loading)', 'click', function () {
                 that._goPrev();
 
-                $( document ).trigger( 'button-prev-clicked.popplayer' );
+                $( document ).trigger( 'button-prev-clicked.lightplayer' );
             } )
             .delegate( 'a.next.visible:not(.loading)', 'click', function () {
                 that._goNext();
 
-                $( document ).trigger( 'button-next-clicked.popplayer' );
+                $( document ).trigger( 'button-next-clicked.lightplayer' );
             } )
             .delegate( 'a.nav:not(.loading)', 'mouseenter', function () {
                 var a = $( this );
@@ -203,7 +203,7 @@ popplayer = {
                 $( this ).select();
             });
 
-        $( document ).bind( 'keydown.pop-player', function ( evt ) {
+        $( document ).bind( 'keydown.lightplayer', function ( evt ) {
             switch ( evt.which ) {
                 case 27: /* ESC key */
                     that.close(); break;
@@ -338,16 +338,16 @@ popplayer = {
     },
 
     _renderModal: function ( json ) {
-        var divPopPlayer, html = $( 'script#pop-videos-template' ).html();
+        var divlightplayer, html = $( 'script#lightplayer-template' ).html();
 
-        divPopPlayer = $( html );
-        divPopPlayer.find( 'ul' ).data( {
+        divlightplayer = $( html );
+        divlightplayer.find( 'ul' ).data( {
             'prev-page': json.prevPage,
             'next-page': json.nextPage
         });
-        divPopPlayer.appendTo( 'body' );
+        divlightplayer.appendTo( 'body' );
 
-        return divPopPlayer;
+        return divlightplayer;
     },
 
     _selectCurrent: function ( list ) {
@@ -418,7 +418,7 @@ popplayer = {
 
 
 
-popplayer.navigation = {
+lightplayer.navigation = {
     init: function ( options ) {
         this.div   = options.container;
         this.aNext = this.div.find( 'a.nav.next' );
@@ -475,7 +475,7 @@ popplayer.navigation = {
 
 
 
-popplayer.social = {
+lightplayer.social = {
     init: function ( options ) {
         this.div = options.container;
     },
