@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Pop Player Test Runner</title>
+  
+  <link href="../js/jasmine-1.1.0/jasmine.css" rel="stylesheet"/>
+  <link href="src.css" rel="stylesheet"/>
+	
+  <!-- dependencies -->
+  <script src="../js/jasmine-1.1.0/jasmine.js"></script>
+  <script src="../js/jasmine-1.1.0/jasmine-html.js"></script>
+  <script src="/media/common/js/jquery-1.4.3.min.js"></script>
+  <script src="/media/comum/js/bbbvideos.js"></script>
+  <script src="/media/comum/js/bbb.tiptip.js"></script>
+  <script src="http://s.videos.globo.com/p2/j/api.min.js"></script>
+	
+  <!-- source code -->
+  <script src="src.js"></script>
+
+  <!-- specs-->
+  <script src="spec.js"></script>
+
+  <script>
+  function abrir() {
+      popplayer.open( {
+          title: 'Leonardo Quixada',
+          subtitle: 'melhores videos dele',
+          prevPage: 'fixtures/1.json',
+          nextPage: 'fixtures/3.json',
+          list: [
+              {
+                  id: 1673168,
+                  title: 'Maurício anuncia os últimos dias de inscrições para o BBB12',
+                  description: 'O ex-BBB alerta os condidatos para os últimos momentos das inscrições',
+                  url: 'http://www.globo.com',
+                  views: 3412
+              },
+              {
+                  id: 1606199,
+                  title: 'Maria dá dicas para quem quer se inscrever no BBB12',
+                  description: 'A vencedora do BBB11 conta que se inscreveu mais de uma vez e revela por que não desistiu de entrar no programa.',
+                  url: 'http://www.globo.com',
+                  views: 39389,
+                  current: true
+              },
+              {
+                  id: 1495271,
+                  title: 'Diana explica como se increver no Big Brother Brasil 12',
+                  description: 'A ex-BBB tira todas as dúvidas dos candidatos e explica as novidades das inscrições para a 12° edição do BBB.',
+                  url: 'http://www.globo.com',
+                  views: 93920,
+                  shortUrl: 'glo.bo/qwe'
+              }
+          ]
+      } );
+  }
+  </script>
+</head>
+
+<body>
+
+<div id="buttons">
+    <button onclick="abrir()">abrir</button>
+</div>
+
+
+<div id="main">
+  <!-- HTML fixtures -->
+</div>
+
+<script type="text/plain+template" id="pop-videos-template">
+    <div class="pop-player">
+        <div class="widget-container">
+            <div class="widget">
+                
+                <div class="widget-top">
+                    <h5><span>Pop</span> Vídeos</h5>
+                    <em class="subtitulo">seleção dos vídeos mais assistidos</em>
+                    <a href="javascript:;" class="close">fechar</a>
+                </div>
+
+                <div class="widget-content">
+                    <a href="javascript:;" class="nav prev">
+                        <span class="arrow"></span>
+
+                        <span class="video">
+                            <span class="chapeu">Anterior</span>
+                            <span class="title"></span>
+                        </span>
+                        
+                        <span class="overlay"></span>
+                    </a>
+
+                    <a href="javascript:;" class="nav next">
+                        <span class="arrow"></span>
+
+                        <span class="video">
+                            <span class="chapeu">Próximo</span>
+                            <span class="title"></span>
+                        </span>
+                        
+                        <span class="overlay"></span>
+                    </a>
+
+                    <ul></ul>
+
+                    <div class="video-info">
+                        <h6></h6>
+                        <span class="views"></span>
+                        <p></p>
+                    </div>
+
+                    <div class="video-social"></div>
+                </div>
+
+            </div> <!-- .widget -->
+
+            &nbsp; <!-- needed for preventing scrollbar flickering -->
+        </div> <!-- .widget-container -->
+
+        <div class="widget-overlay"></div>
+    </div>
+</script>
+
+<script>
+jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+jasmine.getEnv().execute();
+</script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,8 @@
+
+= TODO =============================================
+
+- Testando edge cases. Ex.: problema com parametros.
+- Converter singleton popplayer para função construtora PopPlayer
+- Remover dependências: player, facebookParse e tipTip
+- Abrir repositório no ngit
+- Tagear versões
