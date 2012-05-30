@@ -1,11 +1,10 @@
-;(function ( $ ) {
 
-window.LightPlayer = function () {
+LightPlayer = function () {
     this.navigation = new LightPlayer.Navigation();
     this.social = new LightPlayer.Social();
 };
 
-window.LightPlayer.prototype = {
+LightPlayer.prototype = {
     open: function ( json ) {
         var that = this;
 
@@ -437,8 +436,8 @@ window.LightPlayer.prototype = {
 };
 
 
-window.LightPlayer.Navigation = function () {};
-window.LightPlayer.Navigation.prototype = {
+LightPlayer.Navigation = function () {};
+LightPlayer.Navigation.prototype = {
     init: function ( options ) {
         this.div   = options.container;
         this.aNext = this.div.find( 'a.nav.next' );
@@ -494,8 +493,8 @@ window.LightPlayer.Navigation.prototype = {
 };
 
 
-window.LightPlayer.Social = function () {};
-window.LightPlayer.Social.prototype = {
+LightPlayer.Social = function () {};
+LightPlayer.Social.prototype = {
     init: function ( options ) {
         this.div = options.container;
     },
@@ -579,5 +578,3 @@ window.LightPlayer.Social.prototype = {
         }).appendTo( this.div );
     }
 };
-
-})( jQuery );
