@@ -1,5 +1,3 @@
-$.fn.tipTip = function () {};
-window.facebookParse = function () {};
 
 beforeEach(function() {
     // Prevents jquery animations
@@ -9,21 +7,21 @@ beforeEach(function() {
     spyOn( $.fn, 'player' );
     
     // Prevents calling tipTip plugin
-    spyOn( $.fn, 'tipTip' );
+    $.fn.tipTip = function () {};
     
     // Prevents dealing with Facebook SDK
-    spyOn( window, 'facebookParse' );
+    window.facebookParse = function () {};
 
     // Prevents doing real ajax calls (clears console!)
     spyOn( $, 'ajax' );
 
     // Prevents css3 animations on open
-    spyOn( lightplayer, '_animateIn' ).andCallFake( function ( callback ) {
+    spyOn( LightPlayer.prototype, '_animateIn' ).andCallFake( function ( callback ) {
         callback();
     });
 
     // Prevents css3 animations on close
-    spyOn( lightplayer, '_animateOut' ).andCallFake( function ( callback ) {
+    spyOn( LightPlayer.prototype, '_animateOut' ).andCallFake( function ( callback ) {
         callback();
     });
 
@@ -36,6 +34,8 @@ beforeEach(function() {
              }
          }
     });
+
+    this.lightplayer = new LightPlayer();
 });
 
 
@@ -52,10 +52,10 @@ describe("Light Player", function() {
     describe("one video", function() {
         beforeEach(function() {
             this.json = [{ id: 123, title: 'Titulo 1', description: 'Descricao 1', views: '100', url: 'http://www.globo.com' }];
+            
+            this.lightplayer.open( this.json );
 
-            lightplayer.open( this.json );
-
-            this.divContainer = lightplayer.div;
+            this.divContainer = this.lightplayer.div;
         });
 
         describe("open", function() {
@@ -72,6 +72,7 @@ describe("Light Player", function() {
             });
 
             it("should have a video player", function() {
+                //debugger;
                 expect( this.divContainer.find( 'div.video-player' ).size() ).toBe( 1 );
                 expect( this.divContainer.find( 'div.video-player' ).attr( 'data-player-videosIDs' ) ).toBe( String(this.json[0].id) );
             });
@@ -88,7 +89,7 @@ describe("Light Player", function() {
             });
 
             it("should close", function() {
-                lightplayer.close();
+                this.lightplayer.close();
 
                 expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
             });
@@ -132,31 +133,31 @@ describe("Light Player", function() {
         });
 
         it("should customize the title", function() {
-            lightplayer.open( this.json );
+            this.lightplayer.open( this.json );
 
-            expect( lightplayer.div.find( 'h5' ).html().toLowerCase() ).toBe( '<span>Titulo</span> do Modal'.toLowerCase() );
+            expect( this.lightplayer.div.find( 'h5' ).html().toLowerCase() ).toBe( '<span>Titulo</span> do Modal'.toLowerCase() );
         });
 
         it("should have the title 'mais videos' if none provided", function() {
             delete this.json.title;
 
-            lightplayer.open( this.json );
+            this.lightplayer.open( this.json );
             
-            expect( lightplayer.div.find( 'h5' ).html().toLowerCase() ).toBe( '<span>mais</span> videos'.toLowerCase() );
+            expect( this.lightplayer.div.find( 'h5' ).html().toLowerCase() ).toBe( '<span>mais</span> videos'.toLowerCase() );
         });
 
         it("should customize the subtitle", function() {
-            lightplayer.open( this.json );
+            this.lightplayer.open( this.json );
 
-            expect( lightplayer.div.find( 'em.subtitulo' ).html() ).toBe( this.json.subtitle );
+            expect( this.lightplayer.div.find( 'em.subtitulo' ).html() ).toBe( this.json.subtitle );
         });
 
         it("should have the subtitle empty if none provided", function() {
             delete this.json.subtitle;
 
-            lightplayer.open( this.json );
+            this.lightplayer.open( this.json );
             
-            expect( lightplayer.div.find( 'em.subtitulo' ).html() ).toBe( '' );
+            expect( this.lightplayer.div.find( 'em.subtitulo' ).html() ).toBe( '' );
         });
     });
     
@@ -170,10 +171,10 @@ describe("Light Player", function() {
                     { id: 456, title: 'Titulo 2', description: 'Descricao 2', views: '200' }
                 ]; 
 
-                lightplayer.open( this.json );
+                this.lightplayer.open( this.json );
 
-                this.divContainer = lightplayer.div;
-                this.ul = lightplayer.ul;
+                this.divContainer = this.lightplayer.div;
+                this.ul = this.lightplayer.ul;
             });
 
             it("should have two videos", function() {
@@ -219,10 +220,10 @@ describe("Light Player", function() {
                     { id: 123, title: 'Titulo 1', views: '100' },
                     { id: 456, title: 'Titulo 2', views: '200', current: true }
                 ]; 
+                
+                this.lightplayer.open( this.json );
 
-                lightplayer.open( this.json );
-
-                this.divContainer = lightplayer.div;
+                this.divContainer = this.lightplayer.div;
             });
 
             it("should mark the first item as current", function() {
@@ -245,12 +246,12 @@ describe("Light Player", function() {
                     ]
                 };
 
-                lightplayer.open( this.json );
+                this.lightplayer.open( this.json );
 
-                this.divContainer = lightplayer.div;
+                this.divContainer = this.lightplayer.div;
 
-                this.nextButton = lightplayer.navigation.aNext;
-                this.ul = lightplayer.ul;
+                this.nextButton = this.lightplayer.navigation.aNext;
+                this.ul = this.lightplayer.ul;
             });
 
             it("should store the next page url", function() {
@@ -280,10 +281,10 @@ describe("Light Player", function() {
                     ]
                 };
 
-                lightplayer.open( this.json );
+                this.lightplayer.open( this.json );
 
-                this.divContainer = lightplayer.div;
-                this.nextButton = lightplayer.navigation.aNext;
+                this.divContainer = this.lightplayer.div;
+                this.nextButton = this.lightplayer.navigation.aNext;
 
                 expect( this.nextButton ).toHaveClass( 'loading' );
                 expect( this.nextButton ).toHaveClass( 'visible' );
@@ -298,10 +299,10 @@ describe("Light Player", function() {
                     ]
                 };
 
-                lightplayer.open( this.json );
+                this.lightplayer.open( this.json );
 
-                this.divContainer = lightplayer.div;
-                this.prevButton = lightplayer.navigation.aPrev;
+                this.divContainer = this.lightplayer.div;
+                this.prevButton = this.lightplayer.navigation.aPrev;
 
                 expect( this.prevButton ).toHaveClass( 'loading' );
                 expect( this.prevButton ).toHaveClass( 'visible' );
@@ -319,12 +320,12 @@ describe("Light Player", function() {
                     ]
                 };
 
-                lightplayer.open( this.json );
+                this.lightplayer.open( this.json );
 
-                this.divContainer = lightplayer.div;
+                this.divContainer = this.lightplayer.div;
 
-                this.nextButton = lightplayer.navigation.aNext;
-                this.ul = lightplayer.ul;
+                this.nextButton = this.lightplayer.navigation.aNext;
+                this.ul = this.lightplayer.ul;
             });
 
             it("should show next button if next page available", function() {
@@ -344,12 +345,12 @@ describe("Light Player", function() {
             it("should not make a request if there is no next page", function() {
                 this.json.nextPage = '';
 
-                lightplayer.open( this.json );
+                this.lightplayer.open( this.json );
                 
                 spyOn( $, 'getJSON' );
 
                 // at this point, the this.nextButton reference is outdated
-                lightplayer.navigation.aNext.click();
+                this.lightplayer.navigation.aNext.click();
                 
                 expect( $.getJSON ).not.toHaveBeenCalled();
             });
@@ -415,16 +416,15 @@ describe("Light Player", function() {
                     ]
                 };
 
-                lightplayer.open( this.json );
+                this.lightplayer.open( this.json );
 
-                this.divContainer = lightplayer.div;
+                this.divContainer = this.lightplayer.div;
 
-                this.prevButton = lightplayer.navigation.aPrev;
-                this.ul = lightplayer.ul;
+                this.prevButton = this.lightplayer.navigation.aPrev;
+                this.ul = this.lightplayer.ul;
             });
 
             it("should show prev button if prev page available", function() {
-
                 expect( this.prevButton ).toHaveClass( 'visible' );
             });
 
@@ -439,12 +439,12 @@ describe("Light Player", function() {
             it("should not make a request if there is no prev page", function() {
                 this.json.prevPage = '';
 
-                lightplayer.open( this.json );
+                this.lightplayer.open( this.json );
                 
                 spyOn( $, 'getJSON' );
 
                 // at this point, the this.nextButton reference is outdated
-                lightplayer.navigation.aPrev.click();
+                this.lightplayer.navigation.aPrev.click();
                 
                 expect( $.getJSON ).not.toHaveBeenCalled();
             });
@@ -510,15 +510,15 @@ describe("Light Player Navigation", function() {
     describe("with one item", function() {
         beforeEach(function() {
             this.json = [
-        { id: 123, title: 'Titulo 1', views: '100' }
-        ]; 
+                { id: 123, title: 'Titulo 1', views: '100' }
+            ]; 
 
-        lightplayer.open( this.json );
+            this.lightplayer.open( this.json );
 
-        this.divContainer = lightplayer.div;
+            this.divContainer = this.lightplayer.div;
 
-        this.prevButton = lightplayer.navigation.aPrev;
-        this.nextButton = lightplayer.navigation.aNext;
+            this.prevButton = this.lightplayer.navigation.aPrev;
+            this.nextButton = this.lightplayer.navigation.aNext;
         });
 
         it("should disable navigation", function() {
@@ -530,21 +530,21 @@ describe("Light Player Navigation", function() {
     describe("with more itens", function() {
         beforeEach(function() {
             this.json = [
-        { id: 123, title: 'Titulo 1', views: '100' },
-            { id: 456, title: 'Titulo 2', views: '200' },
-            { id: 789, title: 'Titulo 3', views: '300' }
-        ]; 
+                { id: 123, title: 'Titulo 1', views: '100' },
+                { id: 456, title: 'Titulo 2', views: '200' },
+                { id: 789, title: 'Titulo 3', views: '300' }
+            ]; 
 
-        lightplayer.open( this.json );
+            this.lightplayer.open( this.json );
 
-        this.divContainer = lightplayer.div;
+            this.divContainer = this.lightplayer.div;
 
-        this.li1 = lightplayer.ul.find( 'li:eq(0)' );
-        this.li2 = lightplayer.ul.find( 'li:eq(1)' );
-        this.li3 = lightplayer.ul.find( 'li:eq(2)' );
+            this.li1 = this.lightplayer.ul.find( 'li:eq(0)' );
+            this.li2 = this.lightplayer.ul.find( 'li:eq(1)' );
+            this.li3 = this.lightplayer.ul.find( 'li:eq(2)' );
 
-        this.prevButton = lightplayer.navigation.aPrev;
-        this.nextButton = lightplayer.navigation.aNext;
+            this.prevButton = this.lightplayer.navigation.aPrev;
+            this.nextButton = this.lightplayer.navigation.aNext;
         });
 
 
@@ -702,7 +702,7 @@ describe("Light Player Navigation", function() {
             it("should dettach Left key event from document", function() {
                 expect( $( document ).data( 'events' ) ).toBeDefined();
 
-                lightplayer.close();
+                this.lightplayer.close();
 
                 expect( $( document ).data( 'events' ) ).not.toBeDefined();
             });
@@ -725,10 +725,10 @@ describe("Light Player Social", function() {
             shortUrl: 'http://glo.bo/abc'
         }];
 
-        lightplayer.open( this.json );
+        this.lightplayer.open( this.json );
 
-        this.divContainer = lightplayer.div;
-        this.divSocial = lightplayer.social.div;
+        this.divContainer = this.lightplayer.div;
+        this.divSocial = this.lightplayer.social.div;
     });
 
     it("should have a share box", function() {
@@ -758,10 +758,10 @@ describe("Light Player Social", function() {
             
             delete this.json[0].shortUrl;
 
-            lightplayer.close();
-            lightplayer.open( this.json );
+            this.lightplayer.close();
+            this.lightplayer.open( this.json );
 
-            expect( lightplayer.social.div.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
+            expect( this.lightplayer.social.div.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
         
         it("should have a facebook share button with title", function() {
@@ -786,10 +786,10 @@ describe("Light Player Social", function() {
             
             delete this.json[0].shortUrl;
 
-            lightplayer.close();
-            lightplayer.open( this.json );
+            this.lightplayer.close();
+            this.lightplayer.open( this.json );
 
-            expect( lightplayer.social.div.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedUrl );
+            expect( this.lightplayer.social.div.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
 
         it("should have a twitter share button with title", function() {
@@ -816,10 +816,10 @@ describe("Light Player Social", function() {
         it("should use the regular url if shorten url is not provided", function() {
             delete this.json[0].shortUrl;
 
-            lightplayer.close();
-            lightplayer.open( this.json );
+            this.lightplayer.close();
+            this.lightplayer.open( this.json );
 
-            expect( lightplayer.social.div.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( this.json[0].url );
+            expect( this.lightplayer.social.div.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( this.json[0].url );
         });
 
         it("should have an orkut share button with title", function() {
@@ -842,11 +842,11 @@ describe("Light Player Social", function() {
         });
 
         it("should not display a field for shortened url when there isn't one", function() {
-            lightplayer.close();
+            this.lightplayer.close();
 
             delete this.json[0].shortUrl;
 
-            lightplayer.open( this.json );
+            this.lightplayer.open( this.json );
             
             expect( $( 'div.lightplayer' ).find( 'input.globo-url' ).size() ).toBe( 0 );
         });

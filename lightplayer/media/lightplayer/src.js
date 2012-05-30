@@ -1,6 +1,11 @@
 ;(function ( $ ) {
 
-lightplayer = {
+window.LightPlayer = function () {
+    this.navigation = new LightPlayer.Navigation();
+    this.social = new LightPlayer.Social();
+};
+
+window.LightPlayer.prototype = {
     open: function ( json ) {
         var that = this;
 
@@ -18,12 +23,12 @@ lightplayer = {
         this.social.init( {
             container: this.div.find( 'div.video-social' )
         } );
-
+        
         this._setTitle( json );
-
+        
         this._animateIn( function () {
             var list = $.isArray( json )? json: json.list;
-
+            
             that._appendItens( list );
             that._selectCurrent( list );
             that._bindEvents();
@@ -55,7 +60,11 @@ lightplayer = {
         this._disablePageScroll();
 
         divOverlay.bind( onTransitionEnd, function () {
+            console.log( 'hey' );
+            
             divWidget.bind( onTransitionEnd, function () {
+                console.log( 'hm?' );
+                
                 /* Firefox bugfix: Flash + css transform doesn't get along very well */
                 divWidget.css( '-moz-transform', 'none' );
 
@@ -68,16 +77,27 @@ lightplayer = {
             
             divOverlay.unbind( onTransitionEnd );
         } );
+
+        console.log( 'ho' );
+        
         
         // Bugfix: transition doesn't work when element is immediatelly added to the DOM
         setTimeout( function () {
+            
             divOverlay.addClass( 'visible' );
-
+            
+            console.log( 'vai!' );
+            
             // For browsers (IEs and FF3.6) that doesn't support css3 animations, just call the callback
             if ( !that._hasTransitionSupport() ) {
+                console.log( 'f' );
                 divWidget.css( '-moz-transform', 'none' );
                 divWidget.addClass( 'visible' );
+                console.log( 'g' );
+                
                 callback();
+                console.log( 'h' );
+                
             }
         }, 250);
     },
@@ -358,7 +378,7 @@ lightplayer = {
                 chosen = i;
             }
         });
-
+        
         this._show( this.div.find( 'li' ).eq( chosen ) );
     },
 
@@ -387,7 +407,7 @@ lightplayer = {
             nextJson: this._getJson( item.next() )
         } );
 
-        // Social box
+        //// Social box
         this.social.update( item.data( 'json' ) );
 
         // Pagination
@@ -417,8 +437,8 @@ lightplayer = {
 };
 
 
-
-lightplayer.navigation = {
+window.LightPlayer.Navigation = function () {};
+window.LightPlayer.Navigation.prototype = {
     init: function ( options ) {
         this.div   = options.container;
         this.aNext = this.div.find( 'a.nav.next' );
@@ -444,8 +464,8 @@ lightplayer.navigation = {
     // private
     
     _toggle: function ( options ) {
-        var isOnlyChild = options.itensTotal == 1,
-            isFirstChild = options.itemIndex == 0,
+        var isOnlyChild = options.itensTotal === 1,
+            isFirstChild = options.itemIndex === 0,
             isLastChild = options.itemIndex == options.itensTotal-1;
 
         this.div.find( 'a.nav' ).removeClass( 'visible' );
@@ -474,8 +494,8 @@ lightplayer.navigation = {
 };
 
 
-
-lightplayer.social = {
+window.LightPlayer.Social = function () {};
+window.LightPlayer.Social.prototype = {
     init: function ( options ) {
         this.div = options.container;
     },
@@ -558,6 +578,6 @@ lightplayer.social = {
             'title': 'Compartilhe no Twitter'
         }).appendTo( this.div );
     }
-}
+};
 
 })( jQuery );
