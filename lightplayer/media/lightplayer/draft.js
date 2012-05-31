@@ -6,12 +6,12 @@ LightPlayer.prototype = {
     },
 
     addBlocks: function () {
-        this.add( new LightPlayer.header( this.bus, this.json ) );
-        this.add( new LightPlayer.title( this.bus, this.json ) );
-        this.add( new LightPlayer.social( this.bus, this.json ) );
-        this.add( new LightPlayer.stage( this.bus, this.json ) );
-        this.add( new LightPlayer.playlist( this.bus, this.json ) );
-        this.add( new LightPlayer.comments( this.bus, this.json ) );
+        this.add( new Header( this.bus, this.json ) );
+        this.add( new VideoTitle( this.bus, this.json ) );
+        this.add( new Social( this.bus, this.json ) );
+        this.add( new Stage( this.bus, this.json ) );
+        this.add( new Playlist( this.bus, this.json ) );
+        this.add( new Comments( this.bus, this.json ) );
     },
 
     open: function ( json ) {
@@ -24,43 +24,33 @@ LightPlayer.prototype = {
     }
 };
 
-LightPlayer.stage = function ( bus, json ) {
+
+/***********************************************
+ * EXEMPLO DE MODULO: STAGE
+ ***********************************************/
+
+// A FUNCAO CONSTRUTORA RECEBERA UM BARRAMENTO E O JSON COM OS VIDEOS
+Stage = function ( bus, json ) {
     this.bus = bus;
     this.json = json;
 };
 
-LightPlayer.stage.prototype = {
+Stage.prototype = {
+    // CHAMADO QUANDO MODULO EH ADICIONADO AO LIGHTPLAYER
     init: function () {
         this.block = this.render( json );
         this.addEvents();
-
+        
+        // DEVE RETORNA O NOH RAIZ DO HTML DO MODULO
         return this.block;
     },
 
     addEvents: function () {
-        var that = this;
-
-        this.block.delegate( 'a', 'click', function () {
-            that.bus.publish( 'event', {} );
-
-        } );
-
-        this.bus.subscribe( 'event', function ( json ) {
-            
-        } );
+        // SETA TODOS OS EVENTOS DO MODULO
     },
 
-    render: function ( json ) {
-        var tmpl = [
-                '<div class="header">',
-                    '<h5>', json.title,'</h5>',
-                    '<em class="subtitulo">', json.subtitle, '</em>',
-                    '<a href="javascript:;" class="close">fechar</a>',
-                '</div>'
-            ].join();
-
-        this.block = $( tmpl );
-        this.widget.append( this.block );
+    render: function () {
+        // TRANSFORMA JSON EM HTML VIA TEMPLATE OU JAVASCRIPT
     }
 };
 
