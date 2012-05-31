@@ -1,6 +1,5 @@
-
 LightPlayer = function () {
-    this.navigation = new LightPlayer.Navigation();
+    this.navigation = new LightPlayer.Navigation( this.bus );
     this.social = new LightPlayer.Social();
 };
 
