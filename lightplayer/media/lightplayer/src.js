@@ -577,3 +577,154 @@ LightPlayer.Social.prototype = {
         }).appendTo( this.div );
     }
 };
+
+
+
+
+/***********************************************
+ * MODULO STAGE
+ ***********************************************/
+
+Stage = function ( json ) {
+    this.json = json;
+};
+
+Stage.prototype = {
+    addEvents: function () {
+        var that = this;
+
+        this.block.delegate( 'a.nav.next', 'click', function () {
+            that._goNext();
+        } );
+
+        this.block.delegate( 'a.nav.prev', 'click', function () {
+            that._goPrev();
+        } );
+    },
+
+    init: function () {
+        this.render();
+        this.addEvents();
+    },
+
+    getCurrentItem: function () {
+        var result;
+        
+        result = $.grep( this.json.list, function ( item ) {
+            return item.current;
+        });
+
+        return result[0];
+    },
+
+    getNextItem: function() {
+        var itemNext, itens = this.json.list;
+        
+        $.each( itens, function ( index, item ) {
+            if ( item.current ) {
+                itemNext = itens[index+1];
+                return false;
+            }
+        });
+        
+        return itemNext;
+    },
+
+    getPrevItem: function() {
+        var itemPrev, itens = this.json.list;
+        
+        $.each( itens, function ( index, item ) {
+            if ( item.current ) {
+                itemPrev = itens[index-1];
+                return false;
+            }
+        });
+        
+        return itemPrev;
+    },
+
+    _goNext: function () {
+        this._go( 'next' );
+    },
+
+    _goPrev: function () {
+        this._go( 'prev' );
+    },
+
+    _go: function ( dir ) {
+        var current = this.block.find( 'li.current' ),
+            li = ( dir === 'next'? current.next(): current.prev() );
+
+        this.block.find( 'li' ).removeClass( 'current' );
+        li.addClass( 'current' );
+    },
+
+    render: function () {
+        this.renderItem();
+        this.renderArrows();
+    },
+
+    renderItem: function() {
+        var item = this.getCurrentItem();
+
+        this.block = $( [
+            '<div>',
+                '<ul>',
+                    '<li id="item-'+item.id+'" class="current">',
+                        '<div class="video-player" data-player-videosIDs='+item.id+'></div>',
+                    '</li>',
+                '</ul>',
+            '</div>'
+        ].join() );
+    },
+
+    renderArrows: function () {
+        this.block.append( [
+            '<a href="javascript:;" class="nav next visible">',
+                '<span class="arrow"></span>',
+                '<span class="info">',
+                    '<span class="chapeu">Próximo</span>',
+                    '<span class="titulo"></span>',
+                '</span>',
+            '</a>',
+
+            '<a href="javascript:;" class="nav prev">',
+                '<span class="arrow"></span>',
+                '<span class="info">',
+                    '<span class="chapeu">Anterior</span>',
+                    '<span class="titulo"></span>',
+                '</span>',
+            '</a>'
+        ].join() );
+
+        this.updateArrows();
+    },
+
+    updateArrows: function () {
+        var first = this.json.list[0],
+            last = this.json.list[this.json.list.length-1];
+
+        this.block.find( 'a.nav' ).removeClass( 'visible' );
+
+        if ( first.current ) {
+            this.updateNextArrow();
+        } else if ( last.current ) {
+            this.updatePrevArrow();
+        } else {
+            this.updatePrevArrow();
+            this.updateNextArrow();
+        }
+    },
+
+    updateNextArrow: function () {
+        var itemNext = this.getNextItem();
+        this.block.find( 'a.nav.next' ).addClass( 'visible' );
+        this.block.find( 'a.nav.next' ).find( 'span.titulo' ).text( itemNext.title );
+    },
+
+    updatePrevArrow: function () {
+        var itemPrev = this.getPrevItem();
+        this.block.find( 'a.nav.prev' ).addClass( 'visible' );
+        this.block.find( 'a.nav.prev' ).find( 'span.titulo' ).text( itemPrev.title );
+    }
+};

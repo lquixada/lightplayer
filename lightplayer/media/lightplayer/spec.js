@@ -853,150 +853,15 @@ describe("Light Player Social", function() {
     });
 });
 
-LightPlayer.stage = function ( json ) {
-    this.json = json;
-};
-
-LightPlayer.stage.prototype = {
-    init: function () {
-        this.render();
-        this.addEvents();
-    },
-
-    getCurrentItem: function () {
-        var result;
-        
-        result = $.grep( this.json.list, function ( item ) {
-            return item.current;
-        });
-
-        return result[0];
-    },
-
-    getNextItem: function() {
-        var itemNext, itens = this.json.list;
-        
-        $.each( itens, function ( index, item ) {
-            if ( item.current ) {
-                itemNext = itens[index+1];
-                return false;
-            }
-        });
-        
-        return itemNext;
-    },
-
-    getPrevItem: function() {
-        var itemPrev, itens = this.json.list;
-        
-        $.each( itens, function ( index, item ) {
-            if ( item.current ) {
-                itemPrev = itens[index-1];
-                return false;
-            }
-        });
-        
-        return itemPrev;
-    },
-
-    render: function () {
-        this.renderItem();
-        this.renderArrows();
-    },
-
-    renderItem: function() {
-        var item = this.getCurrentItem();
-
-        this.block = $( [
-            '<div>',
-                '<ul>',
-                    '<li id="item-'+item.id+'" class="current">',
-                        '<div class="video-player" data-player-videosIDs='+item.id+'></div>',
-                    '</li>',
-                '</ul>',
-            '</div>'
-        ].join() );
-    },
-
-    renderArrows: function () {
-        this.block.append( [
-            '<a href="javascript:;" class="nav next visible">',
-                '<span class="arrow"></span>',
-                '<span class="info">',
-                    '<span class="chapeu">Próximo</span>',
-                    '<span class="titulo"></span>',
-                '</span>',
-            '</a>',
-
-            '<a href="javascript:;" class="nav prev">',
-                '<span class="arrow"></span>',
-                '<span class="info">',
-                    '<span class="chapeu">Anterior</span>',
-                    '<span class="titulo"></span>',
-                '</span>',
-            '</a>'
-        ].join() );
-
-        this.updateArrows();
-    },
-
-    updateArrows: function () {
-        var first = this.json.list[0],
-            last = this.json.list[this.json.list.length-1];
-
-        this.block.find( 'a.nav' ).removeClass( 'visible' );
-
-        if ( first.current ) {
-            this.updateNextArrow();
-        } else if ( last.current ) {
-            this.updatePrevArrow();
-        } else {
-            this.updatePrevArrow();
-            this.updateNextArrow();
-        }
-    },
-
-    updateNextArrow: function () {
-        var itemNext = this.getNextItem();
-        this.block.find( 'a.nav.next' ).addClass( 'visible' );
-        this.block.find( 'a.nav.next' ).find( 'span.titulo' ).text( itemNext.title );
-    },
-
-    updatePrevArrow: function () {
-        var itemPrev = this.getPrevItem();
-        this.block.find( 'a.nav.prev' ).addClass( 'visible' );
-        this.block.find( 'a.nav.prev' ).find( 'span.titulo' ).text( itemPrev.title );
-    }
-};
-
-LightPlayer.stage.prototype.addEvents = function () {
-    var that = this;
-
-    this.block.delegate( 'a.nav.next', 'click', function () {
-        that._goNext();
-    } );
-
-    this.block.delegate( 'a.nav.prev', 'click', function () {
-        that._goPrev();
-    } );
-};
 
 
-LightPlayer.stage.prototype._goNext = function () {
-    this._go( 'next' );
-};
 
-LightPlayer.stage.prototype._goPrev = function () {
-    this._go( 'prev' );
-};
 
-LightPlayer.stage.prototype._go = function ( dir ) {
-    var current = this.block.find( 'li.current' ),
-        li = ( dir === 'next'? current.next(): current.prev() );
 
-    this.block.find( 'li' ).removeClass( 'current' );
-    li.addClass( 'current' );
-};
+/***********************************************
+ * MODULO STAGE
+ ***********************************************/
+
 
 describe("Module: Stage", function() {
     beforeEach(function() {
@@ -1013,7 +878,7 @@ describe("Module: Stage", function() {
         beforeEach(function() {
             this.json.list[0].current = true;
 
-            this.stage = new LightPlayer.stage( this.json );
+            this.stage = new Stage( this.json );
             this.stage.init();
 
             this.liCurrent = this.stage.block.find( 'ul li.current' );
@@ -1038,7 +903,7 @@ describe("Module: Stage", function() {
         beforeEach(function() {
             this.json.list[1].current = true;
 
-            this.stage = new LightPlayer.stage( this.json );
+            this.stage = new Stage( this.json );
             this.stage.init();
 
             this.liCurrent = this.stage.block.find( 'ul li.current' );
@@ -1063,7 +928,7 @@ describe("Module: Stage", function() {
         beforeEach(function() {
             this.json.list[1].current = true;
 
-            this.stage = new LightPlayer.stage( this.json );
+            this.stage = new Stage( this.json );
             this.stage.init();
         });
 
@@ -1110,7 +975,7 @@ describe("Module: Stage", function() {
             beforeEach(function() {
                 this.json.list[0].current = true;
 
-                this.stage = new LightPlayer.stage( this.json );
+                this.stage = new Stage( this.json );
                 this.stage.init();
 
                 this.nextButton = this.stage.block.find( 'a.nav.next' );
@@ -1139,7 +1004,7 @@ describe("Module: Stage", function() {
             beforeEach(function() {
                 this.json.list[1].current = true;
 
-                this.stage = new LightPlayer.stage( this.json );
+                this.stage = new Stage( this.json );
                 this.stage.init();
 
                 this.nextButton = this.stage.block.find( 'a.nav.next' );
@@ -1169,7 +1034,7 @@ describe("Module: Stage", function() {
             beforeEach(function() {
                 this.json.list[2].current = true;
 
-                this.stage = new LightPlayer.stage( this.json );
+                this.stage = new Stage( this.json );
                 this.stage.init();
 
                 this.nextButton = this.stage.block.find( 'a.nav.next' );
@@ -1194,148 +1059,6 @@ describe("Module: Stage", function() {
             });
         }); 
     }); // describe("scenarios")
-    
-    xdescribe("two item list", function() {
-        beforeEach(function() {
-            this.json = {
-                list: [
-                    { id: 123, title: 'titulo 1' },
-                    { id: 456, title: 'titulo 2' }
-                ]
-            };
-
-            this.stage.add( this.json );
-        });
-        
-        it("should render two list itens", function() {
-            expect( this.stage.block.find( 'ul li' ).size() ).toBe( 2 );
-        });
-
-        it("should set the first item as current", function() {
-            expect( this.stage.block.find( 'ul li:eq(0)' ) ).toHaveClass( 'current' );
-        });
-
-        describe("next button", function() {
-            beforeEach(function() {
-                this.nextButton = this.stage.block.find( 'a.nav.next' );
-            });
-            
-            it("should exist", function() {
-                expect( this.nextButton.size() ).toBe( 1 );
-            });
-
-            it("should have an arrow", function() {
-                expect( this.nextButton.find( 'span.arrow' ).size() ).toBe( 1 );
-            });
-
-            it("should have an chapeu", function() {
-                expect( this.nextButton.find( 'span.chapeu' ).text() ).toBe( 'Próximo' );
-            });
-
-            //it("should have the next item title", function() {
-                //var title = this.json.list[1].title;
-                //expect( this.nextButton.find( 'span.titulo' ).text() ).toBe( title );
-            //});
-        });
-
-        describe("prev button", function() {
-            beforeEach(function() {
-                this.prevButton = this.stage.block.find( 'a.nav.prev' );
-            });
-            
-            it("should exist", function() {
-                expect( this.prevButton.size() ).toBe( 1 );
-            });
-
-            it("should have an arrow", function() {
-                expect( this.prevButton.find( 'span.arrow' ).size() ).toBe( 1 );
-            });
-
-            it("should have an chapeu", function() {
-                expect( this.prevButton.find( 'span.chapeu' ).text() ).toBe( 'Anterior' );
-            });
-
-            it("should not have an item title", function() {
-                expect( this.prevButton.find( 'span.titulo' ).text() ).toBe( '' );
-            });
-        });
-    });
-    
-    xdescribe("navigation", function() {
-        beforeEach(function() {
-            this.json = {
-                list: [
-                    { id: 123, title: 'titulo 1' },
-                    { id: 456, title: 'titulo 2' }
-                ]
-            };
-        });
-        
-        describe("NEXT button", function() {
-            describe("interaction", function() {
-                describe("click", function() {
-                    it("should go to the next item", function() {
-                        var lis;
-
-                        this.stage.add( this.json );
-                        this.stage.block.find( 'a.nav.next' ).click();
-
-                        lis = this.stage.block.find( 'ul li' );
-
-                        expect( lis.filter(':eq(1)') ).toHaveClass( 'current' );
-                        expect( lis.filter(':eq(0)') ).not.toHaveClass( 'current' );
-                    });
-
-                    //it("should not have an item title", function() {
-                        //var lis;
-
-                        //this.stage.render( this.json );
-                        //this.nextButton = this.stage.block.find( 'a.nav.next' );
-                        //this.nextButton.click();
-
-                        //expect( this.nextButton.find( 'span.titulo' ).text() ).toBe( '' );
-                    //});
-                    
-                    
-                });
-            }); // describe("interaction")
-        });
-
-        describe("PREV button", function() {
-            describe("interaction", function() {
-                describe("click", function() {
-                    it("should go to the prev item", function() {
-                        this.stage.add( this.json );
-                        this.stage.block.find( 'a.nav.next' ).click();
-                        this.stage.block.find( 'a.nav.prev' ).click();
-
-                        var lis = this.stage.block.find( 'ul li' );
-
-                        expect( lis.filter(':eq(0)') ).toHaveClass( 'current' );
-                        expect( lis.filter(':eq(1)') ).not.toHaveClass( 'current' );
-                    });
-
-                    //it("should have the prev item title", function() {
-                        //var title = this.json.list[0].title;
-
-                        //this.stage.render( this.json );
-                        //this.nextButton = this.stage.block.find( 'a.nav.next' );
-                        //this.prevButton = this.stage.block.find( 'a.nav.prev' );
-
-                        //this.nextButton.click();
-
-                        //expect( this.prevButton.find( 'span.titulo' ).text() ).toBe( title );
-                    //});
-                    
-                });
-            }); // describe("interaction")
-            
-        });
-        
-        
-    });
-    
-    
     
 });
     
