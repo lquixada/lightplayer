@@ -70,7 +70,7 @@ describe("Light Player", function() {
         this.lightplayer.open( this.json );
     });
 
-    describe("container", function() {
+    describe("open", function() {
         it("should have a container", function() {
             expect( this.lightplayer.div.size() ).toBe( 1 );
         });
@@ -83,6 +83,44 @@ describe("Light Player", function() {
             expect( this.lightplayer.div.find( 'div.widget-overlay' ).size() ).toBe( 1 );
         });
     });
+
+    describe("close", function() {
+        beforeEach(function() {
+            this.simulateEscKey = function () {
+                var evt = jQuery.Event('keydown');
+                evt.which = 27;
+                $( document ).trigger( evt );
+            };
+        });
+
+        it("should close", function() {
+            this.lightplayer.close();
+
+            expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
+        });
+
+        it("should close on Esc key", function() {
+            this.simulateEscKey();
+
+            expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
+        });
+
+        it("should dettach Esc key event from document", function() {
+            expect( $( document ).data( 'events' ) ).toBeDefined();
+
+            this.simulateEscKey();
+
+            expect( $( document ).data( 'events' ) ).not.toBeDefined();
+        });
+
+        it("should close clicking on overlay (container)", function() {
+            this.lightplayer.div.find( 'div.widget-container' ).click();
+            
+            expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
+        });
+        
+    });
+    
 
     describe("module", function() {
         it("should add a stage as module", function() {
@@ -124,7 +162,7 @@ xdescribe("Light Player", function() {
         });
 
 
-        xdescribe("close", function() {
+        describe("close", function() {
             beforeEach(function() {
                 this.simulateEscKey = function () {
                     var evt = jQuery.Event('keydown');
@@ -139,31 +177,31 @@ xdescribe("Light Player", function() {
                 expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
             });
 
-            it("should close clicking on the button", function() {
-                this.divContainer.find( 'a.close' ).click();
+            //it("should close clicking on the button", function() {
+                //this.divContainer.find( 'a.close' ).click();
 
-                expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
-            });
+                //expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
+            //});
 
-            it("should close on Esc key", function() {
-                this.simulateEscKey();
+            //it("should close on Esc key", function() {
+                //this.simulateEscKey();
 
-                expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
-            });
+                //expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
+            //});
 
-            it("should dettach Esc key event from document", function() {
-                expect( $( document ).data( 'events' ) ).toBeDefined();
+            //it("should dettach Esc key event from document", function() {
+                //expect( $( document ).data( 'events' ) ).toBeDefined();
 
-                this.simulateEscKey();
+                //this.simulateEscKey();
 
-                expect( $( document ).data( 'events' ) ).not.toBeDefined();
-            });
+                //expect( $( document ).data( 'events' ) ).not.toBeDefined();
+            //});
 
-            it("should close clicking on overlay (container)", function() {
-                this.divContainer.find( 'div.widget-container' ).click();
+            //it("should close clicking on overlay (container)", function() {
+                //this.divContainer.find( 'div.widget-container' ).click();
                 
-                expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
-            });
+                //expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
+            //});
             
         });
     });

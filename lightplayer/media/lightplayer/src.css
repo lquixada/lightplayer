@@ -4,6 +4,7 @@ div.lightplayer {
     left:0;
     width:100%;
     height:100%;
+    font:x-small arial, helvetica, freesans, sans-serif;
     z-index:100000;
 }
 

@@ -26,7 +26,31 @@ Stage.prototype = {
             } )
             .delegate( 'a.nav.prev', 'click', function () {
                 that._goPrev();
-            } );
+            } )
+            .delegate( 'a.nav:not(.loading)', 'mouseenter', function () {
+                var a = $( this );
+                
+                // Show arrow
+                a.stop().find( 'span.arrow' ).fadeTo( 250, 1 );
+
+                // First open box
+                a.stop().animate( { width: 245 }, 250, function () {
+                    // Then show info
+                    a.find( 'span.info' ).fadeIn();
+                } );
+            } )
+            .delegate( 'a.nav:not(.loading)', 'mouseleave', function () {
+                var a = $( this );
+                
+                // Hide arrow
+                a.stop().find( 'span.arrow' ).fadeTo( 250, 0.2 );
+
+                // First hide info
+                a.stop().find( 'span.info' ).fadeOut( 300, function () {
+                    // Then close box
+                    a.stop().animate( { width: 0 }, 250 );
+                });
+            } )
     },
 
     _addItem: function( position ) {
@@ -37,7 +61,7 @@ Stage.prototype = {
         itemHTML = [
             '<li id="item-'+item.id+'" class="'+position+'">',
                 '<div class="video-player" data-player-videosIDs='+item.id+'></div>',
-            '</li>',
+            '</li>'
         ].join( '' );
         
         if ( position === 'prev' ) {
@@ -114,6 +138,7 @@ Stage.prototype = {
                     '<span class="chapeu">'+label+'</span>',
                     '<span class="titulo"></span>',
                 '</span>',
+                '<span class="overlay"></span>',
             '</a>'
         ].join( '' ) ); 
     },

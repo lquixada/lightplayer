@@ -32,6 +32,8 @@ LightPlayer.prototype = {
             //that._selectCurrent( list );
             //that._bindEvents();
         } );
+
+        this._addEvents();
     },
 
     close: function () {
@@ -53,6 +55,28 @@ LightPlayer.prototype = {
     add: function ( mod ) {
         this.div.find( 'div.widget' ).append( mod.init() ); 
     },
+
+    _addEvents: function () {
+        var that = this;
+
+        this.div.delegate( 'div.widget-container', 'click', function ( event ) {
+                if ( event.target == this ) {
+                    that.close();
+                }
+            } );
+
+        $( document ).bind( 'keydown.lightplayer', function ( evt ) {
+            switch ( evt.which ) {
+                case 27: /* ESC key */
+                    that.close(); break;
+                //case 37: [> LEFT key <]
+                    //that.div.find( 'a.prev.visible' ).click(); break;
+                //case 39: [> RIGHT key <]
+                    //that.div.find( 'a.next.visible' ).click(); break;
+            }
+        } );
+    },
+
 
     _animateIn: function ( callback ) {
         var that = this,

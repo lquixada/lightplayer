@@ -114,7 +114,7 @@ describe("Module: Stage", function() {
 
     describe("scenarios", function() {
         
-        describe("begginning", function() {
+        describe("beginning", function() {
             beforeEach(function() {
                 this.json.list[0].current = true;
 
