@@ -118,7 +118,6 @@ describe("Light Player", function() {
             
             expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
         });
-        
     });
     
 
@@ -161,49 +160,6 @@ xdescribe("Light Player", function() {
             });
         });
 
-
-        describe("close", function() {
-            beforeEach(function() {
-                this.simulateEscKey = function () {
-                    var evt = jQuery.Event('keydown');
-                    evt.which = 27;
-                    $( document ).trigger( evt );
-                };
-            });
-
-            it("should close", function() {
-                this.lightplayer.close();
-
-                expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
-            });
-
-            //it("should close clicking on the button", function() {
-                //this.divContainer.find( 'a.close' ).click();
-
-                //expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
-            //});
-
-            //it("should close on Esc key", function() {
-                //this.simulateEscKey();
-
-                //expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
-            //});
-
-            //it("should dettach Esc key event from document", function() {
-                //expect( $( document ).data( 'events' ) ).toBeDefined();
-
-                //this.simulateEscKey();
-
-                //expect( $( document ).data( 'events' ) ).not.toBeDefined();
-            //});
-
-            //it("should close clicking on overlay (container)", function() {
-                //this.divContainer.find( 'div.widget-container' ).click();
-                
-                //expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
-            //});
-            
-        });
     });
 
     xdescribe("title", function() {
