@@ -48,6 +48,47 @@ afterEach(function() {
 
 
 describe("Light Player", function() {
+    beforeEach(function() {
+        this.json = {
+            list: [
+                {
+                    id: 123,
+                    title: 'Titulo 1',
+                    description: 'Descricao 1',
+                    views: '100',
+                    url: 'http://www.globo.com',
+                    current: true
+                }
+            ]
+        };
+        
+        this.lightplayer.open( this.json );
+    });
+
+    describe("container", function() {
+        it("should have a container", function() {
+            expect( this.lightplayer.div.size() ).toBe( 1 );
+        });
+
+        it("should have a box", function() {
+            expect( this.lightplayer.div.find( 'div.widget' ).size() ).toBe( 1 );
+        });
+
+        it("should have an overlay", function() {
+            expect( this.lightplayer.div.find( 'div.widget-overlay' ).size() ).toBe( 1 );
+        });
+    });
+
+    describe("module", function() {
+        it("should add a stage as module", function() {
+            expect( this.lightplayer.div.find( 'div.widget' ).find( 'div.palco' ).size() ).toBe( 1 );
+        });
+    });
+
+});
+
+
+xdescribe("Light Player", function() {
     
     describe("one video", function() {
         beforeEach(function() {
@@ -78,7 +119,7 @@ describe("Light Player", function() {
         });
 
 
-        describe("close", function() {
+        xdescribe("close", function() {
             beforeEach(function() {
                 this.simulateEscKey = function () {
                     var evt = jQuery.Event('keydown');
@@ -122,7 +163,7 @@ describe("Light Player", function() {
         });
     });
 
-    describe("title", function() {
+    xdescribe("title", function() {
         beforeEach(function() {
             this.json = {
                 title: 'Titulo do Modal',
@@ -161,7 +202,7 @@ describe("Light Player", function() {
     });
     
 
-    describe("open two videos", function() {
+    xdescribe("open two videos", function() {
 
         describe("default", function() {
             beforeEach(function() {
@@ -232,7 +273,7 @@ describe("Light Player", function() {
         
     });
 
-    describe("pagination", function() {
+    xdescribe("pagination", function() {
         
         describe("parameters", function() {
             beforeEach(function() {
@@ -504,354 +545,354 @@ describe("Light Player", function() {
 });
 
 
-describe("Light Player Navigation", function() {
+//describe("Light Player Navigation", function() {
 
-    describe("with one item", function() {
-        beforeEach(function() {
-            this.json = [
-                { id: 123, title: 'Titulo 1', views: '100' }
-            ]; 
+    //describe("with one item", function() {
+        //beforeEach(function() {
+            //this.json = [
+                //{ id: 123, title: 'Titulo 1', views: '100' }
+            //]; 
 
-            this.lightplayer.open( this.json );
+            //this.lightplayer.open( this.json );
 
-            this.divContainer = this.lightplayer.div;
+            //this.divContainer = this.lightplayer.div;
 
-            this.prevButton = this.lightplayer.navigation.aPrev;
-            this.nextButton = this.lightplayer.navigation.aNext;
-        });
+            //this.prevButton = this.lightplayer.navigation.aPrev;
+            //this.nextButton = this.lightplayer.navigation.aNext;
+        //});
 
-        it("should disable navigation", function() {
-            expect( this.nextButton ).not.toHaveClass( 'visible' );
-            expect( this.prevButton ).not.toHaveClass( 'visible' );
-        });
-    });
+        //it("should disable navigation", function() {
+            //expect( this.nextButton ).not.toHaveClass( 'visible' );
+            //expect( this.prevButton ).not.toHaveClass( 'visible' );
+        //});
+    //});
 
-    describe("with more itens", function() {
-        beforeEach(function() {
-            this.json = [
-                { id: 123, title: 'Titulo 1', views: '100' },
-                { id: 456, title: 'Titulo 2', views: '200' },
-                { id: 789, title: 'Titulo 3', views: '300' }
-            ]; 
+    //describe("with more itens", function() {
+        //beforeEach(function() {
+            //this.json = [
+                //{ id: 123, title: 'Titulo 1', views: '100' },
+                //{ id: 456, title: 'Titulo 2', views: '200' },
+                //{ id: 789, title: 'Titulo 3', views: '300' }
+            //]; 
 
-            this.lightplayer.open( this.json );
+            //this.lightplayer.open( this.json );
 
-            this.divContainer = this.lightplayer.div;
+            //this.divContainer = this.lightplayer.div;
 
-            this.li1 = this.lightplayer.ul.find( 'li:eq(0)' );
-            this.li2 = this.lightplayer.ul.find( 'li:eq(1)' );
-            this.li3 = this.lightplayer.ul.find( 'li:eq(2)' );
+            //this.li1 = this.lightplayer.ul.find( 'li:eq(0)' );
+            //this.li2 = this.lightplayer.ul.find( 'li:eq(1)' );
+            //this.li3 = this.lightplayer.ul.find( 'li:eq(2)' );
 
-            this.prevButton = this.lightplayer.navigation.aPrev;
-            this.nextButton = this.lightplayer.navigation.aNext;
-        });
+            //this.prevButton = this.lightplayer.navigation.aPrev;
+            //this.nextButton = this.lightplayer.navigation.aNext;
+        //});
 
 
-        describe("next", function() {
-            it("should have a next button", function() {
-                expect( this.nextButton.size() ).toBe( 1 );
-            });
+        //describe("next", function() {
+            //it("should have a next button", function() {
+                //expect( this.nextButton.size() ).toBe( 1 );
+            //});
 
-            it("should have a next button enabled", function() {
-                expect( this.nextButton ).toHaveClass( 'visible' );
-            });
+            //it("should have a next button enabled", function() {
+                //expect( this.nextButton ).toHaveClass( 'visible' );
+            //});
 
-            it("should have a chapeu about the next video", function() {
-                expect( this.nextButton.find( 'span.chapeu' ).size() ).toBe( 1 );
-            });
+            //it("should have a chapeu about the next video", function() {
+                //expect( this.nextButton.find( 'span.chapeu' ).size() ).toBe( 1 );
+            //});
 
-            it("should have a title about the next video", function() {
-                expect( this.nextButton.find( 'span.title' ).size() ).toBe( 1 );
-                expect( this.nextButton.find( 'span.title' ).text() ).toBe( this.json[1].title );
-            });
+            //it("should have a title about the next video", function() {
+                //expect( this.nextButton.find( 'span.title' ).size() ).toBe( 1 );
+                //expect( this.nextButton.find( 'span.title' ).text() ).toBe( this.json[1].title );
+            //});
 
-            it("should navigate to the next", function() {
-                expect( this.li1 ).toHaveClass( 'current' );
-                expect( this.li2 ).toHaveClass( 'next' );
-                expect( this.li3 ).not.toHaveClass();
+            //it("should navigate to the next", function() {
+                //expect( this.li1 ).toHaveClass( 'current' );
+                //expect( this.li2 ).toHaveClass( 'next' );
+                //expect( this.li3 ).not.toHaveClass();
 
-                this.nextButton.click();
+                //this.nextButton.click();
 
-                expect( this.li1 ).toHaveClass( 'prev' );
-                expect( this.li2 ).toHaveClass( 'current' );
-                expect( this.li3 ).toHaveClass( 'next' );
+                //expect( this.li1 ).toHaveClass( 'prev' );
+                //expect( this.li2 ).toHaveClass( 'current' );
+                //expect( this.li3 ).toHaveClass( 'next' );
 
-                this.nextButton.click();
+                //this.nextButton.click();
 
-                expect( this.li1 ).not.toHaveClass();
-                expect( this.li2 ).toHaveClass( 'prev' );
-                expect( this.li3 ).toHaveClass( 'current' );
-            });
+                //expect( this.li1 ).not.toHaveClass();
+                //expect( this.li2 ).toHaveClass( 'prev' );
+                //expect( this.li3 ).toHaveClass( 'current' );
+            //});
 
-            it("should not navigate to the next when showing last item", function() {
-                this.nextButton.click();
-                this.nextButton.click();
-                this.nextButton.click();
+            //it("should not navigate to the next when showing last item", function() {
+                //this.nextButton.click();
+                //this.nextButton.click();
+                //this.nextButton.click();
 
-                expect( this.li3 ).toHaveClass( 'current' );
-            });
+                //expect( this.li3 ).toHaveClass( 'current' );
+            //});
 
-            it("should disable the button next on last item", function() {
-                this.nextButton.click();
+            //it("should disable the button next on last item", function() {
+                //this.nextButton.click();
 
-                // Here we're on last item
+                //// Here we're on last item
 
-                this.nextButton.click();
+                //this.nextButton.click();
 
-                expect( this.nextButton ).not.toHaveClass( 'visible' );
-            });
+                //expect( this.nextButton ).not.toHaveClass( 'visible' );
+            //});
 
-            it("should enable the button next when coming from the last item", function() {
-                this.nextButton.click();
+            //it("should enable the button next when coming from the last item", function() {
+                //this.nextButton.click();
 
-                // Here we're on last item
+                //// Here we're on last item
 
-                this.nextButton.click();
-                this.prevButton.click();
+                //this.nextButton.click();
+                //this.prevButton.click();
 
-                expect( this.nextButton ).toHaveClass( 'visible' );
-            });
+                //expect( this.nextButton ).toHaveClass( 'visible' );
+            //});
 
-            it("should go to the next item with Right key", function() {
-                var evt = jQuery.Event('keydown');
-                evt.which = 39;
+            //it("should go to the next item with Right key", function() {
+                //var evt = jQuery.Event('keydown');
+                //evt.which = 39;
 
-                $( document ).trigger( evt );
+                //$( document ).trigger( evt );
 
-                expect( this.li2 ).toHaveClass( 'current' );
-            });
+                //expect( this.li2 ).toHaveClass( 'current' );
+            //});
 
-        });
+        //});
 
 
-        describe("prev", function() {
-            it("should have a prev button", function() {
-                expect( this.prevButton.size() ).toBe( 1 );
-            });
+        //describe("prev", function() {
+            //it("should have a prev button", function() {
+                //expect( this.prevButton.size() ).toBe( 1 );
+            //});
 
-            it("should have a prev button disabled", function() {
-                expect( this.prevButton ).not.toHaveClass( 'visible' );
-            });
+            //it("should have a prev button disabled", function() {
+                //expect( this.prevButton ).not.toHaveClass( 'visible' );
+            //});
 
-            it("should have a chapeu about the prev video", function() {
-                expect( this.prevButton.find( 'span.chapeu' ).size() ).toBe( 1 );
-            });
+            //it("should have a chapeu about the prev video", function() {
+                //expect( this.prevButton.find( 'span.chapeu' ).size() ).toBe( 1 );
+            //});
 
-            it("should have a title about the prev video", function() {
-                expect( this.prevButton.find( 'span.title' ).size() ).toBe( 1 );
-            });
+            //it("should have a title about the prev video", function() {
+                //expect( this.prevButton.find( 'span.title' ).size() ).toBe( 1 );
+            //});
 
-            it("should have the title about the prev video", function() {
-                this.nextButton.click();
+            //it("should have the title about the prev video", function() {
+                //this.nextButton.click();
 
-                expect( this.prevButton.find( 'span.title' ).text() ).toBe( this.json[0].title );
-            });
+                //expect( this.prevButton.find( 'span.title' ).text() ).toBe( this.json[0].title );
+            //});
 
-            it("should navigate to the prev", function() {
-                this.nextButton.click();
-                this.nextButton.click();
+            //it("should navigate to the prev", function() {
+                //this.nextButton.click();
+                //this.nextButton.click();
 
-                expect( this.li1 ).not.toHaveClass();
-                expect( this.li2 ).toHaveClass( 'prev' );
-                expect( this.li3 ).toHaveClass( 'current' );
+                //expect( this.li1 ).not.toHaveClass();
+                //expect( this.li2 ).toHaveClass( 'prev' );
+                //expect( this.li3 ).toHaveClass( 'current' );
 
-                this.prevButton.click();
+                //this.prevButton.click();
 
-                expect( this.li1 ).toHaveClass( 'prev' );
-                expect( this.li2 ).toHaveClass( 'current' );
-                expect( this.li3 ).toHaveClass( 'next' );
+                //expect( this.li1 ).toHaveClass( 'prev' );
+                //expect( this.li2 ).toHaveClass( 'current' );
+                //expect( this.li3 ).toHaveClass( 'next' );
 
-                this.prevButton.click();
+                //this.prevButton.click();
 
-                expect( this.li1 ).toHaveClass( 'current' );
-                expect( this.li2 ).toHaveClass( 'next' );
-                expect( this.li3 ).not.toHaveClass();
-            });
+                //expect( this.li1 ).toHaveClass( 'current' );
+                //expect( this.li2 ).toHaveClass( 'next' );
+                //expect( this.li3 ).not.toHaveClass();
+            //});
 
-            it("should not navigate to the prev on open", function() {
-                this.prevButton.click();
+            //it("should not navigate to the prev on open", function() {
+                //this.prevButton.click();
 
-                expect( this.li1 ).toHaveClass( 'current' );
-            });
+                //expect( this.li1 ).toHaveClass( 'current' );
+            //});
 
-            it("should enable the button prev on second item", function() {
-                this.nextButton.click();
+            //it("should enable the button prev on second item", function() {
+                //this.nextButton.click();
 
-                expect( this.prevButton ).toHaveClass( 'visible' );
-            });
+                //expect( this.prevButton ).toHaveClass( 'visible' );
+            //});
 
-            it("should disable the button prev when coming from the second item", function() {
-                this.nextButton.click();
-                this.prevButton.click();
+            //it("should disable the button prev when coming from the second item", function() {
+                //this.nextButton.click();
+                //this.prevButton.click();
 
-                expect( this.prevButton ).not.toHaveClass( 'visible' );
-            });
+                //expect( this.prevButton ).not.toHaveClass( 'visible' );
+            //});
 
-            it("should go to the next item with Left key", function() {
-                // Go to the second item first
-                this.nextButton.click();
+            //it("should go to the next item with Left key", function() {
+                //// Go to the second item first
+                //this.nextButton.click();
 
-                var evt = jQuery.Event( 'keydown' );
-                evt.which = 37;
-                $( document ).trigger( evt );
+                //var evt = jQuery.Event( 'keydown' );
+                //evt.which = 37;
+                //$( document ).trigger( evt );
 
-                expect( this.li1 ).toHaveClass( 'current' );
-            });
+                //expect( this.li1 ).toHaveClass( 'current' );
+            //});
 
-            it("should dettach Left key event from document", function() {
-                expect( $( document ).data( 'events' ) ).toBeDefined();
+            //it("should dettach Left key event from document", function() {
+                //expect( $( document ).data( 'events' ) ).toBeDefined();
 
-                this.lightplayer.close();
+                //this.lightplayer.close();
 
-                expect( $( document ).data( 'events' ) ).not.toBeDefined();
-            });
+                //expect( $( document ).data( 'events' ) ).not.toBeDefined();
+            //});
 
-        }); // describe("prev")
+        //}); // describe("prev")
 
-    }); // describe("with more itens")
+    //}); // describe("with more itens")
 
-}); // describe("navigation")
+//}); // describe("navigation")
 
 
-describe("Light Player Social", function() {
-    beforeEach(function() {
-        this.json = [{
-            id: 123,
-            title: 'Titulo 1',
-            views: '100',
-            url: 'http://www.globo.com',
-            thumbUrl: 'http://img.globo.com',
-            shortUrl: 'http://glo.bo/abc'
-        }];
+//describe("Light Player Social", function() {
+    //beforeEach(function() {
+        //this.json = [{
+            //id: 123,
+            //title: 'Titulo 1',
+            //views: '100',
+            //url: 'http://www.globo.com',
+            //thumbUrl: 'http://img.globo.com',
+            //shortUrl: 'http://glo.bo/abc'
+        //}];
 
-        this.lightplayer.open( this.json );
+        //this.lightplayer.open( this.json );
 
-        this.divContainer = this.lightplayer.div;
-        this.divSocial = this.lightplayer.social.div;
-    });
+        //this.divContainer = this.lightplayer.div;
+        //this.divSocial = this.lightplayer.social.div;
+    //});
 
-    it("should have a share box", function() {
-        expect( this.divSocial.size() ).toBe( 1 );
-    });
+    //it("should have a share box", function() {
+        //expect( this.divSocial.size() ).toBe( 1 );
+    //});
 
-    describe("facebook", function() {
-        it("should have facebook likes", function() {
-            expect( this.divSocial.find( 'span.facebook > :first-child' ).size() ).toBe( 1 );
-        });
+    //describe("facebook", function() {
+        //it("should have facebook likes", function() {
+            //expect( this.divSocial.find( 'span.facebook > :first-child' ).size() ).toBe( 1 );
+        //});
 
-        it("should use the regular url for the facebook like", function() {
-            expect( this.divSocial.find( 'span.facebook > :first-child' ).attr( 'href' ) ).toContain( this.json[0].url );
-        });
+        //it("should use the regular url for the facebook like", function() {
+            //expect( this.divSocial.find( 'span.facebook > :first-child' ).attr( 'href' ) ).toContain( this.json[0].url );
+        //});
 
-        it("should have a facebook share button", function() {
-            expect( this.divSocial.find( 'a.facebook.button' ).size() ).toBe( 1 );
-        });
+        //it("should have a facebook share button", function() {
+            //expect( this.divSocial.find( 'a.facebook.button' ).size() ).toBe( 1 );
+        //});
 
-        it("should have a facebook share button with shorten url", function() {
-            var encodedUrl = encodeURIComponent( this.json[0].shortUrl );
-            expect( this.divSocial.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
-        });
+        //it("should have a facebook share button with shorten url", function() {
+            //var encodedUrl = encodeURIComponent( this.json[0].shortUrl );
+            //expect( this.divSocial.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
+        //});
 
-        it("should use the regular url if shorten url is not provided", function() {
-            var encodedUrl = encodeURIComponent( this.json[0].url );
+        //it("should use the regular url if shorten url is not provided", function() {
+            //var encodedUrl = encodeURIComponent( this.json[0].url );
             
-            delete this.json[0].shortUrl;
+            //delete this.json[0].shortUrl;
 
-            this.lightplayer.close();
-            this.lightplayer.open( this.json );
+            //this.lightplayer.close();
+            //this.lightplayer.open( this.json );
 
-            expect( this.lightplayer.social.div.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
-        });
+            //expect( this.lightplayer.social.div.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
+        //});
         
-        it("should have a facebook share button with title", function() {
-            var encodedTitle = encodeURIComponent( this.json[0].title );
-            expect( this.divSocial.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedTitle );
-        });
-    });
+        //it("should have a facebook share button with title", function() {
+            //var encodedTitle = encodeURIComponent( this.json[0].title );
+            //expect( this.divSocial.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedTitle );
+        //});
+    //});
     
 
-    describe("twitter", function() {
-        it("should have a twitter share button", function() {
-            expect( this.divSocial.find( 'a.twitter.button' ).size() ).toBe( 1 );
-        });
+    //describe("twitter", function() {
+        //it("should have a twitter share button", function() {
+            //expect( this.divSocial.find( 'a.twitter.button' ).size() ).toBe( 1 );
+        //});
 
-        it("should have a twitter share button with shorten url", function() {
-            var encodedUrl = encodeURIComponent( this.json[0].shortUrl );
-            expect( this.divSocial.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedUrl );
-        });
+        //it("should have a twitter share button with shorten url", function() {
+            //var encodedUrl = encodeURIComponent( this.json[0].shortUrl );
+            //expect( this.divSocial.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedUrl );
+        //});
 
-        it("should use the regular url if shorten url is not provided", function() {
-            var encodedUrl = encodeURIComponent( this.json[0].url );
+        //it("should use the regular url if shorten url is not provided", function() {
+            //var encodedUrl = encodeURIComponent( this.json[0].url );
             
-            delete this.json[0].shortUrl;
+            //delete this.json[0].shortUrl;
 
-            this.lightplayer.close();
-            this.lightplayer.open( this.json );
+            //this.lightplayer.close();
+            //this.lightplayer.open( this.json );
 
-            expect( this.lightplayer.social.div.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedUrl );
-        });
+            //expect( this.lightplayer.social.div.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedUrl );
+        //});
 
-        it("should have a twitter share button with title", function() {
-            var encodedTitle = encodeURIComponent( this.json[0].title );
-            expect( this.divSocial.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedTitle );
-        });
+        //it("should have a twitter share button with title", function() {
+            //var encodedTitle = encodeURIComponent( this.json[0].title );
+            //expect( this.divSocial.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedTitle );
+        //});
 
-        it("should have a twitter share button with hash", function() {
-            var encodedHash = encodeURIComponent( '#bbb12' );
-            expect( this.divSocial.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedHash );
-        });
+        //it("should have a twitter share button with hash", function() {
+            //var encodedHash = encodeURIComponent( '#bbb12' );
+            //expect( this.divSocial.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedHash );
+        //});
 
-    });
+    //});
     
 
-    describe("orkut", function() {
-        it("should have an orkut share button", function() {
-            expect( this.divSocial.find( 'a.orkut.button' ).size() ).toBe( 1 );
-        });
+    //describe("orkut", function() {
+        //it("should have an orkut share button", function() {
+            //expect( this.divSocial.find( 'a.orkut.button' ).size() ).toBe( 1 );
+        //});
 
-        it("should have an orkut share button without shorten url", function() {
-            expect( this.divSocial.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( this.json[0].url );
-        });
+        //it("should have an orkut share button without shorten url", function() {
+            //expect( this.divSocial.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( this.json[0].url );
+        //});
 
-        it("should use the regular url if shorten url is not provided", function() {
-            delete this.json[0].shortUrl;
+        //it("should use the regular url if shorten url is not provided", function() {
+            //delete this.json[0].shortUrl;
 
-            this.lightplayer.close();
-            this.lightplayer.open( this.json );
+            //this.lightplayer.close();
+            //this.lightplayer.open( this.json );
 
-            expect( this.lightplayer.social.div.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( this.json[0].url );
-        });
+            //expect( this.lightplayer.social.div.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( this.json[0].url );
+        //});
 
-        it("should have an orkut share button with title", function() {
-            expect( this.divSocial.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( encodeURI(this.json[0].title) );
-        });
+        //it("should have an orkut share button with title", function() {
+            //expect( this.divSocial.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( encodeURI(this.json[0].title) );
+        //});
 
-        it("should have an orkut share button with thumb url", function() {
-            expect( this.divSocial.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( this.json[0].thumbUrl );
-        });
-    });
+        //it("should have an orkut share button with thumb url", function() {
+            //expect( this.divSocial.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( this.json[0].thumbUrl );
+        //});
+    //});
 
 
-    describe("glo.bo", function() {
-        it("should have a field for shortened url", function() {
-            expect( this.divSocial.find( 'input.globo-url' ).size() ).toBe( 1 );
-        });
+    //describe("glo.bo", function() {
+        //it("should have a field for shortened url", function() {
+            //expect( this.divSocial.find( 'input.globo-url' ).size() ).toBe( 1 );
+        //});
 
-        it("should display the shortened version of url", function() {
-            expect( this.divSocial.find( 'input.globo-url' ).val() ).toContain( this.json[0].shortUrl );
-        });
+        //it("should display the shortened version of url", function() {
+            //expect( this.divSocial.find( 'input.globo-url' ).val() ).toContain( this.json[0].shortUrl );
+        //});
 
-        it("should not display a field for shortened url when there isn't one", function() {
-            this.lightplayer.close();
+        //it("should not display a field for shortened url when there isn't one", function() {
+            //this.lightplayer.close();
 
-            delete this.json[0].shortUrl;
+            //delete this.json[0].shortUrl;
 
-            this.lightplayer.open( this.json );
+            //this.lightplayer.open( this.json );
             
-            expect( $( 'div.lightplayer' ).find( 'input.globo-url' ).size() ).toBe( 0 );
-        });
-    });
-});
+            //expect( $( 'div.lightplayer' ).find( 'input.globo-url' ).size() ).toBe( 0 );
+        //});
+    //});
+//});
 
 
 
@@ -873,6 +914,11 @@ describe("Module: Stage", function() {
             ]
         };
     });
+
+    describe("no item as current", function() {
+        // TODO
+    });
+    
     
     describe("first item", function() {
         beforeEach(function() {
@@ -881,7 +927,7 @@ describe("Module: Stage", function() {
             this.stage = new Stage( this.json );
             this.stage.init();
 
-            this.liCurrent = this.stage.block.find( 'ul li.current' );
+            this.liCurrent = this.stage.domRoot.find( 'ul li.current' );
         });
         
         it("should render", function() {
@@ -906,7 +952,7 @@ describe("Module: Stage", function() {
             this.stage = new Stage( this.json );
             this.stage.init();
 
-            this.liCurrent = this.stage.block.find( 'ul li.current' );
+            this.liCurrent = this.stage.domRoot.find( 'ul li.current' );
         });
         
         it("should render", function() {
@@ -934,7 +980,7 @@ describe("Module: Stage", function() {
 
         describe("NEXT button", function() {
             beforeEach(function() {
-                this.nextButton = this.stage.block.find( 'a.nav.next' );
+                this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
             });
             
             it("should exist", function() {
@@ -952,7 +998,7 @@ describe("Module: Stage", function() {
 
         describe("PREV button", function() {
             beforeEach(function() {
-                this.prevButton = this.stage.block.find( 'a.nav.prev' );
+                this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
             });
             
             it("should exist", function() {
@@ -978,8 +1024,8 @@ describe("Module: Stage", function() {
                 this.stage = new Stage( this.json );
                 this.stage.init();
 
-                this.nextButton = this.stage.block.find( 'a.nav.next' );
-                this.prevButton = this.stage.block.find( 'a.nav.prev' );
+                this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
+                this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
             });
             
             it("should have the PREV button not visible", function () {
@@ -1007,8 +1053,8 @@ describe("Module: Stage", function() {
                 this.stage = new Stage( this.json );
                 this.stage.init();
 
-                this.nextButton = this.stage.block.find( 'a.nav.next' );
-                this.prevButton = this.stage.block.find( 'a.nav.prev' );
+                this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
+                this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
             });
             
             it("should have the PREV button visible", function () {
@@ -1037,8 +1083,8 @@ describe("Module: Stage", function() {
                 this.stage = new Stage( this.json );
                 this.stage.init();
 
-                this.nextButton = this.stage.block.find( 'a.nav.next' );
-                this.prevButton = this.stage.block.find( 'a.nav.prev' );
+                this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
+                this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
             });
             
             it("should have the PREV button visible", function () {
@@ -1059,6 +1105,30 @@ describe("Module: Stage", function() {
             });
         }); 
     }); // describe("scenarios")
+
+    describe("interaction", function() {
+        beforeEach(function() {
+            this.json.list[1].current = true;
+
+            this.stage = new Stage( this.json );
+            this.stage.init();
+
+            this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
+            this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
+        });
+
+        it("should move to the next item", function() {
+            this.nextButton.click();
+            
+            expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-789' );
+        });
+
+        it("should move to the prev item", function() {
+            this.prevButton.click();
+            
+            expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-123' );
+        });
+    });
     
 });
     

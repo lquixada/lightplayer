@@ -1,6 +1,6 @@
 LightPlayer = function () {
-    this.navigation = new LightPlayer.Navigation( this.bus );
-    this.social = new LightPlayer.Social();
+    //this.navigation = new LightPlayer.Navigation( this.bus );
+    //this.social = new LightPlayer.Social();
 };
 
 LightPlayer.prototype = {
@@ -14,22 +14,23 @@ LightPlayer.prototype = {
 
         this.justOpened = true;
 
-        this.navigation.init( {
-            container: this.div.find( 'div.widget-content' )
-        } );
+        //this.navigation.init( {
+            //container: this.div.find( 'div.widget-content' )
+        //} );
 
-        this.social.init( {
-            container: this.div.find( 'div.video-social' )
-        } );
+        //this.social.init( {
+            //container: this.div.find( 'div.video-social' )
+        //} );
+        this.add( new Stage( json ) );
         
         this._setTitle( json );
         
         this._animateIn( function () {
-            var list = $.isArray( json )? json: json.list;
+            //var list = $.isArray( json )? json: json.list;
             
-            that._appendItens( list );
-            that._selectCurrent( list );
-            that._bindEvents();
+            //that._appendItens( list );
+            //that._selectCurrent( list );
+            //that._bindEvents();
         } );
     },
 
@@ -49,6 +50,10 @@ LightPlayer.prototype = {
 
     // private
 
+    add: function ( mod ) {
+        this.div.find( 'div.widget' ).append( mod.init() ); 
+    },
+
     _animateIn: function ( callback ) {
         var that = this,
             onTransitionEnd = this._getTransitionEndEvent(),
@@ -58,11 +63,7 @@ LightPlayer.prototype = {
         this._disablePageScroll();
 
         divOverlay.bind( onTransitionEnd, function () {
-            console.log( 'hey' );
-            
             divWidget.bind( onTransitionEnd, function () {
-                console.log( 'hm?' );
-                
                 /* Firefox bugfix: Flash + css transform doesn't get along very well */
                 divWidget.css( '-moz-transform', 'none' );
 
@@ -76,9 +77,6 @@ LightPlayer.prototype = {
             divOverlay.unbind( onTransitionEnd );
         } );
 
-        console.log( 'ho' );
-        
-        
         // Bugfix: transition doesn't work when element is immediatelly added to the DOM
         setTimeout( function () {
             
@@ -267,7 +265,7 @@ LightPlayer.prototype = {
             prevUrl = this.ul.data( 'prev-page' );
         
         if ( item.is( ':first-child' ) && prevUrl ) {
-            this.navigation.spin( 'prevButton' );
+            //this.navigation.spin( 'prevButton' );
             
             $.getJSON( prevUrl, function ( json ) {
                 var current = that.div.find( 'li.current' );
@@ -277,17 +275,17 @@ LightPlayer.prototype = {
                 that._prependItens( json.list );
                 that._setCurrent( current );
 
-                that.navigation._updateInfo( {
-                    prevJson: that._getJson( current.prev() ),
-                    nextJson: that._getJson( current.next() )
-                } );
+                //that.navigation._updateInfo( {
+                    //prevJson: that._getJson( current.prev() ),
+                    //nextJson: that._getJson( current.next() )
+                //} );
 
-                that.navigation.stop( 'prevButton' );
+                //that.navigation.stop( 'prevButton' );
             } );
         }
 
         if ( item.is( ':last-child' ) && nextUrl ) {
-            this.navigation.spin( 'nextButton' );
+            //this.navigation.spin( 'nextButton' );
             
             $.getJSON( nextUrl, function ( json ) {
                 var current = that.div.find( 'li.current' );
@@ -296,12 +294,12 @@ LightPlayer.prototype = {
 
                 that._appendItens( json.list );
                 that._setCurrent( current );
-                that.navigation._updateInfo( {
-                    prevJson: that._getJson( current.prev() ),
-                    nextJson: that._getJson( current.next() )
-                } );
+                //that.navigation._updateInfo( {
+                    //prevJson: that._getJson( current.prev() ),
+                    //nextJson: that._getJson( current.next() )
+                //} );
 
-                that.navigation.stop( 'nextButton' );
+                //that.navigation.stop( 'nextButton' );
             } );
         }
     },
@@ -395,18 +393,18 @@ LightPlayer.prototype = {
         this._updateInfo( item );
 
         // Nav buttons
-        this.navigation._toggle( {
-            itemIndex: item.index(),
-            itensTotal: item.siblings().size()+1
-        } );
+        //this.navigation._toggle( {
+            //itemIndex: item.index(),
+            //itensTotal: item.siblings().size()+1
+        //} );
 
-        this.navigation._updateInfo( {
-            prevJson: this._getJson( item.prev() ),
-            nextJson: this._getJson( item.next() )
-        } );
+        //this.navigation._updateInfo( {
+            //prevJson: this._getJson( item.prev() ),
+            //nextJson: this._getJson( item.next() )
+        //} );
 
         //// Social box
-        this.social.update( item.data( 'json' ) );
+        //this.social.update( item.data( 'json' ) );
 
         // Pagination
         this._getMore( item );
@@ -435,148 +433,148 @@ LightPlayer.prototype = {
 };
 
 
-LightPlayer.Navigation = function () {};
-LightPlayer.Navigation.prototype = {
-    init: function ( options ) {
-        this.div   = options.container;
-        this.aNext = this.div.find( 'a.nav.next' );
-        this.aPrev = this.div.find( 'a.nav.prev' );
-    },
+//LightPlayer.Navigation = function () {};
+//LightPlayer.Navigation.prototype = {
+    //init: function ( options ) {
+        //this.div   = options.container;
+        //this.aNext = this.div.find( 'a.nav.next' );
+        //this.aPrev = this.div.find( 'a.nav.prev' );
+    //},
     
-    spin: function ( button ) {
-        if ( button == 'nextButton' ) {
-            this.aNext.addClass( 'visible loading' ); 
-        } else {
-            this.aPrev.addClass( 'visible loading' ); 
-        }
-    },
+    //spin: function ( button ) {
+        //if ( button == 'nextButton' ) {
+            //this.aNext.addClass( 'visible loading' ); 
+        //} else {
+            //this.aPrev.addClass( 'visible loading' ); 
+        //}
+    //},
 
-    stop: function ( button ) {
-      if ( button == 'nextButton' ) {
-          this.aNext.removeClass( 'loading' ); 
-      } else {
-          this.aPrev.removeClass( 'loading' ); 
-      }
-    },
+    //stop: function ( button ) {
+      //if ( button == 'nextButton' ) {
+          //this.aNext.removeClass( 'loading' ); 
+      //} else {
+          //this.aPrev.removeClass( 'loading' ); 
+      //}
+    //},
 
-    // private
+    //// private
     
-    _toggle: function ( options ) {
-        var isOnlyChild = options.itensTotal === 1,
-            isFirstChild = options.itemIndex === 0,
-            isLastChild = options.itemIndex == options.itensTotal-1;
+    //_toggle: function ( options ) {
+        //var isOnlyChild = options.itensTotal === 1,
+            //isFirstChild = options.itemIndex === 0,
+            //isLastChild = options.itemIndex == options.itensTotal-1;
 
-        this.div.find( 'a.nav' ).removeClass( 'visible' );
+        //this.div.find( 'a.nav' ).removeClass( 'visible' );
 
-        if ( isOnlyChild ) {
-            return;
-        }
+        //if ( isOnlyChild ) {
+            //return;
+        //}
 
-        if ( isFirstChild ) {
-            this.aNext.addClass( 'visible' );
-        } else if ( isLastChild ) {
-            this.aPrev.addClass( 'visible' );
-        } else {
-            this.aNext.addClass( 'visible' );
-            this.aPrev.addClass( 'visible' );
-        }
+        //if ( isFirstChild ) {
+            //this.aNext.addClass( 'visible' );
+        //} else if ( isLastChild ) {
+            //this.aPrev.addClass( 'visible' );
+        //} else {
+            //this.aNext.addClass( 'visible' );
+            //this.aPrev.addClass( 'visible' );
+        //}
 
-        // Bugfix: ghost text showing when getting to the edges.
-        this.div.find( 'a.nav:not(.visible) span.video' ).removeAttr( 'style' );
-    },
+        //// Bugfix: ghost text showing when getting to the edges.
+        //this.div.find( 'a.nav:not(.visible) span.video' ).removeAttr( 'style' );
+    //},
 
-    _updateInfo: function ( options ) {
-        this.aPrev.find( 'span.title' ).text( options.prevJson.title );
-        this.aNext.find( 'span.title' ).text( options.nextJson.title );
-    }
-};
+    //_updateInfo: function ( options ) {
+        //this.aPrev.find( 'span.title' ).text( options.prevJson.title );
+        //this.aNext.find( 'span.title' ).text( options.nextJson.title );
+    //}
+//};
 
 
-LightPlayer.Social = function () {};
-LightPlayer.Social.prototype = {
-    init: function ( options ) {
-        this.div = options.container;
-    },
+//LightPlayer.Social = function () {};
+//LightPlayer.Social.prototype = {
+    //init: function ( options ) {
+        //this.div = options.container;
+    //},
 
-    update: function ( json ) {
-        this._clearContent();
+    //update: function ( json ) {
+        //this._clearContent();
 
-        this._updateFacebook( json );
-        this._updateTwitter( json );
-        this._updateFacebookButton( json );
-        this._updateOrkut( json );
-        this._updateGloboUrl( json );
+        //this._updateFacebook( json );
+        //this._updateTwitter( json );
+        //this._updateFacebookButton( json );
+        //this._updateOrkut( json );
+        //this._updateGloboUrl( json );
 
-        this.div.find('a.button').tipTip( { tipClass: 'amarelo' } );
-    },
+        //this.div.find('a.button').tipTip( { tipClass: 'amarelo' } );
+    //},
 
-    // private
+    //// private
     
-    _clearContent: function () {
-        this.div.html( '' );
-    },
+    //_clearContent: function () {
+        //this.div.html( '' );
+    //},
 
-    _updateFacebook: function ( json ) {
-        var span = $( '<span class="facebook"></span>' );
+    //_updateFacebook: function ( json ) {
+        //var span = $( '<span class="facebook"></span>' );
         
-        span.append( '<fb:like href="'+json.url+'" send="false" width="240" show_faces="true"></fb:like>' )
-            .appendTo( this.div );
+        //span.append( '<fb:like href="'+json.url+'" send="false" width="240" show_faces="true"></fb:like>' )
+            //.appendTo( this.div );
         
-        facebookParse( span.get(0) );
-    },
+        //facebookParse( span.get(0) );
+    //},
 
-    _updateFacebookButton: function ( json ) {
-        var url = json.shortUrl || json.url;
+    //_updateFacebookButton: function ( json ) {
+        //var url = json.shortUrl || json.url;
 
-        $( '<a></a>', {
-            'href': 'http://www.facebook.com/share.php?t='+encodeURIComponent(json.title)+'&u='+encodeURIComponent(url),
-            'class': 'facebook button',
-            'data-video-url': json.url,
-            'data-video-id': json.id,
-            'target': '_blank',
-            'title': 'Compartilhe no Facebook'
-        }).appendTo( this.div );
-    },
+        //$( '<a></a>', {
+            //'href': 'http://www.facebook.com/share.php?t='+encodeURIComponent(json.title)+'&u='+encodeURIComponent(url),
+            //'class': 'facebook button',
+            //'data-video-url': json.url,
+            //'data-video-id': json.id,
+            //'target': '_blank',
+            //'title': 'Compartilhe no Facebook'
+        //}).appendTo( this.div );
+    //},
 
-    _updateGloboUrl: function ( json ) {
-        if ( !json.shortUrl ) {
-            return;
-        }
+    //_updateGloboUrl: function ( json ) {
+        //if ( !json.shortUrl ) {
+            //return;
+        //}
 
-        $( '<input />', {
-            type: 'text',
-            value: json.shortUrl,
-            readonly: 'readonly',
-            'class': 'globo-url'
-        }).appendTo( this.div );
-    },
+        //$( '<input />', {
+            //type: 'text',
+            //value: json.shortUrl,
+            //readonly: 'readonly',
+            //'class': 'globo-url'
+        //}).appendTo( this.div );
+    //},
 
-    _updateOrkut: function ( json ) {
-        var url = json.shortUrl || json.url;
+    //_updateOrkut: function ( json ) {
+        //var url = json.shortUrl || json.url;
 
-        $( '<a></a>', {
-            'href': 'http://promote.orkut.com/preview?nt=orkut.com&tt='+encodeURI(json.title)+'%20-%20BBB12&cn='+encodeURI(json.description)+'&du='+json.url+'&tn='+json.thumbUrl,
-            'class': 'orkut button',
-            'data-video-url': json.url,
-            'data-video-id': json.id,
-            'target': '_blank',
-            'title': 'Compartilhe no Orkut'
-        }).appendTo( this.div );
-    },
+        //$( '<a></a>', {
+            //'href': 'http://promote.orkut.com/preview?nt=orkut.com&tt='+encodeURI(json.title)+'%20-%20BBB12&cn='+encodeURI(json.description)+'&du='+json.url+'&tn='+json.thumbUrl,
+            //'class': 'orkut button',
+            //'data-video-url': json.url,
+            //'data-video-id': json.id,
+            //'target': '_blank',
+            //'title': 'Compartilhe no Orkut'
+        //}).appendTo( this.div );
+    //},
 
-    _updateTwitter: function ( json ) {
-        var url = json.shortUrl || json.url;
+    //_updateTwitter: function ( json ) {
+        //var url = json.shortUrl || json.url;
 
-        $( '<a></a>', {
-            'href': 'http://twitter.com?status='+encodeURIComponent(url+' '+json.title+' #bbb12'),
-            'class': 'twitter button',
-            'data-video-url': json.url,
-            'data-video-id': json.id,
-            'target': '_blank',
-            'title': 'Compartilhe no Twitter'
-        }).appendTo( this.div );
-    }
-};
+        //$( '<a></a>', {
+            //'href': 'http://twitter.com?status='+encodeURIComponent(url+' '+json.title+' #bbb12'),
+            //'class': 'twitter button',
+            //'data-video-url': json.url,
+            //'data-video-id': json.id,
+            //'target': '_blank',
+            //'title': 'Compartilhe no Twitter'
+        //}).appendTo( this.div );
+    //}
+//};
 
 
 
@@ -593,11 +591,11 @@ Stage.prototype = {
     addEvents: function () {
         var that = this;
 
-        this.block.delegate( 'a.nav.next', 'click', function () {
+        this.domRoot.delegate( 'a.nav.next', 'click', function () {
             that._goNext();
         } );
 
-        this.block.delegate( 'a.nav.prev', 'click', function () {
+        this.domRoot.delegate( 'a.nav.prev', 'click', function () {
             that._goPrev();
         } );
     },
@@ -605,42 +603,29 @@ Stage.prototype = {
     init: function () {
         this.render();
         this.addEvents();
+
+        return this.domRoot;
     },
 
-    getCurrentItem: function () {
-        var result;
-        
-        result = $.grep( this.json.list, function ( item ) {
-            return item.current;
-        });
+    getItem: function ( position ) {
+        var choose, itemChoosen, itens = this.json.list;
 
-        return result[0];
-    },
-
-    getNextItem: function() {
-        var itemNext, itens = this.json.list;
+        if ( position === 'current' ) {
+            choose = function ( i ) { return itens[i] };
+        } else if ( position === 'next' ) {
+            choose = function ( i ) { return itens[i+1] };
+        } else if ( position === 'prev' ) {
+            choose = function ( i ) { return itens[i-1] };
+        }
         
-        $.each( itens, function ( index, item ) {
+        $.each( itens, function ( i, item ) {
             if ( item.current ) {
-                itemNext = itens[index+1];
+                itemChoosen = choose( i );
                 return false;
             }
         });
         
-        return itemNext;
-    },
-
-    getPrevItem: function() {
-        var itemPrev, itens = this.json.list;
-        
-        $.each( itens, function ( index, item ) {
-            if ( item.current ) {
-                itemPrev = itens[index-1];
-                return false;
-            }
-        });
-        
-        return itemPrev;
+        return itemChoosen || {};
     },
 
     _goNext: function () {
@@ -651,35 +636,60 @@ Stage.prototype = {
         this._go( 'prev' );
     },
 
-    _go: function ( dir ) {
-        var current = this.block.find( 'li.current' ),
-            li = ( dir === 'next'? current.next(): current.prev() );
+    _go: function ( position ) {
+        this.domRoot.find( 'li.next, li.prev' ).remove();
 
-        this.block.find( 'li' ).removeClass( 'current' );
-        li.addClass( 'current' );
+        this.addItem( position );
+
+        if ( position === 'next' ) {
+            this.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'prev' );
+            this.domRoot.find( 'li.next' ).removeClass( 'next' ).addClass( 'current' );
+        } else {
+            this.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'next' );
+            this.domRoot.find( 'li.prev' ).removeClass( 'prev' ).addClass( 'current' );
+        }
+
+        // Por algum motivo, sem o setTimeout a transicao CSS3 n funfa no Chrome
+        //setTimeout( function () {
+            //that.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'prev' );
+            //that.domRoot.find( 'li.next' ).removeClass( 'next' ).addClass( 'current' );
+        //}, 100);
     },
 
     render: function () {
-        this.renderItem();
+        this.renderRoot();
         this.renderArrows();
+        this.addItem( 'current' );
     },
 
-    renderItem: function() {
-        var item = this.getCurrentItem();
-
-        this.block = $( [
-            '<div>',
-                '<ul>',
-                    '<li id="item-'+item.id+'" class="current">',
-                        '<div class="video-player" data-player-videosIDs='+item.id+'></div>',
-                    '</li>',
-                '</ul>',
+    renderRoot: function () {
+        this.domRoot = $( [
+            '<div class="palco">',
+                '<ul></ul>',
             '</div>'
-        ].join() );
+        ].join( '' ) ); 
+    },
+
+    addItem: function( position ) {
+        var itemHTML,
+            item = this.getItem( position ),
+            ul = this.domRoot.find( 'ul' );
+        
+        itemHTML = [
+            '<li id="item-'+item.id+'" class="'+position+'">',
+                '<div class="video-player" data-player-videosIDs='+item.id+'></div>',
+            '</li>',
+        ].join( '' );
+        
+        if ( position === 'prev' ) {
+            ul.prepend( itemHTML );
+        } else {
+            ul.append( itemHTML );
+        }
     },
 
     renderArrows: function () {
-        this.block.append( [
+        this.domRoot.append( [
             '<a href="javascript:;" class="nav next visible">',
                 '<span class="arrow"></span>',
                 '<span class="info">',
@@ -695,7 +705,7 @@ Stage.prototype = {
                     '<span class="titulo"></span>',
                 '</span>',
             '</a>'
-        ].join() );
+        ].join( '' ) );
 
         this.updateArrows();
     },
@@ -704,7 +714,7 @@ Stage.prototype = {
         var first = this.json.list[0],
             last = this.json.list[this.json.list.length-1];
 
-        this.block.find( 'a.nav' ).removeClass( 'visible' );
+        this.domRoot.find( 'a.nav' ).removeClass( 'visible' );
 
         if ( first.current ) {
             this.updateNextArrow();
@@ -717,14 +727,14 @@ Stage.prototype = {
     },
 
     updateNextArrow: function () {
-        var itemNext = this.getNextItem();
-        this.block.find( 'a.nav.next' ).addClass( 'visible' );
-        this.block.find( 'a.nav.next' ).find( 'span.titulo' ).text( itemNext.title );
+        var itemNext = this.getItem( 'next' );
+        this.domRoot.find( 'a.nav.next' ).addClass( 'visible' );
+        this.domRoot.find( 'a.nav.next' ).find( 'span.titulo' ).text( itemNext.title );
     },
 
     updatePrevArrow: function () {
-        var itemPrev = this.getPrevItem();
-        this.block.find( 'a.nav.prev' ).addClass( 'visible' );
-        this.block.find( 'a.nav.prev' ).find( 'span.titulo' ).text( itemPrev.title );
+        var itemPrev = this.getItem( 'prev' );
+        this.domRoot.find( 'a.nav.prev' ).addClass( 'visible' );
+        this.domRoot.find( 'a.nav.prev' ).find( 'span.titulo' ).text( itemPrev.title );
     }
 };

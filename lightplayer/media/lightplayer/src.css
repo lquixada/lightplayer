@@ -72,7 +72,7 @@ div.lightplayer a.nav span.chapeu {
     text-transform:uppercase;
 }
 
-div.lightplayer a.nav span.video {
+div.lightplayer a.nav span.info {
     position:absolute;
     display:none;
     top:20px;
@@ -87,7 +87,7 @@ div.lightplayer a.nav.next {
     right:0;
 }
 
-div.lightplayer a.nav.next span.video {
+div.lightplayer a.nav.next span.info {
     left:20px;
 }
 
@@ -100,7 +100,7 @@ div.lightplayer a.nav.prev {
     left:0;
 }
 
-div.lightplayer a.nav.prev span.video {
+div.lightplayer a.nav.prev span.info {
     right:20px;
 }
 
@@ -123,7 +123,7 @@ div.lightplayer a.nav.loading span.arrow {
 }
 
 div.lightplayer a.nav.loading span.overlay,
-div.lightplayer a.nav.loading span.video {
+div.lightplayer a.nav.loading span.info {
     display:none !important;
 }
 
