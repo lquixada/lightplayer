@@ -15,6 +15,11 @@ beforeEach(function() {
     // Prevents doing real ajax calls (clears console!)
     spyOn( $, 'ajax' );
 
+    // Prevents setTimout async call
+    spyOn( window, 'setTimeout' ).andCallFake( function ( callback ) {
+        callback();
+    });
+
     // Prevents css3 animations on open
     spyOn( LightPlayer.prototype, '_animateIn' ).andCallFake( function ( callback ) {
         callback();
@@ -919,7 +924,6 @@ describe("Module: Stage", function() {
         // TODO
     });
     
-    
     describe("first item", function() {
         beforeEach(function() {
             this.json.list[0].current = true;
@@ -1117,17 +1121,42 @@ describe("Module: Stage", function() {
             this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
         });
 
-        it("should move to the next item", function() {
-            this.nextButton.click();
+        describe("NEXT button", function() {
+            beforeEach(function() {
+                this.nextButton.click();
+            });
             
-            expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-789' );
+            it("should move to the next item", function() {
+                expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-789' );
+            });
+
+            it("should update json", function() {
+                expect( this.stage.json.list[2].current ).toBe( true );
+            });
+
+            it("should not be visible", function() {
+                expect( this.nextButton ).not.toHaveClass( 'visible' );
+            });
+        });
+        
+        describe("PREV button", function() {
+            beforeEach(function() {
+                this.prevButton.click();
+            });
+            
+            it("should move to the prev item", function() {
+                expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-123' );
+            });
+
+            it("should update json", function() {
+                expect( this.stage.json.list[0].current ).toBe( true );
+            });
+
+            it("should not be visible", function() {
+                expect( this.prevButton ).not.toHaveClass( 'visible' );
+            });
         });
 
-        it("should move to the prev item", function() {
-            this.prevButton.click();
-            
-            expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-123' );
-        });
     });
     
 });

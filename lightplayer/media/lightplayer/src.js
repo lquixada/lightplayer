@@ -588,91 +588,30 @@ Stage = function ( json ) {
 };
 
 Stage.prototype = {
-    addEvents: function () {
-        var that = this;
-
-        this.domRoot.delegate( 'a.nav.next', 'click', function () {
-            that._goNext();
-        } );
-
-        this.domRoot.delegate( 'a.nav.prev', 'click', function () {
-            that._goPrev();
-        } );
-    },
-
     init: function () {
-        this.render();
-        this.addEvents();
+        this._render();
+        this._addEvents();
 
         return this.domRoot;
     },
 
-    getItem: function ( position ) {
-        var choose, itemChoosen, itens = this.json.list;
+    // private
 
-        if ( position === 'current' ) {
-            choose = function ( i ) { return itens[i] };
-        } else if ( position === 'next' ) {
-            choose = function ( i ) { return itens[i+1] };
-        } else if ( position === 'prev' ) {
-            choose = function ( i ) { return itens[i-1] };
-        }
-        
-        $.each( itens, function ( i, item ) {
-            if ( item.current ) {
-                itemChoosen = choose( i );
-                return false;
-            }
-        });
-        
-        return itemChoosen || {};
+    _addEvents: function () {
+        var that = this;
+
+        this.domRoot
+            .delegate( 'a.nav.next', 'click', function () {
+                that._goNext();
+            } )
+            .delegate( 'a.nav.prev', 'click', function () {
+                that._goPrev();
+            } );
     },
 
-    _goNext: function () {
-        this._go( 'next' );
-    },
-
-    _goPrev: function () {
-        this._go( 'prev' );
-    },
-
-    _go: function ( position ) {
-        this.domRoot.find( 'li.next, li.prev' ).remove();
-
-        this.addItem( position );
-
-        if ( position === 'next' ) {
-            this.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'prev' );
-            this.domRoot.find( 'li.next' ).removeClass( 'next' ).addClass( 'current' );
-        } else {
-            this.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'next' );
-            this.domRoot.find( 'li.prev' ).removeClass( 'prev' ).addClass( 'current' );
-        }
-
-        // Por algum motivo, sem o setTimeout a transicao CSS3 n funfa no Chrome
-        //setTimeout( function () {
-            //that.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'prev' );
-            //that.domRoot.find( 'li.next' ).removeClass( 'next' ).addClass( 'current' );
-        //}, 100);
-    },
-
-    render: function () {
-        this.renderRoot();
-        this.renderArrows();
-        this.addItem( 'current' );
-    },
-
-    renderRoot: function () {
-        this.domRoot = $( [
-            '<div class="palco">',
-                '<ul></ul>',
-            '</div>'
-        ].join( '' ) ); 
-    },
-
-    addItem: function( position ) {
+    _addItem: function( position ) {
         var itemHTML,
-            item = this.getItem( position ),
+            item = this._getItem( position ),
             ul = this.domRoot.find( 'ul' );
         
         itemHTML = [
@@ -686,9 +625,66 @@ Stage.prototype = {
         } else {
             ul.append( itemHTML );
         }
+
+        return item;
     },
 
-    renderArrows: function () {
+    _getItem: function ( position ) {
+        var itemChosen, itens = this.json.list,
+            choose = function ( i ) {
+                if ( position === 'current' ) {  return itens[i];   }
+                if ( position === 'next' ) {     return itens[i+1]; }
+                if ( position === 'prev' ) {     return itens[i-1]; }
+            };
+        
+        $.each( itens, function ( i ) {
+            if ( this.current ) {
+                itemChosen = choose( i );
+                return false;
+            }
+        });
+        
+        return itemChosen || {};
+    },
+
+    _go: function ( position ) {
+        var that = this;
+
+        this.domRoot.find( 'li.next, li.prev' ).remove();
+
+        var item = this._addItem( position );
+
+        // Por algum motivo, sem o setTimeout a transicao CSS3 n funfa no Chrome
+        setTimeout( function () {
+            if ( position === 'next' ) {
+                that.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'prev' );
+                that.domRoot.find( 'li.next' ).removeClass( 'next' ).addClass( 'current' );
+            } else {
+                that.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'next' );
+                that.domRoot.find( 'li.prev' ).removeClass( 'prev' ).addClass( 'current' );
+            }
+        }, 100);
+        
+        this._setItemAsCurrent( item );
+    },
+
+    _goNext: function () {
+        this._go( 'next' );
+        this._updateArrows();
+    },
+
+    _goPrev: function () {
+        this._go( 'prev' );
+        this._updateArrows();
+    },
+
+    _render: function () {
+        this._renderRoot();
+        this._renderArrows();
+        this._addItem( 'current' );
+    },
+
+    _renderArrows: function () {
         this.domRoot.append( [
             '<a href="javascript:;" class="nav next visible">',
                 '<span class="arrow"></span>',
@@ -707,34 +703,54 @@ Stage.prototype = {
             '</a>'
         ].join( '' ) );
 
-        this.updateArrows();
+        this._updateArrows();
     },
 
-    updateArrows: function () {
+    _renderRoot: function () {
+        this.domRoot = $( [
+            '<div class="palco">',
+                '<ul></ul>',
+            '</div>'
+        ].join( '' ) ); 
+    },
+
+    _setItemAsCurrent: function  ( itemChosen ) {
+        var itens = this.json.list;
+
+        $.each( itens, function () {
+            this.current = false;
+        });
+
+        itemChosen.current = true;
+    },
+
+    _updateArrows: function () {
         var first = this.json.list[0],
             last = this.json.list[this.json.list.length-1];
 
         this.domRoot.find( 'a.nav' ).removeClass( 'visible' );
 
         if ( first.current ) {
-            this.updateNextArrow();
+            this._updateNextArrow();
         } else if ( last.current ) {
-            this.updatePrevArrow();
+            this._updatePrevArrow();
         } else {
-            this.updatePrevArrow();
-            this.updateNextArrow();
+            this._updatePrevArrow();
+            this._updateNextArrow();
         }
     },
 
-    updateNextArrow: function () {
-        var itemNext = this.getItem( 'next' );
-        this.domRoot.find( 'a.nav.next' ).addClass( 'visible' );
-        this.domRoot.find( 'a.nav.next' ).find( 'span.titulo' ).text( itemNext.title );
+    _updateNextArrow: function () {
+        var item = this._getItem( 'next' );
+
+        this.domRoot.find( 'a.nav.next' ).addClass( 'visible' )
+            .find( 'span.titulo' ).text( item.title );
     },
 
-    updatePrevArrow: function () {
-        var itemPrev = this.getItem( 'prev' );
-        this.domRoot.find( 'a.nav.prev' ).addClass( 'visible' );
-        this.domRoot.find( 'a.nav.prev' ).find( 'span.titulo' ).text( itemPrev.title );
+    _updatePrevArrow: function () {
+        var item = this._getItem( 'prev' );
+
+        this.domRoot.find( 'a.nav.prev' ).addClass( 'visible' )
+            .find( 'span.titulo' ).text( item.title );
     }
 };
