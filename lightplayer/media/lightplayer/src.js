@@ -648,11 +648,11 @@ Stage.prototype = {
     },
 
     _go: function ( position ) {
-        var that = this;
+        var item, that = this;
 
         this.domRoot.find( 'li.next, li.prev' ).remove();
 
-        var item = this._addItem( position );
+        item = this._addItem( position );
 
         // Por algum motivo, sem o setTimeout a transicao CSS3 n funfa no Chrome
         setTimeout( function () {
@@ -684,25 +684,23 @@ Stage.prototype = {
         this._addItem( 'current' );
     },
 
-    _renderArrows: function () {
-        this.domRoot.append( [
-            '<a href="javascript:;" class="nav next visible">',
-                '<span class="arrow"></span>',
-                '<span class="info">',
-                    '<span class="chapeu">Próximo</span>',
-                    '<span class="titulo"></span>',
-                '</span>',
-            '</a>',
+    _renderArrow: function ( position ) {
+        var label = ( position === 'next'? 'Próximo': 'Anterior' );
 
-            '<a href="javascript:;" class="nav prev">',
+        this.domRoot.append( [
+            '<a href="javascript:;" class="nav '+position+' visible">',
                 '<span class="arrow"></span>',
                 '<span class="info">',
-                    '<span class="chapeu">Anterior</span>',
+                    '<span class="chapeu">'+label+'</span>',
                     '<span class="titulo"></span>',
                 '</span>',
             '</a>'
-        ].join( '' ) );
+        ].join( '' ) ); 
+    },
 
+    _renderArrows: function () {
+        this._renderArrow( 'next' );
+        this._renderArrow( 'prev' );
         this._updateArrows();
     },
 
