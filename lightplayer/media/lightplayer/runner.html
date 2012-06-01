@@ -20,9 +20,11 @@
 	
   <!-- source code -->
   <script src="src.js"></script>
+  <script src="src-palco.js"></script>
 
   <!-- specs-->
   <script src="spec.js"></script>
+  <script src="spec-palco.js"></script>
 
   <script>
   function abrir() {
@@ -69,52 +71,14 @@
     <button onclick="abrir()">abrir</button>
 </div>
 
-
 <div id="main">
   <!-- HTML fixtures -->
 </div>
-
-<script type="text/plain" id="lightplayer-header-template">
-    <header>
-        <h5>{% titulo %}</h5>
-        <em class="subtitulo">{% subtitulo %}</em>
-        <a href="javascript:;" class="close">fechar</a>
-    </header>
-</script>
-
-
-<script type="text/plain" id="lightplayer-video-titulo-template">
-    <section class="video-titulo">
-        <em class="cena">cena {% video_index %} de {% video_total %}</em>
-        <h6>{% video_titulo %}</h6>
-    </section>
-</script>
-
-<script type="text/plain" id="lightplayer-video-playlist-template">
-    <section class="video-playlist">
-        <ul>
-            <li>
-                <a href="{% video_href %}">
-                    <img src="{% video_src %}" alt="" />
-                    <span class="info">
-                        <span class="cena">{% video_cena %}</span>
-                        <span class="titulo">{% video_titulo %}</span>
-                        <span class="hits">{% video_hits %}</span>
-                    </span>
-                </a>
-            </li>
-        </ul>
-    </section>
-</script>
-
-
 
 <script type="text/plain+template" id="lightplayer-template">
     <div class="lightplayer">
         <div class="widget-container">
             <div class="widget">
-                
-
             </div> <!-- .widget -->
 
             &nbsp; <!-- needed for preventing scrollbar flickering -->
