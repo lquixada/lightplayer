@@ -82,18 +82,12 @@ LightPlayer.prototype = {
             
             divOverlay.addClass( 'visible' );
             
-            console.log( 'vai!' );
-            
             // For browsers (IEs and FF3.6) that doesn't support css3 animations, just call the callback
             if ( !that._hasTransitionSupport() ) {
-                console.log( 'f' );
                 divWidget.css( '-moz-transform', 'none' );
                 divWidget.addClass( 'visible' );
-                console.log( 'g' );
                 
                 callback();
-                console.log( 'h' );
-                
             }
         }, 250);
     },
