@@ -199,17 +199,17 @@ Stage.prototype = {
         this.domRoot.find( 'li.current div.video-player' )
             .width( width )
             .player( {
-            videosIDs: item.id,
-            autoPlay: this.json.autoPlay || false,
-            sitePage: this.json.sitePage || '',
-            width: width,
-            height: 360,
-            complete: function () {
-                if ( that.json.autoNext ) {
-                    that._goNext();
+                videosIDs: item.id,
+                autoPlay: this.json.autoPlay || false,
+                sitePage: this.json.sitePage || '',
+                width: width,
+                height: 360,
+                complete: function () {
+                    if ( that.json.autoNext ) {
+                        that._goNext();
+                    }
                 }
-            }
-        });
+            });
     },
 
     _updateNextArrow: function () {
