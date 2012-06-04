@@ -521,14 +521,14 @@ div.lightplayer div.bloco-playlist ul{
     white-space: normal;
     text-indent:0px;
     margin: 0px;
+    margin-right:-4px;
 }
 
 div.lightplayer div.bloco-playlist li{
     width: 180px;
     display: inline-block;
     vertical-align: top;
-    margin-left: 4px;
-    margin-right: 3px;
+    margin: 0px 4px;
 }
 
 div.lightplayer div.bloco-playlist img{
