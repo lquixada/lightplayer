@@ -132,6 +132,10 @@ describe("Light Player", function() {
         it("should add a stage as module", function() {
             expect( this.lightplayer.div.find( 'div.widget' ).find( 'div.palco' ).size() ).toBe( 1 );
         });
+
+        it("should add a header as module", function() {
+            expect( this.lightplayer.div.find( 'div.widget' ).find( 'div.header' ).size() ).toBe( 1 );
+        });
     });
 
 });
@@ -168,45 +172,6 @@ xdescribe("Light Player", function() {
         });
 
     });
-
-    xdescribe("title", function() {
-        beforeEach(function() {
-            this.json = {
-                title: 'Titulo do Modal',
-                subtitle: 'Subtitulo do Modal',
-                list: [{ id: 123, title: 'Titulo 1', description: 'Descricao 1', views: '100', url: 'http://www.globo.com' }]
-            };
-        });
-
-        it("should customize the title", function() {
-            this.lightplayer.open( this.json );
-
-            expect( this.lightplayer.div.find( 'h5' ).html().toLowerCase() ).toBe( '<span>Titulo</span> do Modal'.toLowerCase() );
-        });
-
-        it("should have the title 'mais videos' if none provided", function() {
-            delete this.json.title;
-
-            this.lightplayer.open( this.json );
-            
-            expect( this.lightplayer.div.find( 'h5' ).html().toLowerCase() ).toBe( '<span>mais</span> videos'.toLowerCase() );
-        });
-
-        it("should customize the subtitle", function() {
-            this.lightplayer.open( this.json );
-
-            expect( this.lightplayer.div.find( 'em.subtitulo' ).html() ).toBe( this.json.subtitle );
-        });
-
-        it("should have the subtitle empty if none provided", function() {
-            delete this.json.subtitle;
-
-            this.lightplayer.open( this.json );
-            
-            expect( this.lightplayer.div.find( 'em.subtitulo' ).html() ).toBe( '' );
-        });
-    });
-    
 
     xdescribe("open two videos", function() {
 

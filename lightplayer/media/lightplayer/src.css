@@ -267,7 +267,7 @@ div.lightplayer div.widget-overlay.visible {
     filter:alpha(opacity=80); /* IE7- */
 }
 
-div.lightplayer div.widget-top {
+div.lightplayer div.header {
     padding:28px 23px 12px;
     height:40px;
     overflow:hidden;

@@ -10,7 +10,8 @@ LightPlayer.prototype = {
         $( document ).trigger( 'modal-opened.lightplayer' );
 
         // Barramento principal pela qual todos os modulos se comunicam
-        this.bus = $( {} );
+        this.bus  = $( {} );
+        this.json = json;
 
         this.div = this._renderModal( json );
         this.ul  = this.div.find( 'ul' );
@@ -24,9 +25,9 @@ LightPlayer.prototype = {
         //this.social.init( {
             //container: this.div.find( 'div.video-social' )
         //} );
-        this.add( new Stage( json ) );
         
-        this._setTitle( json );
+        this.add( new Header( this.bus, json ) );
+        this.add( new Stage( json ) );
         
         this._animateIn( function () {
             //var list = $.isArray( json )? json: json.list;
@@ -433,15 +434,6 @@ LightPlayer.prototype = {
 
         // Pagination
         this._getMore( item );
-    },
-
-    _setTitle: function ( json ) {
-        json.title = json.title || 'mais videos';
-        json.subtitle = json.subtitle || '';
-        
-        // Adds a <span> to the first word
-        this.div.find( 'h5' ).html( json.title.replace( /^(.+?) /, '<span>$1</span> ' ) );
-        this.div.find( 'em.subtitulo' ).html( json.subtitle );
     },
 
     _updateInfo: function ( item ) {
