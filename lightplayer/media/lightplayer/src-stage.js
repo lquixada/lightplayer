@@ -7,6 +7,7 @@ Stage = function () {};
 
 Stage.prototype = {
     init: function ( bus, json ) {
+        this.bus = bus;
         this.json = json;
 
         this._render();
@@ -114,10 +115,12 @@ Stage.prototype = {
 
     _goNext: function () {
         var item = this._getItem( 'next' );
-
+        
         this._go( 'next' );
         this._updateArrows();
         this._updateItem( item );
+
+        this.bus.trigger( 'video-change', this.json );
     },
 
     _goPrev: function () {
@@ -126,6 +129,8 @@ Stage.prototype = {
         this._go( 'prev' );
         this._updateArrows();
         this._updateItem( item );
+
+        this.bus.trigger( 'video-change', this.json );
     },
 
     _render: function () {

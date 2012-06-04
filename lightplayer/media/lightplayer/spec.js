@@ -163,6 +163,11 @@ describe("Light Player", function() {
         it("should add a header as module", function() {
             expect( this.lightplayer.div.find( 'div.widget' ).find( 'div.header' ).size() ).toBe( 1 );
         });
+
+        it("should add a title as module", function() {
+            expect( this.lightplayer.div.find( 'div.widget' ).find( 'div.video-info' ).size() ).toBe( 1 );
+        });
+        
     });
 
 });

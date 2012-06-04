@@ -4,6 +4,7 @@
 
 describe("Module: Stage", function() {
     beforeEach(function() {
+        this.bus = $( {} );
         this.json = {
             list: [
                 { id: 123, title: 'titulo 1' },
@@ -278,7 +279,7 @@ describe("Module: Stage", function() {
     describe("interaction", function() {
         beforeEach(function() {
             this.json.list[1].current = true;
-
+           
             this.stage.init( this.bus, this.json );
 
             this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
@@ -288,6 +289,7 @@ describe("Module: Stage", function() {
         describe("NEXT button", function() {
             beforeEach(function() {
                 var that = this;
+
                 $.fn.player = $.fn.player.originalValue;
                 
                 spyOn( $.fn, 'player' ).andCallFake( function ( params ) {
@@ -316,6 +318,18 @@ describe("Module: Stage", function() {
             it("should call player with the current item id", function() {
                 expect( this.playerParams.videosIDs ).toBe( this.json.list[2].id );
             });
+
+            it("should trigger video-change", function() {
+                var callback = jasmine.createSpy( 'video-change-callback' );
+                
+                this.stage.init( this.bus, this.json );
+                this.stage.bus.bind( 'video-change', callback );
+
+                this.nextButton.click();
+
+                expect( callback ).toHaveBeenCalled();
+            });
+            
         });
 
         describe("PREV button", function() {
@@ -341,6 +355,17 @@ describe("Module: Stage", function() {
 
             it("should call player with the current item id", function() {
                 expect( this.playerParams.videosIDs ).toBe( this.json.list[0].id );
+            });
+
+            it("should trigger video-change", function() {
+                var callback = jasmine.createSpy( 'video-change-callback' );
+                
+                this.stage.init( this.bus, this.json );
+                this.stage.bus.bind( 'video-change', callback );
+
+                this.prevButton.click();
+
+                expect( callback ).toHaveBeenCalled();
             });
         });
 

@@ -30,6 +30,7 @@ LightPlayer.prototype = {
         
         this.add( new Header() );
         this.add( new Stage() );
+        this.add( new VideoTitle() );
         
         this._animateIn( function () {
             //var list = $.isArray( json )? json: json.list;

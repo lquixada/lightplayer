@@ -21,20 +21,22 @@
   <!-- source code -->
   <script src="src.js"></script>
   <script src="src-header.js"></script>
-  <script src="src-palco.js"></script>
+  <script src="src-stage.js"></script>
+  <script src="src-video-title.js"></script>
 
   <!-- specs-->
   <script src="spec.js"></script>
   <script src="spec-header.js"></script>
-  <script src="spec-palco.js"></script>
+  <script src="spec-stage.js"></script>
+  <script src="spec-video-title.js"></script>
 
   <script>
   function abrir() {
       lightplayer = new LightPlayer();
 
       lightplayer.open( {
-          title: 'Leonardo Quixada',
-          subtitle: 'melhores videos dele',
+          title: '<span>clássicos</span> do BBB',
+          subtitle: 'os vídeos mais clicados',
           mode: 'sd',
           htmlClass: 'bbb',
           prevPage: 'fixtures/1.json',
