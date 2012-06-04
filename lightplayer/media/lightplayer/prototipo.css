@@ -556,8 +556,42 @@ div.lightplayer div.bloco-playlist span.exibicao strong{
 
 div.lightplayer div.bloco-playlist a{
     display:block;
+    position:relative;
     text-decoration: none;
     color:#999;
+}
+
+div.lightplayer div.bloco-playlist li span.label,
+div.lightplayer div.bloco-playlist li span.layer{
+    display:none;
+}
+
+
+div.lightplayer div.bloco-playlist li.assistindo span.layer{
+    width: 180px;
+    height: 108px;
+    position: absolute;
+    top: 0px;
+    border-radius: 5px;
+    background-color: #000;
+    opacity:0.3;
+    -moz-opacity: 0.3;
+    filter: alpha(opacity=3);
+    display:block;
+}
+
+
+div.lightplayer div.bloco-playlist li.assistindo span.label{
+    font-family: ProximaNova-SemiBold;
+    letter-spacing: -1px;
+    font-size: 12px;
+    color:#fff;
+    position: absolute;
+    top: 50px;
+    left: 55px;
+    text-transform: uppercase;
+    font-weight: bold;
+    display:block;
 }
 
 div.lightplayer div.bloco-playlist a:hover, 
