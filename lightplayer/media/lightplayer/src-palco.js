@@ -197,7 +197,7 @@ Stage.prototype = {
             width = (this.json.mode === 'sd'? 480: 640);
 
         this.domRoot.find( 'li.current div.video-player' )
-            .css( 'width', width+'px' )
+            .width( width )
             .player( {
             videosIDs: item.id,
             autoPlay: this.json.autoPlay || false,
