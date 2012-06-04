@@ -132,7 +132,6 @@ div.lightplayer div.video-player {
     display:inline-block;
     *display:inline;
     *zoom:1;
-    width:479px !important;
     height:359px !important;
     background-color:#000;
 }
@@ -241,7 +240,7 @@ div.lightplayer div.widget-container {
     z-index:2;
 }
 
-div.lightplayer div.widget-content {
+div.lightplayer div.palco {
     position:relative;
 }
 

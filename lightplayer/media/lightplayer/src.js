@@ -18,6 +18,10 @@ LightPlayer.prototype = {
 
         this.justOpened = true;
 
+        if ( json.htmlClass ) {
+            this.div.addClass( this.json.htmlClass );
+        }
+
         //this.navigation.init( {
             //container: this.div.find( 'div.widget-content' )
         //} );

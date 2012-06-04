@@ -27,10 +27,13 @@ Header.prototype = {
     },
 
     _render: function () {
+        var title = this.json.title || '<span>mais</span> videos',
+            subtitle = this.json.subtitle || '';
+
         this.domRoot = $( [
             '<div class="header">',
-                '<h5>'+this.json.title+'</h5>',
-                '<em class="subtitulo">'+this.json.subtitle+'</em>',
+                '<h5>'+title+'</h5>',
+                '<em class="subtitulo">'+subtitle+'</em>',
                 '<a href="javascript:;" class="close">fechar</a>',
             '</div>'
         ].join( '' ) ); 

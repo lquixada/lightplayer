@@ -50,7 +50,7 @@ Stage.prototype = {
                     // Then close box
                     a.stop().animate( { width: 0 }, 250 );
                 });
-            } )
+            } );
     },
 
     _addItem: function( position ) {
@@ -60,7 +60,7 @@ Stage.prototype = {
         
         itemHTML = [
             '<li id="item-'+item.id+'" class="'+position+'">',
-                '<div class="video-player" data-player-videosIDs='+item.id+'></div>',
+                '<div class="video-player"></div>',
             '</li>'
         ].join( '' );
         
@@ -99,7 +99,7 @@ Stage.prototype = {
         item = this._addItem( position );
 
         // Por algum motivo, sem o setTimeout a transicao CSS3 n funfa no Chrome
-        setTimeout( function () {
+        //setTimeout( function () {
             if ( position === 'next' ) {
                 that.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'prev' );
                 that.domRoot.find( 'li.next' ).removeClass( 'next' ).addClass( 'current' );
@@ -107,25 +107,34 @@ Stage.prototype = {
                 that.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'next' );
                 that.domRoot.find( 'li.prev' ).removeClass( 'prev' ).addClass( 'current' );
             }
-        }, 100);
+        //}, 100);
         
         this._setItemAsCurrent( item );
     },
 
     _goNext: function () {
+        var item = this._getItem( 'next' );
+
         this._go( 'next' );
         this._updateArrows();
+        this._updateItem( item );
     },
 
     _goPrev: function () {
+        var item = this._getItem('prev');
+
         this._go( 'prev' );
         this._updateArrows();
+        this._updateItem( item );
     },
 
     _render: function () {
+        var item = this._getItem( 'current' );
+
         this._renderRoot();
         this._renderArrows();
         this._addItem( 'current' );
+        this._updateItem( item );
     },
 
     _renderArrow: function ( position ) {
@@ -181,6 +190,26 @@ Stage.prototype = {
             this._updatePrevArrow();
             this._updateNextArrow();
         }
+    },
+
+    _updateItem: function ( item ) {
+        var that = this,
+            width = (this.json.mode === 'sd'? 480: 640);
+
+        this.domRoot.find( 'li.current div.video-player' )
+            .css( 'width', width+'px' )
+            .player( {
+            videosIDs: item.id,
+            autoPlay: this.json.autoPlay || false,
+            sitePage: this.json.sitePage || '',
+            width: width,
+            height: 360,
+            complete: function () {
+                if ( that.json.autoNext ) {
+                    that._goNext();
+                }
+            }
+        });
     },
 
     _updateNextArrow: function () {

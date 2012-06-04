@@ -1,10 +1,14 @@
 
 beforeEach(function() {
+    var that = this;
+
     // Prevents jquery animations
     $.fx.off = true;
 
     // Prevents embedding flash player (speeds up the tests!)
-    spyOn( $.fn, 'player' );
+    spyOn( $.fn, 'player' ).andCallFake( function ( params ) {
+        that.playerParams = params;
+    });
     
     // Prevents calling tipTip plugin
     $.fn.tipTip = function () {};
@@ -47,6 +51,8 @@ beforeEach(function() {
 afterEach(function() { 
     $.fx.off = false;
 
+    this.playerParams = null;
+
     $( 'div.lightplayer' ).remove();
     $( document ).unbind();
 });
@@ -82,6 +88,27 @@ describe("Light Player", function() {
         it("should have an overlay", function() {
             expect( this.lightplayer.div.find( 'div.widget-overlay' ).size() ).toBe( 1 );
         });
+
+        it("should set the html class", function() {
+            this.json = {
+                htmlClass: 'blah',
+                list: [
+                    {
+                        id: 123,
+                        title: 'Titulo 1',
+                        description: 'Descricao 1',
+                        views: '100',
+                        url: 'http://www.globo.com',
+                        current: true
+                    }
+                ]
+            };
+            
+            this.lightplayer.open( this.json );
+            
+            expect( this.lightplayer.div ).toHaveClass( 'blah' );
+        });
+        
     });
 
     describe("close", function() {

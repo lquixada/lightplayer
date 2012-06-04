@@ -6,8 +6,6 @@ describe("Module: Header", function() {
     beforeEach(function() {
         this.bus = $({});
         this.json = {
-            title: 'mais videos',
-            subtitle: 'melhores videos do mesmo tema',
             list: [
                 { id: 123, title: 'titulo 1' },
                 { id: 456, title: 'titulo 2' },
@@ -19,11 +17,29 @@ describe("Module: Header", function() {
         this.header.init();
     });
 
-    it("should show the lightbox title", function() {
-        expect( this.header.domRoot.find( 'h5' ).text() ).toBe( this.json.title );
+    it("should have a default title", function() {
+        expect( this.header.domRoot.find( 'h5' ).html() ).toBe( '<span>mais</span> videos' );
     });
 
+    it("should not have a default subtitle", function() {
+        expect( this.header.domRoot.find( 'em.subtitulo' ).text() ).toBe( '' );
+    });
+
+    it("show customize the lightbox title", function() {
+        this.json.title = 'ultimos videos da semana';
+
+        this.header = new Header( this.bus, this.json );
+        this.header.init();
+
+        expect( this.header.domRoot.find( 'h5' ).text() ).toBe( this.json.title );
+    });
+    
     it("should show the lightbox subtitle", function() {
+        this.json.subtitle = 'melhores videos do mesmo tema';
+
+        this.header = new Header( this.bus, this.json );
+        this.header.init();
+
         expect( this.header.domRoot.find( 'em.subtitulo' ).text() ).toBe( this.json.subtitle );
     });
 

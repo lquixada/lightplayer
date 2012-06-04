@@ -16,7 +16,7 @@ describe("Module: Stage", function() {
     describe("no item as current", function() {
         // TODO
     });
-    
+
     describe("first item", function() {
         beforeEach(function() {
             this.json.list[0].current = true;
@@ -34,11 +34,6 @@ describe("Module: Stage", function() {
 
         it("should have a video player div", function() {
             expect( this.liCurrent.find( 'div.video-player' ).size() ).toBe( 1 );
-        });
-
-        it("should have a video player id", function() {
-            var dataPlayerVideosIDs = this.liCurrent.find( 'div.video-player' ).attr( 'data-player-videosIDs' );
-            expect( dataPlayerVideosIDs ).toBe( String(this.json.list[0].id) );
         });
     });
 
@@ -60,10 +55,94 @@ describe("Module: Stage", function() {
         it("should have a video player div", function() {
             expect( this.liCurrent.find( 'div.video-player' ).size() ).toBe( 1 );
         });
+    });
 
-        it("should have a video player id", function() {
-            var dataPlayerVideosIDs = this.liCurrent.find( 'div.video-player' ).attr( 'data-player-videosIDs' );
-            expect( dataPlayerVideosIDs ).toBe( String(this.json.list[1].id) );
+
+    describe("player", function() {
+        beforeEach(function() {
+            this.json.list[0].current = true;
+
+            this.stage = new Stage( this.json );
+            this.stage.init();
+
+            this.liCurrent = this.stage.domRoot.find( 'ul li.current' );
+        });
+
+        it("should call player", function() {
+            expect( $.fn.player ).toHaveBeenCalled();
+        });
+
+        it("should call player with the current item id", function() {
+            expect( this.playerParams.videosIDs ).toBe( this.json.list[0].id );
+        });
+        
+        it("should show the player with the right width", function() {
+            var div = this.stage.domRoot.find( 'li.current div.video-player' );
+
+            expect( this.playerParams.width ).toBe( 640 );
+            expect( div.attr( 'style' ) ).toMatch( /640px/ );
+        });
+
+        it("should adapt the player width on sd mode", function() {
+            var div;
+
+            this.json.mode = 'sd';
+
+            this.stage = new Stage( this.json );
+            this.stage.init();
+
+            div = this.stage.domRoot.find( 'li.current div.video-player' );
+
+            expect( this.playerParams.width ).toBe( 480 );
+            expect( div.attr( 'style' ) ).toMatch( /480px/ );
+        });
+        
+        it("should show the player with the right height", function() {
+            expect( this.playerParams.height ).toBe( 360 );
+        });
+
+        it("should use a blank sitepage", function() {
+            expect( this.playerParams.sitePage ).toBe( '' );
+        });
+
+        it("should configure the sitepage", function() {
+            this.json.sitePage = 'exemplo/de/sitepage';
+            this.stage = new Stage( this.json );
+            this.stage.init();
+
+            expect( this.playerParams.sitePage ).toBe( this.json.sitePage );
+        });
+        
+        it("should not enable autoPlay", function() {
+            expect( this.playerParams.autoPlay ).toBe( false );
+        });
+
+        it("should configure the autoPlay", function() {
+            this.json.autoPlay = true;
+            this.stage = new Stage( this.json );
+            this.stage.init();
+
+            expect( this.playerParams.autoPlay ).toBe( true );
+        });
+        
+        it("should not enable autoNext", function() {
+            spyOn( this.stage, '_goNext' );
+
+            this.playerParams.complete();
+
+            expect( this.stage._goNext ).not.toHaveBeenCalled();
+        });
+
+        it("should enable autoNext", function() {
+            this.json.autoNext = true;
+            this.stage = new Stage( this.json );
+            this.stage.init();
+
+            spyOn( this.stage, '_goNext' );
+
+            this.playerParams.complete();
+
+            expect( this.stage._goNext ).toHaveBeenCalled();
         });
     });
 
@@ -216,6 +295,13 @@ describe("Module: Stage", function() {
 
         describe("NEXT button", function() {
             beforeEach(function() {
+                var that = this;
+                $.fn.player = $.fn.player.originalValue;
+                
+                spyOn( $.fn, 'player' ).andCallFake( function ( params ) {
+                    that.playerParams = params;
+                });
+
                 this.nextButton.click();
             });
             
@@ -230,8 +316,16 @@ describe("Module: Stage", function() {
             it("should not be visible", function() {
                 expect( this.nextButton ).not.toHaveClass( 'visible' );
             });
+
+            it("should call player", function() {
+                expect( $.fn.player ).toHaveBeenCalled();
+            });
+
+            it("should call player with the current item id", function() {
+                expect( this.playerParams.videosIDs ).toBe( this.json.list[2].id );
+            });
         });
-        
+
         describe("PREV button", function() {
             beforeEach(function() {
                 this.prevButton.click();
@@ -247,6 +341,14 @@ describe("Module: Stage", function() {
 
             it("should not be visible", function() {
                 expect( this.prevButton ).not.toHaveClass( 'visible' );
+            });
+
+            it("should call player", function() {
+                expect( $.fn.player ).toHaveBeenCalled();
+            });
+
+            it("should call player with the current item id", function() {
+                expect( this.playerParams.videosIDs ).toBe( this.json.list[0].id );
             });
         });
 
