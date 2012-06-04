@@ -21,8 +21,8 @@ describe("Module: Stage", function() {
         beforeEach(function() {
             this.json.list[0].current = true;
 
-            this.stage = new Stage( this.json );
-            this.stage.init();
+            this.stage = new Stage();
+            this.stage.init( this.bus, this.json );
 
             this.liCurrent = this.stage.domRoot.find( 'ul li.current' );
         });
@@ -41,8 +41,8 @@ describe("Module: Stage", function() {
         beforeEach(function() {
             this.json.list[1].current = true;
 
-            this.stage = new Stage( this.json );
-            this.stage.init();
+            this.stage = new Stage();
+            this.stage.init( this.bus, this.json );
 
             this.liCurrent = this.stage.domRoot.find( 'ul li.current' );
         });
@@ -62,8 +62,8 @@ describe("Module: Stage", function() {
         beforeEach(function() {
             this.json.list[0].current = true;
 
-            this.stage = new Stage( this.json );
-            this.stage.init();
+            this.stage = new Stage();
+            this.stage.init( this.bus, this.json );
 
             this.liCurrent = this.stage.domRoot.find( 'ul li.current' );
         });
@@ -88,8 +88,8 @@ describe("Module: Stage", function() {
 
             this.json.mode = 'sd';
 
-            this.stage = new Stage( this.json );
-            this.stage.init();
+            this.stage = new Stage();
+            this.stage.init( this.bus, this.json );
 
             div = this.stage.domRoot.find( 'li.current div.video-player' );
 
@@ -107,8 +107,8 @@ describe("Module: Stage", function() {
 
         it("should configure the sitepage", function() {
             this.json.sitePage = 'exemplo/de/sitepage';
-            this.stage = new Stage( this.json );
-            this.stage.init();
+            this.stage = new Stage();
+            this.stage.init( this.bus, this.json );
 
             expect( this.playerParams.sitePage ).toBe( this.json.sitePage );
         });
@@ -119,8 +119,8 @@ describe("Module: Stage", function() {
 
         it("should configure the autoPlay", function() {
             this.json.autoPlay = true;
-            this.stage = new Stage( this.json );
-            this.stage.init();
+            this.stage = new Stage();
+            this.stage.init( this.bus, this.json );
 
             expect( this.playerParams.autoPlay ).toBe( true );
         });
@@ -135,8 +135,8 @@ describe("Module: Stage", function() {
 
         it("should enable autoNext", function() {
             this.json.autoNext = true;
-            this.stage = new Stage( this.json );
-            this.stage.init();
+            this.stage = new Stage();
+            this.stage.init( this.bus, this.json );
 
             spyOn( this.stage, '_goNext' );
 
@@ -150,8 +150,8 @@ describe("Module: Stage", function() {
         beforeEach(function() {
             this.json.list[1].current = true;
 
-            this.stage = new Stage( this.json );
-            this.stage.init();
+            this.stage = new Stage();
+            this.stage.init( this.bus, this.json );
         });
 
         describe("NEXT button", function() {
@@ -197,8 +197,8 @@ describe("Module: Stage", function() {
             beforeEach(function() {
                 this.json.list[0].current = true;
 
-                this.stage = new Stage( this.json );
-                this.stage.init();
+                this.stage = new Stage();
+                this.stage.init( this.bus, this.json );
 
                 this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
                 this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
@@ -226,8 +226,8 @@ describe("Module: Stage", function() {
             beforeEach(function() {
                 this.json.list[1].current = true;
 
-                this.stage = new Stage( this.json );
-                this.stage.init();
+                this.stage = new Stage();
+                this.stage.init( this.bus, this.json );
 
                 this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
                 this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
@@ -256,8 +256,8 @@ describe("Module: Stage", function() {
             beforeEach(function() {
                 this.json.list[2].current = true;
 
-                this.stage = new Stage( this.json );
-                this.stage.init();
+                this.stage = new Stage();
+                this.stage.init( this.bus, this.json );
 
                 this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
                 this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
@@ -286,8 +286,8 @@ describe("Module: Stage", function() {
         beforeEach(function() {
             this.json.list[1].current = true;
 
-            this.stage = new Stage( this.json );
-            this.stage.init();
+            this.stage = new Stage();
+            this.stage.init( this.bus, this.json );
 
             this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
             this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );

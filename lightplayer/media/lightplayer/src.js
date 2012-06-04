@@ -1,7 +1,5 @@
-LightPlayer = function () {
-    //this.navigation = new LightPlayer.Navigation( this.bus );
-    //this.social = new LightPlayer.Social();
-};
+
+LightPlayer = function () {};
 
 LightPlayer.prototype = {
     open: function ( json ) {
@@ -30,8 +28,8 @@ LightPlayer.prototype = {
             //container: this.div.find( 'div.video-social' )
         //} );
         
-        this.add( new Header( this.bus, json ) );
-        this.add( new Stage( json ) );
+        this.add( new Header() );
+        this.add( new Stage() );
         
         this._animateIn( function () {
             //var list = $.isArray( json )? json: json.list;
@@ -61,7 +59,7 @@ LightPlayer.prototype = {
     // private
 
     add: function ( mod ) {
-        this.div.find( 'div.widget' ).append( mod.init() ); 
+        this.div.find( 'div.widget' ).append( mod.init( this.bus, this.json ) ); 
     },
 
     _addEvents: function () {

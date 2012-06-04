@@ -13,8 +13,8 @@ describe("Module: Header", function() {
             ]
         };
 
-        this.header = new Header( this.bus, this.json );
-        this.header.init();
+        this.header = new Header();
+        this.header.init( this.bus, this.json );
     });
 
     it("should have a default title", function() {
@@ -28,8 +28,8 @@ describe("Module: Header", function() {
     it("show customize the lightbox title", function() {
         this.json.title = 'ultimos videos da semana';
 
-        this.header = new Header( this.bus, this.json );
-        this.header.init();
+        this.header = new Header();
+        this.header.init( this.bus, this.json );
 
         expect( this.header.domRoot.find( 'h5' ).text() ).toBe( this.json.title );
     });
@@ -37,8 +37,8 @@ describe("Module: Header", function() {
     it("should show the lightbox subtitle", function() {
         this.json.subtitle = 'melhores videos do mesmo tema';
 
-        this.header = new Header( this.bus, this.json );
-        this.header.init();
+        this.header = new Header();
+        this.header.init( this.bus, this.json );
 
         expect( this.header.domRoot.find( 'em.subtitulo' ).text() ).toBe( this.json.subtitle );
     });

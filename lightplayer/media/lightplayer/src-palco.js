@@ -3,12 +3,12 @@
  * MODULO STAGE
  ***********************************************/
 
-Stage = function ( json ) {
-    this.json = json;
-};
+Stage = function () {};
 
 Stage.prototype = {
-    init: function () {
+    init: function ( bus, json ) {
+        this.json = json;
+
         this._render();
         this._addEvents();
 

@@ -3,13 +3,13 @@
  * MODULO STAGE
  ***********************************************/
 
-Header = function ( bus, json ) {
-    this.bus = bus;
-    this.json = json;
-};
+Header = function () {};
 
 Header.prototype = {
-    init: function () {
+    init: function ( bus, json ) {
+        this.bus = bus;
+        this.json = json;
+
         this._render();
         this._addEvents();
         
