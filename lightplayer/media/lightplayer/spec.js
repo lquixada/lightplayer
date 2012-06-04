@@ -118,6 +118,13 @@ describe("Light Player", function() {
             
             expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
         });
+
+        it("should close on close event", function() {
+            this.lightplayer.bus.trigger( 'lightplayer-close' );
+            
+            expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
+        });
+        
     });
     
 

@@ -9,6 +9,9 @@ LightPlayer.prototype = {
 
         $( document ).trigger( 'modal-opened.lightplayer' );
 
+        // Barramento principal pela qual todos os modulos se comunicam
+        this.bus = $( {} );
+
         this.div = this._renderModal( json );
         this.ul  = this.div.find( 'ul' );
 
@@ -58,6 +61,10 @@ LightPlayer.prototype = {
 
     _addEvents: function () {
         var that = this;
+
+        this.bus.bind( 'lightplayer-close', function () {
+            that.close();
+        } );
 
         this.div.delegate( 'div.widget-container', 'click', function ( event ) {
                 if ( event.target == this ) {
