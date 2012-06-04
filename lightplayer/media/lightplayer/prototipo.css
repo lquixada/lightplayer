@@ -455,13 +455,12 @@ div.lightplayer div.bloco-social span.facebook-like {
 div.lightplayer div.bloco-playlist{
     height: 225px;
     position: relative;
-    padding: 10px 38px 30px;
+    padding: 10px 28px 30px;
     margin-bottom:30px;
     background-color: #F6F6F6;
     
 }
-
-div.lightplayer div.bloco-playlist span.seta-esquerda{
+div.lightplayer div.bloco-playlist a.seta-esquerda{
     background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent 0 0 no-repeat;
     background-color:#0000FF;
     position: absolute;
@@ -471,20 +470,20 @@ div.lightplayer div.bloco-playlist span.seta-esquerda{
     width: 26px;
 }
 
-div.lightplayer div.bloco-playlist span.seta-esquerda:hover{
+div.lightplayer div.bloco-playlist a.seta-esquerda:hover{
     background-position: -66px 0;
 }
 
-div.lightplayer div.bloco-playlist span.seta-esquerda:active{
+div.lightplayer div.bloco-playlist a.seta-esquerda:active{
     background-position: -131px 0;
 }
 
-div.lightplayer div.bloco-playlist span.seta-esquerda.inativo{
+div.lightplayer div.bloco-playlist a.seta-esquerda.inativo{
     background-position: -196px 0;
     background-color:#C9C9C9;
 }
 
-div.lightplayer div.bloco-playlist span.seta-direita{
+div.lightplayer div.bloco-playlist a.seta-direita{
     background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent -29px 0 no-repeat;
     background-color:#0000FF;
     position: absolute;
@@ -493,17 +492,43 @@ div.lightplayer div.bloco-playlist span.seta-direita{
     height: 108px;
     width: 26px;
 }
-div.lightplayer div.bloco-playlist span.seta-direita:hover{
+div.lightplayer div.bloco-playlist a.seta-direita:hover{
     background-position: -95px 0;
 }
 
-div.lightplayer div.bloco-playlist span.seta-direita:active{
+div.lightplayer div.bloco-playlist a.seta-direita:active{
     background-position: -160px 0;
 }
 
-div.lightplayer div.bloco-playlist span.seta-direita.inativo{
+div.lightplayer div.bloco-playlist a.seta-direita.inativo{
     background-position: -225px 0;
     background-color:#C9C9C9;
+}
+div.lightplayer div.bloco-playlist div.trilho-videos{
+    position: relative;
+    width: 100%;
+    height: 225px;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: text-indent 400ms ease-out;
+    -webkit-transition: text-indent 400ms ease-out; /* Safari and Chrome */
+    -moz-transition: text-indent 400ms ease-out; /* Firefox 4 */
+    -o-transition: text-indent 400ms ease-out; /* Opera */
+
+}
+div.lightplayer div.bloco-playlist ul{
+    display: inline-block;
+    white-space: normal;
+    text-indent:0px;
+    margin: 0px;
+}
+
+div.lightplayer div.bloco-playlist li{
+    width: 180px;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 4px;
+    margin-right: 3px;
 }
 
 div.lightplayer div.bloco-playlist img{
@@ -512,17 +537,6 @@ div.lightplayer div.bloco-playlist img{
     margin-bottom: 18px;
     border-radius: 5px;
 }
-div.lightplayer div.bloco-playlist li{
-    width: 180px;
-    display: inline-block;
-    vertical-align: top;
-    margin-left: 4px;
-}
-
-div.lightplayer div.bloco-playlist li:first-child{
-    margin-left: 0px;
-}
-
 div.lightplayer div.bloco-playlist span.titulo-item {
     display: inline;
     font-size: 12px;
@@ -556,7 +570,7 @@ div.lightplayer div.bloco-playlist span.hover-img{
     width: 171px;
     height: 100px;
     position: absolute;
-    top: 10px;
+    top: 0px;
     border-radius: 5px;
     display: none;
 }

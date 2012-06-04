@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Light Player Test Runner</title>
+  <title>Light Player Prototipo</title>
   
   <link href="prototipo.css" rel="stylesheet"/>
 	
@@ -13,47 +13,87 @@
   <script src="http://s.videos.globo.com/p2/j/api.min.js"></script>
 	
   <!-- source code -->
-  <script src="src.js"></script>
 
   <script>
-  function abrir() {
-      lightplayer.open( {
-          title: 'Leonardo Quixada',
-          subtitle: 'melhores videos dele',
-          prevPage: 'fixtures/1.json',
-          nextPage: 'fixtures/3.json',
-          list: [
-              {
-                  id: 1673168,
-                  title: 'Maurício anuncia os últimos dias de inscrições para o BBB12',
-                  description: 'O ex-BBB alerta os condidatos para os últimos momentos das inscrições',
-                  url: 'http://www.globo.com',
-                  views: 3412
-              },
-              {
-                  id: 1606199,
-                  title: 'Maria dá dicas para quem quer se inscrever no BBB12',
-                  description: 'A vencedora do BBB11 conta que se inscreveu mais de uma vez e revela por que não desistiu de entrar no programa.',
-                  url: 'http://www.globo.com',
-                  views: 39389,
-                  current: true
-              },
-              {
-                  id: 1495271,
-                  title: 'Diana explica como se increver no Big Brother Brasil 12',
-                  description: 'A ex-BBB tira todas as dúvidas dos candidatos e explica as novidades das inscrições para a 12° edição do BBB.',
-                  url: 'http://www.globo.com',
-                  views: 93920,
-                  shortUrl: 'glo.bo/qwe'
-              }
-          ]
-      } );
-  }
+    var playlist = {
+        
+        init: function() {
+            this.deslocamento = 0; 
+            this.$playlist = $('div.bloco-playlist');
+            this.trilho = this.$playlist.find('div.trilho-videos');
+            this.setaEsquerda = this.$playlist.find('a.seta-esquerda');
+            this.setaDireita = this.$playlist.find('a.seta-direita');
+            
+            this.setCurrent( $(this.trilho).find('current') );
+            this.setStatusSetas();
+            this.binds();
 
-  $(document).ready(function(){
-      abrir() 
-  });
+        },
 
+        binds: function(){
+            var that = this;
+            this.$playlist.delegate('a.seta-direita', 'click', function( event ){
+                if ( $(this).hasClass('inativo') )
+                    return false;
+                that.goNext();
+            });
+            
+            this.$playlist.delegate('a.seta-esquerda', 'click', function( event ){
+                if ( $(this).hasClass('inativo') )
+                    return false;
+                that.goPrev();
+            });
+        },
+        
+        goNext: function(){
+
+            this.deslocamento += - parseInt( $(this.current).next('ul').css('width') );
+            $(this.trilho).css('text-indent', this.deslocamento);
+            this.setCurrent(this.current.next('ul'));
+            this.setStatusSetas();
+        },
+        
+        goPrev: function(){
+            
+            this.deslocamento += parseInt( $(this.current).css('width') );
+            $(this.trilho).css('text-indent', this.deslocamento);
+            this.setCurrent(this.current.prev('ul'));
+            this.setStatusSetas();
+        },
+
+        setStatusSetas: function(){
+            if ( this.current.next('ul').size() == 1 ){
+                $(this.setaDireita).removeClass('inativo');
+            } else { 
+                $(this.setaDireita).addClass('inativo');
+            }
+            if ( this.current.prev('ul').size() == 1 ){
+                $(this.setaEsquerda).removeClass('inativo');
+            } else { 
+                $(this.setaEsquerda).addClass('inativo');
+            }    
+        },
+
+        setCurrent:function(newCurrent){
+            if ( newCurrent.size() != 1 ) {
+                
+                this.current = $(this.trilho).find('ul:first').addClass('current');
+
+            } else {
+        
+                $(this.current).removeClass('current');
+                this.current = $(newCurrent).addClass('current');
+
+            }
+        }
+    };
+
+
+    $(document).ready(function(){
+        playlist.init();
+    });
+
+    
   </script>
 </head>
 
@@ -116,54 +156,126 @@
                 </div><!-- .bloco-palco -->
                 <div class="bloco-playlist">
                     
-                    <span class="seta-esquerda"></span>
-                    <ul class="lista-videos">
-                        <li class="video">
-                            <a href="#">
-                                <img src="http://img.video.globo.com/180x108/1606199.jpg">
-                                <span class="hover-img"></span> 
-                                <span class="contador-videos">
-                                    cena <span class="numero">1</span> de <span class="numero">23</span> 
-                                </span>
-                                <span class="titulo-item">Maria dá dicas para quem quer se inscrever no BBB12</span>
-                                <span class="exibicao"><strong>5.548</strong> exibições</span>
-                            </a>
-                        </li>
-                        <li class="video">
-                            <a href="#">
-                                <img src="http://img.video.globo.com/180x108/1606199.jpg">
-                                <span class="hover-img"></span> 
-                                <span class="contador-videos">
-                                    cena <span class="numero">1</span> de <span class="numero">23</span> 
-                                </span>
-                                <span class="titulo-item">Maria dá dicas para quem quer se inscrever no BBB12</span>
-                                <span class="exibicao"><strong>5.548</strong> exibições</span>
-                            </a>
-                        </li>
-                        <li class="video">
-                            <a href="#">
-                                <img src="http://img.video.globo.com/180x108/1606199.jpg">
-                                <span class="hover-img"></span> 
-                                <span class="contador-videos">
-                                    cena <span class="numero">1</span> de <span class="numero">23</span> 
-                                </span>
-                                <span class="titulo-item">Maria dá dicas para quem quer se inscrever no BBB12</span>
-                                <span class="exibicao"><strong>5.548</strong> exibições</span>
-                            </a>
-                        </li>
-                        <li class="video">
-                            <a href="#">
-                                <img src="http://img.video.globo.com/180x108/1606199.jpg">
-                                <span class="hover-img"></span> 
-                                <span class="contador-videos">
-                                    cena <span class="numero">1</span> de <span class="numero">23</span> 
-                                </span>
-                                <span class="titulo-item">Maria dá dicas para quem quer se inscrever no BBB12</span>
-                                <span class="exibicao"><strong>5.548</strong> exibições</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <span class="seta-direita inativo"></span>
+                    <a class="seta-esquerda"></a>
+                    <div class="trilho-videos">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <img src="http://img.video.globo.com/180x108/1606199.jpg">
+                                    <span class="hover-img"></span> 
+                                    <span class="contador-videos">
+                                        cena <span class="numero">1</span> de <span class="numero">23</span> 
+                                    </span>
+                                    <span class="titulo-item"> lista 1 Maria dá dicas para quem quer se inscrever no BBB12</span>
+                                    <span class="exibicao"><strong>5.548</strong> exibições</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="http://img.video.globo.com/180x108/1606199.jpg">
+                                    <span class="hover-img"></span> 
+                                    <span class="contador-videos">
+                                        cena <span class="numero">1</span> de <span class="numero">23</span> 
+                                    </span>
+                                    <span class="titulo-item"> lista 1 Maria dá dicas para quem quer se inscrever no BBB12</span>
+                                    <span class="exibicao"><strong>5.548</strong> exibições</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="http://img.video.globo.com/180x108/1606199.jpg">
+                                    <span class="hover-img"></span> 
+                                    <span class="contador-videos">
+                                        cena <span class="numero">1</span> de <span class="numero">23</span> 
+                                    </span>
+                                    <span class="titulo-item"> lista 1 Maria dá dicas para quem quer se inscrever no BBB12</span>
+                                    <span class="exibicao"><strong>5.548</strong> exibições</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="http://img.video.globo.com/180x108/1606199.jpg">
+                                    <span class="hover-img"></span> 
+                                    <span class="contador-videos">
+                                        cena <span class="numero">1</span> de <span class="numero">23</span> 
+                                    </span>
+                                    <span class="titulo-item"> lista 1 Maria dá dicas para quem quer se inscrever no BBB12</span>
+                                    <span class="exibicao"><strong>5.548</strong> exibições</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul>
+                           <li>
+                                <a href="#">
+                                    <img src="http://img.video.globo.com/180x108/1606199.jpg">
+                                    <span class="hover-img"></span> 
+                                    <span class="contador-videos">
+                                        cena <span class="numero">1</span> de <span class="numero">23</span> 
+                                    </span>
+                                    <span class="titulo-item"> lista 2 Maria dá dicas para quem quer se inscrever no BBB12</span>
+                                    <span class="exibicao"><strong>5.548</strong> exibições</span>
+                                </a>
+                                </li>
+                            <li>
+                                <a href="#">
+                                    <img src="http://img.video.globo.com/180x108/1606199.jpg">
+                                    <span class="hover-img"></span> 
+                                    <span class="contador-videos">
+                                        cena <span class="numero">1</span> de <span class="numero">23</span> 
+                                    </span>
+                                    <span class="titulo-item"> lista 2 Maria dá dicas para quem quer se inscrever no BBB12</span>
+                                    <span class="exibicao"><strong>5.548</strong> exibições</span>
+                                </a>
+                                </li>
+                            <li>
+                                <a href="#">
+                                    <img src="http://img.video.globo.com/180x108/1606199.jpg">
+                                    <span class="hover-img"></span> 
+                                    <span class="contador-videos">
+                                        cena <span class="numero">1</span> de <span class="numero">23</span> 
+                                    </span>
+                                    <span class="titulo-item"> lista 2 Maria dá dicas para quem quer se inscrever no BBB12</span>
+                                    <span class="exibicao"><strong>5.548</strong> exibições</span>
+                                </a>
+                                </li>
+                            <li>
+                                <a href="#">
+                                    <img src="http://img.video.globo.com/180x108/1606199.jpg">
+                                    <span class="hover-img"></span> 
+                                    <span class="contador-videos">
+                                        cena <span class="numero">1</span> de <span class="numero">23</span> 
+                                    </span>
+                                    <span class="titulo-item"> lista 2 Maria dá dicas para quem quer se inscrever no BBB12</span>
+                                    <span class="exibicao"><strong>5.548</strong> exibições</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul>
+                           <li>
+                                <a href="#">
+                                    <img src="http://img.video.globo.com/180x108/1606199.jpg">
+                                    <span class="hover-img"></span> 
+                                    <span class="contador-videos">
+                                        cena <span class="numero">1</span> de <span class="numero">23</span> 
+                                    </span>
+                                    <span class="titulo-item"> lista 3 Maria dá dicas para quem quer se inscrever no BBB12</span>
+                                    <span class="exibicao"><strong>5.548</strong> exibições</span>
+                                </a>
+                                </li>
+                            <li>
+                                <a href="#">
+                                    <img src="http://img.video.globo.com/180x108/1606199.jpg">
+                                    <span class="hover-img"></span> 
+                                    <span class="contador-videos">
+                                        cena <span class="numero">1</span> de <span class="numero">23</span> 
+                                    </span>
+                                    <span class="titulo-item"> lista 3 Maria dá dicas para quem quer se inscrever no BBB12</span>
+                                    <span class="exibicao"><strong>5.548</strong> exibições</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <a class="seta-direita"></a>
                     <span class="borda-inferior"></span>
                 </div><!-- .bloco-playlist -->
                 <div class="bloco-comentario">
