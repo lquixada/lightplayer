@@ -27,11 +27,10 @@ LightPlayer.prototype = {
         //this.social.init( {
             //container: this.div.find( 'div.video-social' )
         //} );
-        
-        this.add( new Header() );
-        this.add( new Stage() );
-        this.add( new VideoTitle() );
-        
+        this._addEvents();
+
+        this._addMods();
+
         this._animateIn( function () {
             //var list = $.isArray( json )? json: json.list;
             
@@ -39,8 +38,6 @@ LightPlayer.prototype = {
             //that._selectCurrent( list );
             //that._bindEvents();
         } );
-
-        this._addEvents();
     },
 
     close: function () {
@@ -57,10 +54,16 @@ LightPlayer.prototype = {
         $( document ).unbind( 'keydown.lightplayer' );
     },
 
-    // private
-
     add: function ( mod ) {
         this.div.find( 'div.widget' ).append( mod.init( this.bus, this.json ) ); 
+    },
+
+    // private
+    
+    _addMods: function () {
+        this.add( new Header() );
+        this.add( new Stage() );
+        this.add( new VideoTitle() );
     },
 
     _addEvents: function () {
