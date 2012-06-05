@@ -7,6 +7,7 @@ Stage = function () {};
 
 Stage.prototype = {
     init: function ( bus, json ) {
+        this.name = 'stage';
         this.bus = bus;
         this.json = json;
 
@@ -20,6 +21,18 @@ Stage.prototype = {
 
     _addEvents: function () {
         var that = this;
+        
+        this.bus.bind( 'video-change', function ( evt ) {
+            var itemPrev;
+
+            if ( evt.origin !== that.name ) {
+                that.json = evt.json;
+
+                itemPrev = that._getItem( 'prev' );
+                that._setItemAsCurrent( itemPrev );
+                that._goNext();
+            }
+        } );
 
         this.domRoot
             .delegate( 'a.nav.next', 'click', function () {
@@ -67,21 +80,13 @@ Stage.prototype = {
     },
 
     _addItem: function( position ) {
-        var itemHTML,
-            item = this._getItem( position ),
-            ul = this.domRoot.find( 'ul' );
+        var item = this._getItem( position );
         
-        itemHTML = [
+        this.domRoot.find( 'ul' ).append( [
             '<li id="item-'+item.id+'" class="'+position+'">',
                 '<div class="video-player"></div>',
             '</li>'
-        ].join( '' );
-        
-        if ( position === 'prev' ) {
-            ul.prepend( itemHTML );
-        } else {
-            ul.append( itemHTML );
-        }
+        ].join( '' ) );
 
         return item;
     },
@@ -132,7 +137,11 @@ Stage.prototype = {
         this._updateArrows();
         this._updateItem( item );
 
-        this.bus.trigger( 'video-change', this.json );
+        this.bus.trigger( {
+            type: 'video-change',
+            origin: this.name,
+            json: this.json
+        } );
     },
 
     _goPrev: function () {
@@ -142,7 +151,11 @@ Stage.prototype = {
         this._updateArrows();
         this._updateItem( item );
 
-        this.bus.trigger( 'video-change', this.json );
+        this.bus.trigger( {
+            type: 'video-change',
+            origin: this.name,
+            json: this.json
+        } );
     },
 
     _render: function () {

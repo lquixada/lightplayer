@@ -55,7 +55,8 @@ LightPlayer.prototype = {
     },
 
     add: function ( mod ) {
-        this.div.find( 'div.widget' ).append( mod.init( this.bus, this.json ) ); 
+        var json = $.extend( true, {}, this.json );
+        this.div.find( 'div.widget' ).append( mod.init( this.bus, json ) ); 
     },
 
     // private

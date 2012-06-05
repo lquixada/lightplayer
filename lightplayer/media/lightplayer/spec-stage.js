@@ -20,6 +20,12 @@ describe("Module: Stage", function() {
         // TODO
     });
 
+    it("should have a name", function() {
+        this.stage.init( this.bus, this.json );
+
+        expect( this.stage.name ).toBe( 'stage' );
+    });
+
     describe("first item", function() {
         beforeEach(function() {
             this.json.list[0].current = true;
@@ -279,7 +285,7 @@ describe("Module: Stage", function() {
     describe("interaction", function() {
         beforeEach(function() {
             this.json.list[1].current = true;
-           
+            
             this.stage.init( this.bus, this.json );
 
             this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
@@ -319,37 +325,19 @@ describe("Module: Stage", function() {
                 expect( this.playerParams.videosIDs ).toBe( this.json.list[2].id );
             });
 
-            it("should trigger video-change", function() {
-                var callback = jasmine.createSpy( 'video-change-callback' );
+            it("should trigger video-change from it", function() {
+                var event, callback;
+
+                callback = jasmine.createSpy( 'video-change-callback' ).andCallFake( function ( evt ) {
+                    event = evt;
+                } );
                 
                 this.stage.init( this.bus, this.json );
                 this.stage.bus.bind( 'video-change', callback );
 
                 this.nextButton.click();
 
-                expect( callback ).toHaveBeenCalled();
-            });
-
-            
-        });
-
-        describe("Keyboard shortcuts", function() {
-            it("should go to the next item with Right key", function() {
-                var evt = $.Event( 'keydown' );
-                evt.which = 39;
-                
-                $( document ).trigger( evt );
-
-                expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-789' );
-            });
-
-            it("should go to the next item with Left key", function() {
-                var evt = $.Event( 'keydown' );
-                evt.which = 37;
-                
-                $( document ).trigger( evt );
-
-                expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-123' );
+                expect( event.origin ).toBe( 'stage' );
             });
         });
         
@@ -379,18 +367,62 @@ describe("Module: Stage", function() {
                 expect( this.playerParams.videosIDs ).toBe( this.json.list[0].id );
             });
 
-            it("should trigger video-change", function() {
-                var callback = jasmine.createSpy( 'video-change-callback' );
+            it("should trigger video-change from it", function() {
+                var event, callback;
+
+                callback = jasmine.createSpy( 'video-change-callback' ).andCallFake( function ( evt ) {
+                    event = evt;
+                } );
                 
                 this.stage.init( this.bus, this.json );
                 this.stage.bus.bind( 'video-change', callback );
 
                 this.prevButton.click();
 
-                expect( callback ).toHaveBeenCalled();
+                expect( event.origin ).toBe( 'stage' );
             });
         });
 
-    });
+        describe("Keyboard shortcuts", function() {
+            it("should go to the next item with Right key", function() {
+                var evt = $.Event( 'keydown' );
+                evt.which = 39;
+                
+                $( document ).trigger( evt );
+
+                expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-789' );
+            });
+
+            it("should go to the next item with Left key", function() {
+                var evt = $.Event( 'keydown' );
+                evt.which = 37;
+                
+                $( document ).trigger( evt );
+
+                expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-123' );
+            });
+        });
+
+        describe("Events", function() {
+            it("should change on video-change", function() {
+                this.json.list[1].current = false;
+                this.json.list[2].current = true;
+                
+                this.bus.trigger( { type:'video-change', origin: 'testsuite', json: this.json } );
+                
+                expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-789' );
+            });
+
+
+            it("should not change on video-change from same source", function() {
+                this.json.list[1].current = false;
+                this.json.list[2].current = true;
+                
+                this.bus.trigger( { type:'video-change', origin: 'stage' } );
+                
+                expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-456' );
+            });
+        });
+    }); // describe( "interaction" )
     
 });

@@ -22,10 +22,28 @@ VideoTitle.prototype = {
     _addEvents: function () {
         var that = this;
 
-        this.bus.bind( 'video-change', function ( event, data ) {
-            that.json = data;
+        this.bus.bind( 'video-change', function ( evt ) {
+            that.json = evt.json;
             that._updateItem();
         } );
+    },
+
+    _getItem: function ( position ) {
+        var itemChosen, itens = this.json.list,
+            choose = function ( i ) {
+                if ( position === 'current' ) {  return itens[i];   }
+                if ( position === 'next' ) {     return itens[i+1]; }
+                if ( position === 'prev' ) {     return itens[i-1]; }
+            };
+        
+        $.each( itens, function ( i ) {
+            if ( this.current ) {
+                itemChosen = choose( i );
+                return false;
+            }
+        });
+        
+        return itemChosen || {};
     },
 
     _render: function () {
@@ -47,25 +65,6 @@ VideoTitle.prototype = {
         this.domRoot.find( 'h6' ).text( item.title );
         this.domRoot.find( 'span.views' ).text( item.views+' exibições' );
         this.domRoot.find( 'p' ).text( item.description );
-    },
-
-    _getItem: function ( position ) {
-        var itemChosen, itens = this.json.list,
-            choose = function ( i ) {
-                if ( position === 'current' ) {  return itens[i];   }
-                if ( position === 'next' ) {     return itens[i+1]; }
-                if ( position === 'prev' ) {     return itens[i-1]; }
-            };
-        
-        $.each( itens, function ( i ) {
-            if ( this.current ) {
-                itemChosen = choose( i );
-                return false;
-            }
-        });
-        
-        return itemChosen || {};
     }
-
 };
 

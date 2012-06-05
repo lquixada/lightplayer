@@ -2,7 +2,7 @@
  * MODULO HEADER
  ***********************************************/
 
-describe("Module: Title", function() {
+describe("Module: Video Title", function() {
     beforeEach(function() {
         this.bus = $({});
         this.json = {
@@ -42,7 +42,7 @@ describe("Module: Title", function() {
         this.json.list[1].current = false;
         this.json.list[2].current = true;
 
-        this.bus.trigger( 'video-change', this.json );
+        this.bus.trigger( { type: 'video-change', json: this.json } );
         
         expect( div.find( 'h6' ).text() ).toBe( current.title );
         expect( div.find( 'p' ).text() ).toBe( current.description );
