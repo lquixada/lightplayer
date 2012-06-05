@@ -52,6 +52,18 @@ Stage.prototype = {
                     a.stop().animate( { width: 0 }, 250 );
                 });
             } );
+        
+        $( document ).bind( 'keydown.lightplayer', function ( evt ) {
+            /* RIGHT key */
+            if ( evt.which === 39 ) {
+                that.domRoot.find( 'a.next.visible' ).click();
+            }
+            
+            /* LEFT key */
+            if ( evt.which === 37 ) {
+                that.domRoot.find( 'a.prev.visible' ).click();
+            }
+        } ); 
     },
 
     _addItem: function( position ) {
@@ -77,9 +89,9 @@ Stage.prototype = {
     _getItem: function ( position ) {
         var itemChosen, itens = this.json.list,
             choose = function ( i ) {
-                if ( position === 'current' ) {  return itens[i];   }
-                if ( position === 'next' ) {     return itens[i+1]; }
-                if ( position === 'prev' ) {     return itens[i-1]; }
+                if ( position === 'current' ) { return itens[i];   }
+                if ( position === 'next' ) {    return itens[i+1]; }
+                if ( position === 'prev' ) {    return itens[i-1]; }
             };
         
         $.each( itens, function ( i ) {

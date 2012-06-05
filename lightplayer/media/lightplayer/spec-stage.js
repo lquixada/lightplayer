@@ -329,8 +329,30 @@ describe("Module: Stage", function() {
 
                 expect( callback ).toHaveBeenCalled();
             });
+
             
         });
+
+        describe("Keyboard shortcuts", function() {
+            it("should go to the next item with Right key", function() {
+                var evt = $.Event( 'keydown' );
+                evt.which = 39;
+                
+                $( document ).trigger( evt );
+
+                expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-789' );
+            });
+
+            it("should go to the next item with Left key", function() {
+                var evt = $.Event( 'keydown' );
+                evt.which = 37;
+                
+                $( document ).trigger( evt );
+
+                expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-123' );
+            });
+        });
+        
 
         describe("PREV button", function() {
             beforeEach(function() {

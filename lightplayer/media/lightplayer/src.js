@@ -27,9 +27,9 @@ LightPlayer.prototype = {
         //this.social.init( {
             //container: this.div.find( 'div.video-social' )
         //} );
-        this._addEvents();
-
+        
         this._addMods();
+        this._addEvents();
 
         this._animateIn( function () {
             //var list = $.isArray( json )? json: json.list;
@@ -73,20 +73,15 @@ LightPlayer.prototype = {
             that.close();
         } );
 
-        this.div.delegate( 'div.widget-container', 'click', function ( event ) {
-                if ( event.target == this ) {
-                    that.close();
-                }
-            } );
+        this.div.delegate( 'div.widget-container', 'click', function ( evt ) {
+            if ( evt.target === this ) {
+                that.close();
+            }
+        } );
 
         $( document ).bind( 'keydown.lightplayer', function ( evt ) {
-            switch ( evt.which ) {
-                case 27: /* ESC key */
-                    that.close(); break;
-                //case 37: [> LEFT key <]
-                    //that.div.find( 'a.prev.visible' ).click(); break;
-                //case 39: [> RIGHT key <]
-                    //that.div.find( 'a.next.visible' ).click(); break;
+            if ( evt.which === 27 ) {
+                that.close();
             }
         } );
     },
@@ -163,35 +158,6 @@ LightPlayer.prototype = {
         this.ul.append( lis );
     },
     
-    _attachPlayer: function ( item ) {
-        var that = this, eventName;
-
-        this._removePlayers();
-
-        try {
-            // page is a global variable, do not trust its existence.
-            var sitePage = page && page.sitePageVideo;
-        } catch ( err ) {  }
-
-        item.find( 'div.video-player' ).player( {
-            width: 480,
-            height: 360,
-            sitePage: sitePage,
-            autoPlay: true,
-            complete: function () {
-                $( document ).trigger( 'video-ended.lightplayer' );
-
-                that._goNext();
-            }
-        } );
-        
-        eventName = (this.justOpened? 'video-autoplayed-onopen': 'video-autoplayed-onplaylist');
-
-        $( document ).trigger( eventName+'.lightplayer' );
-
-        this.justOpened = false;
-    },
-
     _go: function ( directionClass ) {
         var li = this.div.find( 'li.'+directionClass );
         this._show( li );
@@ -421,7 +387,6 @@ LightPlayer.prototype = {
     _show: function ( item ) {
         // Item
         this._setCurrent( item );
-        this._attachPlayer( item );
         this._updateInfo( item );
 
         // Nav buttons
