@@ -17,6 +17,12 @@ describe("Module: Title", function() {
         this.title.init( this.bus, this.json );
     });
 
+    it("should have a name", function() {
+        this.title.init( this.bus, this.json );
+
+        expect( this.title.name ).toBe( 'video title' );
+    });
+    
     it("should have a default title", function() {
         expect( this.title.domRoot.find( 'h6' ).html() ).toBe( this.json.list[1].title );
     });

@@ -16,6 +16,12 @@ describe("Module: Header", function() {
         this.header = new Header();
         this.header.init( this.bus, this.json );
     });
+    
+    it("should have a name", function() {
+        this.header.init( this.bus, this.json );
+
+        expect( this.header.name ).toBe( 'header' );
+    });
 
     it("should have a default title", function() {
         expect( this.header.domRoot.find( 'h5' ).html() ).toBe( '<span>mais</span> videos' );

@@ -7,6 +7,7 @@ VideoTitle = function () {};
 
 VideoTitle.prototype = {
     init: function ( bus, json ) {
+        this.name = 'video title';
         this.bus = bus;
         this.json = json;
 

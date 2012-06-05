@@ -7,6 +7,7 @@ Header = function () {};
 
 Header.prototype = {
     init: function ( bus, json ) {
+        this.name = 'header';
         this.bus = bus;
         this.json = json;
 
