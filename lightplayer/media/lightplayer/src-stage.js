@@ -5,7 +5,7 @@
 
 Stage = function () {};
 
-$.extend( Stage.prototype, new Mod(), {
+Stage.prototype = $.extend( new Mod(), {
     init: function ( bus, json ) {
         this.name = 'stage';
         this.bus = bus;

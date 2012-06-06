@@ -5,7 +5,7 @@
 
 Header = function () {};
 
-$.extend( Header.prototype, new Mod(), {
+Header.prototype = $.extend( new Mod(), {
     init: function ( bus, json ) {
         this.name = 'header';
         this.bus = bus;

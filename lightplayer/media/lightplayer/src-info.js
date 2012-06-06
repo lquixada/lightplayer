@@ -5,7 +5,7 @@
 
 Info = function () {};
 
-$.extend( Info.prototype, new Mod(), {
+Info.prototype = $.extend( new Mod(), {
     init: function ( bus, json ) {
         this.name = 'info';
         this.bus = bus;
