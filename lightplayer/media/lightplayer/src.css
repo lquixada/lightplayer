@@ -372,10 +372,10 @@ div.lightplayer div.social span.facebook {
 
 
 /********************************************************
- * MODULO VIDEO INFO
+ * MODULO INFO
  ********************************************************/
 
-div.lightplayer div.video-info {
+div.lightplayer div.info {
     display:inline-block;
     *display:inline;
     *zoom:1;
@@ -384,7 +384,7 @@ div.lightplayer div.video-info {
     vertical-align:top;
 }
 
-div.lightplayer div.video-info h6 {
+div.lightplayer div.info h6 {
     display:inline;
     margin-right:5px;
     color:#333;
@@ -392,14 +392,16 @@ div.lightplayer div.video-info h6 {
     letter-spacing:-2px;
 }
 
-div.lightplayer div.video-info p {
+div.lightplayer div.info p {
     margin-top:15px;
     color:#999;
     font:14px/18px Arial, sans-serif;
     letter-spacing: -0.4px;
 }
 
-div.lightplayer div.video-info span.views {
+div.lightplayer div.info span.views {
     color:#bbb;
     font:12px Arial, sans-serif;
 }
+
+
