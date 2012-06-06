@@ -1,7 +1,0 @@
-
-= TODO =============================================
-
-- Testando edge cases. Ex.: problema com parametros.
-- Converter singleton lightplayer para função construtora LightPlayer
-- Remover dependências: player, facebookParse e tipTip
-- Tagear versões
