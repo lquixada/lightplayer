@@ -73,7 +73,5 @@ describe("Module: Basic Module", function() {
             expect( this.json.list[1].current ).toBeFalsy();
         });
     });
-    
-
 
 });

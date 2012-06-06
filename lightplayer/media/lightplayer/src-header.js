@@ -1,11 +1,11 @@
 
 /***********************************************
- * MODULO STAGE
+ * MODULO HEADER
  ***********************************************/
 
 Header = function () {};
 
-Header.prototype = {
+$.extend( Header.prototype, new Mod(), {
     init: function ( bus, json ) {
         this.name = 'header';
         this.bus = bus;
@@ -39,6 +39,5 @@ Header.prototype = {
             '</div>'
         ].join( '' ) ); 
     }
-
-};
+});
 

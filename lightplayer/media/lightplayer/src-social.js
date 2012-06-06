@@ -5,7 +5,7 @@
 
 Social = function () {};
 
-Social.prototype = {
+$.extend( Social.prototype, new Mod(), {
     init: function ( bus, json ) {
         this.name = 'social';
         this.bus = bus;
@@ -30,24 +30,6 @@ Social.prototype = {
 
     _clear: function () {
         this.domRoot.html( '' );
-    },
-
-    _getItem: function ( position ) {
-        var itemChosen, itens = this.json.list,
-            choose = function ( i ) {
-                if ( position === 'current' ) {  return itens[i];   }
-                if ( position === 'next' ) {     return itens[i+1]; }
-                if ( position === 'prev' ) {     return itens[i-1]; }
-            };
-        
-        $.each( itens, function ( i ) {
-            if ( this.current ) {
-                itemChosen = choose( i );
-                return false;
-            }
-        });
-        
-        return itemChosen || {};
     },
 
     _render: function () {
@@ -137,5 +119,4 @@ Social.prototype = {
         this._clear();
         this._renderSocials();
     }
-};
-
+});

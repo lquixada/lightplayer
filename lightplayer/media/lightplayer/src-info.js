@@ -5,7 +5,7 @@
 
 Info = function () {};
 
-Info.prototype = {
+$.extend( Info.prototype, new Mod(), {
     init: function ( bus, json ) {
         this.name = 'info';
         this.bus = bus;
@@ -28,24 +28,6 @@ Info.prototype = {
         } );
     },
 
-    _getItem: function ( position ) {
-        var itemChosen, itens = this.json.list,
-            choose = function ( i ) {
-                if ( position === 'current' ) {  return itens[i];   }
-                if ( position === 'next' ) {     return itens[i+1]; }
-                if ( position === 'prev' ) {     return itens[i-1]; }
-            };
-        
-        $.each( itens, function ( i ) {
-            if ( this.current ) {
-                itemChosen = choose( i );
-                return false;
-            }
-        });
-        
-        return itemChosen || {};
-    },
-
     _render: function () {
         var item = this._getItem( 'current' );
 
@@ -66,5 +48,5 @@ Info.prototype = {
         this.domRoot.find( 'span.views' ).text( item.views+' exibições' );
         this.domRoot.find( 'p' ).text( item.description );
     }
-};
+});
 

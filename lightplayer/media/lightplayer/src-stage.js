@@ -5,7 +5,7 @@
 
 Stage = function () {};
 
-Stage.prototype = {
+$.extend( Stage.prototype, new Mod(), {
     init: function ( bus, json ) {
         this.name = 'stage';
         this.bus = bus;
@@ -89,24 +89,6 @@ Stage.prototype = {
         ].join( '' ) );
 
         return item;
-    },
-
-    _getItem: function ( position ) {
-        var itemChosen, itens = this.json.list,
-            choose = function ( i ) {
-                if ( position === 'current' ) { return itens[i];   }
-                if ( position === 'next' ) {    return itens[i+1]; }
-                if ( position === 'prev' ) {    return itens[i-1]; }
-            };
-        
-        $.each( itens, function ( i ) {
-            if ( this.current ) {
-                itemChosen = choose( i );
-                return false;
-            }
-        });
-        
-        return itemChosen || {};
     },
 
     _go: function ( position ) {
@@ -196,16 +178,6 @@ Stage.prototype = {
         ].join( '' ) ); 
     },
 
-    _setItemAsCurrent: function  ( itemChosen ) {
-        var itens = this.json.list;
-
-        $.each( itens, function () {
-            this.current = false;
-        });
-
-        itemChosen.current = true;
-    },
-
     _updateArrows: function () {
         var first = this.json.list[0],
             last = this.json.list[this.json.list.length-1];
@@ -255,5 +227,4 @@ Stage.prototype = {
         this.domRoot.find( 'a.nav.prev' ).addClass( 'visible' )
             .find( 'span.titulo' ).text( item.title );
     }
-};
-
+});
