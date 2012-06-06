@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Light Player Novelas Test Runner</title>
+  
+  <link href="../jasmine-1.2.0/jasmine.css" rel="stylesheet"/>
+  <style>
+  div#TrivialReporter { top:35px; }
+  </style>
+  <link href="../lightplayer/src.css" rel="stylesheet"/>
+	
+  <!-- dependencies -->
+  <script src="../jasmine-1.2.0/jasmine.js"></script>
+  <script src="../jasmine-1.2.0/jasmine-html.js"></script>
+  <script src="../jquery-1.4.3.min.js"></script>
+  <script src="http://s.videos.globo.com/p2/j/api.min.js"></script>
+  <script src="../lightplayer/src.js"></script>
+	
+  <!-- source code -->
+  <script src="src.js"></script>
+
+  <!-- specs-->
+  <script src="spec.js"></script>
+
+  <script>
+  function abrir() {
+      lightplayer = new LightPlayerNovelas();
+
+      lightplayer.open( {
+          title: '<span>clássicos</span> do BBB',
+          subtitle: 'os vídeos mais clicados',
+          mode: 'sd',
+          htmlClass: 'bbb',
+          prevPage: 'fixtures/1.json',
+          nextPage: 'fixtures/3.json',
+          list: [
+              {
+                  id: 1673168,
+                  title: 'Maurício anuncia os últimos dias de inscrições para o BBB12',
+                  description: 'O ex-BBB alerta os condidatos para os últimos momentos das inscrições',
+                  url: 'http://www.globo.com',
+                  views: 3412
+              },
+              {
+                  id: 1606199,
+                  title: 'Maria dá dicas para quem quer se inscrever no BBB12',
+                  description: 'A vencedora do BBB11 conta que se inscreveu mais de uma vez e revela por que não desistiu de entrar no programa.',
+                  url: 'http://www.globo.com',
+                  views: 39389,
+                  shortUrl: 'glo.bo/qwe',
+                  current: true
+              },
+              {
+                  id: 1495271,
+                  title: 'Diana explica como se increver no Big Brother Brasil 12',
+                  description: 'A ex-BBB tira todas as dúvidas dos candidatos e explica as novidades das inscrições para a 12° edição do BBB.',
+                  url: 'http://www.globo.com',
+                  views: 93920,
+                  shortUrl: 'glo.bo/qwe'
+              },
+              {
+                  id: 1959251,
+                  title: 'Veja as dicas que os ex-BBBs prepararam para você bombar a sua inscrição',
+                  description: 'Veja as dicas que os ex-BBBs prepararam para você bombar a sua inscrição',
+                  url: 'http://www.globo.com',
+                  views: 1527
+              },
+              {
+                  id: 1884004,
+                  title: 'Pedro Bial faz discurso sobre o BBB com participação dos Brothers',
+                  description: 'Pedro Bial faz discurso sobre o BBB com participação dos Brothers',
+                  url: 'http://www.globo.com',
+                  views: 1035
+              },
+              {
+                  id: 1830423,
+                  title: 'Monique esquece câmeras e fica de calcinha fio dental',
+                  description: 'Monique esquece câmeras e fica de calcinha fio dental',
+                  url: 'http://www.globo.com',
+                  views: 937,
+                  shortUrl: 'glo.bo/qwe'
+              }
+          ]
+      } );
+  }
+  </script>
+</head>
+
+<body>
+
+<div id="buttons">
+    <button onclick="abrir()">abrir</button>
+</div>
+
+<div id="main">
+  <!-- HTML fixtures -->
+</div>
+
+<script type="text/plain+template" id="lightplayer-template">
+    <div class="lightplayer">
+        <div class="widget-container">
+            <div class="widget">
+            </div> <!-- .widget -->
+
+            &nbsp; <!-- needed for preventing scrollbar flickering -->
+        </div> <!-- .widget-container -->
+
+        <div class="widget-overlay"></div>
+    </div>
+</script>
+
+<script>
+jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+jasmine.getEnv().execute();
+</script>
+
+</body>
+
+</html>
+
