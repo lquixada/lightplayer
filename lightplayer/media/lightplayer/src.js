@@ -60,7 +60,7 @@ LightPlayer.prototype = {
     _addMods: function () {
         this.add( new Header() );
         this.add( new Stage() );
-        this.add( new VideoTitle() );
+        this.add( new Info() );
         this.add( new Social() );
     },
 

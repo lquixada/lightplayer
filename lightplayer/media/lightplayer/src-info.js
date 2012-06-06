@@ -1,13 +1,13 @@
 
 /***********************************************
- * MODULO TITLE
+ * MODULO INFO
  ***********************************************/
 
-VideoTitle = function () {};
+Info = function () {};
 
-VideoTitle.prototype = {
+Info.prototype = {
     init: function ( bus, json ) {
-        this.name = 'video title';
+        this.name = 'info';
         this.bus = bus;
         this.json = json;
 
@@ -50,7 +50,7 @@ VideoTitle.prototype = {
         var item = this._getItem( 'current' );
 
         this.domRoot = $( [
-            '<div class="video-info">',
+            '<div class="info">',
                 '<h6>'+item.title+'</h6>',
                 ' ', // Espaço intencional
                 '<span class="views">'+item.views+' exibições</span>',

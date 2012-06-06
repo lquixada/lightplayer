@@ -1,8 +1,8 @@
 /***********************************************
- * MODULO HEADER
+ * MODULO INFO
  ***********************************************/
 
-describe("Module: Video Title", function() {
+describe("Module: Info", function() {
     beforeEach(function() {
         this.bus = $({});
         this.json = {
@@ -13,30 +13,30 @@ describe("Module: Video Title", function() {
             ]
         };
 
-        this.title = new VideoTitle();
-        this.title.init( this.bus, this.json );
+        this.info = new Info();
+        this.info.init( this.bus, this.json );
     });
 
     it("should have a name", function() {
-        this.title.init( this.bus, this.json );
+        this.info.init( this.bus, this.json );
 
-        expect( this.title.name ).toBe( 'video title' );
+        expect( this.info.name ).toBe( 'info' );
     });
     
     it("should have a default title", function() {
-        expect( this.title.domRoot.find( 'h6' ).html() ).toBe( this.json.list[1].title );
+        expect( this.info.domRoot.find( 'h6' ).html() ).toBe( this.json.list[1].title );
     });
 
     it("should have a description", function() {
-        expect( this.title.domRoot.find( 'p' ).text() ).toBe( this.json.list[1].description );
+        expect( this.info.domRoot.find( 'p' ).text() ).toBe( this.json.list[1].description );
     });
 
     it("should have views count", function() {
-        expect( this.title.domRoot.find( 'span.views' ).text() ).toBe( this.json.list[1].views+' exibições' );
+        expect( this.info.domRoot.find( 'span.views' ).text() ).toBe( this.json.list[1].views+' exibições' );
     });
 
     it("should update on new current item", function() {
-        var div = this.title.domRoot,
+        var div = this.info.domRoot,
             current = this.json.list[2];
         
         this.json.list[1].current = false;
