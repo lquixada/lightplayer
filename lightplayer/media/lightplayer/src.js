@@ -216,13 +216,9 @@ LightPlayer.prototype = {
             });
 
         $( document ).bind( 'keydown.lightplayer', function ( evt ) {
-            switch ( evt.which ) {
-                case 27: /* ESC key */
-                    that.close(); break;
-                case 37: /* LEFT key */
-                    that.div.find( 'a.prev.visible' ).click(); break;
-                case 39: /* RIGHT key */
-                    that.div.find( 'a.next.visible' ).click(); break;
+            /* ESC key */
+            if ( evt.which === 27 ) {
+                that.close();
             }
         } );
     },
