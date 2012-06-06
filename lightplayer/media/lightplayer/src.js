@@ -327,7 +327,7 @@ LightPlayer.prototype = {
         var li, lis = $( [] ); // Empty jQuery set
 
         $.each( list, function () {
-            li = $( '<li><div class="video-player" data-player-videosIDs="'+this.id+'"></div></li>' );
+            li = $( '<li><div class="video-player"></div></li>' );
             li.data( 'json', this );
             lis = lis.add( li );
         });
