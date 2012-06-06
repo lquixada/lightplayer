@@ -136,7 +136,7 @@ div.lightplayer div.video-player {
     background-color:#000;
 }
 
-div.lightplayer div.video-social {
+div.lightplayer div.social {
     display:inline-block;
     *display:inline;
     *zoom:1;
@@ -146,7 +146,7 @@ div.lightplayer div.video-social {
     vertical-align:top;
 }
 
-div.lightplayer div.video-social a.button {
+div.lightplayer div.social a.button {
     display:inline-block;
     *display:inline;
     *zoom:1;
@@ -160,24 +160,24 @@ div.lightplayer div.video-social a.button {
     background:url(/media/lightplayer/imgs/btn.social.png) transparent 0 0 no-repeat;
 }
 
-div.lightplayer div.video-social a.button.facebook {
+div.lightplayer div.social a.button.facebook {
     background-position:-24px 0;
 }
 
-div.lightplayer div.video-social a.button.orkut {
+div.lightplayer div.social a.button.orkut {
     background-position:0 0;
 }
 
-div.lightplayer div.video-social a.button.twitter {
+div.lightplayer div.social a.button.twitter {
     background-position:-48px 0;
 }
 
-div.lightplayer div.video-social iframe {
+div.lightplayer div.social iframe {
     width:240px;
     height:100px;
 }
 
-div.lightplayer div.video-social input {
+div.lightplayer div.social input {
     padding:0 5px;
     height:22px;
     color:#666;

@@ -24,10 +24,6 @@ LightPlayer.prototype = {
             //container: this.div.find( 'div.widget-content' )
         //} );
 
-        //this.social.init( {
-            //container: this.div.find( 'div.video-social' )
-        //} );
-        
         this._addMods();
         this._addEvents();
 
@@ -65,6 +61,7 @@ LightPlayer.prototype = {
         this.add( new Header() );
         this.add( new Stage() );
         this.add( new VideoTitle() );
+        this.add( new Social() );
     },
 
     _addEvents: function () {
@@ -401,9 +398,6 @@ LightPlayer.prototype = {
             //nextJson: this._getJson( item.next() )
         //} );
 
-        //// Social box
-        //this.social.update( item.data( 'json' ) );
-
         // Pagination
         this._getMore( item );
     },
@@ -477,93 +471,3 @@ LightPlayer.prototype = {
         //this.aNext.find( 'span.title' ).text( options.nextJson.title );
     //}
 //};
-
-
-//LightPlayer.Social = function () {};
-//LightPlayer.Social.prototype = {
-    //init: function ( options ) {
-        //this.div = options.container;
-    //},
-
-    //update: function ( json ) {
-        //this._clearContent();
-
-        //this._updateFacebook( json );
-        //this._updateTwitter( json );
-        //this._updateFacebookButton( json );
-        //this._updateOrkut( json );
-        //this._updateGloboUrl( json );
-
-        //this.div.find('a.button').tipTip( { tipClass: 'amarelo' } );
-    //},
-
-    //// private
-    
-    //_clearContent: function () {
-        //this.div.html( '' );
-    //},
-
-    //_updateFacebook: function ( json ) {
-        //var span = $( '<span class="facebook"></span>' );
-        
-        //span.append( '<fb:like href="'+json.url+'" send="false" width="240" show_faces="true"></fb:like>' )
-            //.appendTo( this.div );
-        
-        //facebookParse( span.get(0) );
-    //},
-
-    //_updateFacebookButton: function ( json ) {
-        //var url = json.shortUrl || json.url;
-
-        //$( '<a></a>', {
-            //'href': 'http://www.facebook.com/share.php?t='+encodeURIComponent(json.title)+'&u='+encodeURIComponent(url),
-            //'class': 'facebook button',
-            //'data-video-url': json.url,
-            //'data-video-id': json.id,
-            //'target': '_blank',
-            //'title': 'Compartilhe no Facebook'
-        //}).appendTo( this.div );
-    //},
-
-    //_updateGloboUrl: function ( json ) {
-        //if ( !json.shortUrl ) {
-            //return;
-        //}
-
-        //$( '<input />', {
-            //type: 'text',
-            //value: json.shortUrl,
-            //readonly: 'readonly',
-            //'class': 'globo-url'
-        //}).appendTo( this.div );
-    //},
-
-    //_updateOrkut: function ( json ) {
-        //var url = json.shortUrl || json.url;
-
-        //$( '<a></a>', {
-            //'href': 'http://promote.orkut.com/preview?nt=orkut.com&tt='+encodeURI(json.title)+'%20-%20BBB12&cn='+encodeURI(json.description)+'&du='+json.url+'&tn='+json.thumbUrl,
-            //'class': 'orkut button',
-            //'data-video-url': json.url,
-            //'data-video-id': json.id,
-            //'target': '_blank',
-            //'title': 'Compartilhe no Orkut'
-        //}).appendTo( this.div );
-    //},
-
-    //_updateTwitter: function ( json ) {
-        //var url = json.shortUrl || json.url;
-
-        //$( '<a></a>', {
-            //'href': 'http://twitter.com?status='+encodeURIComponent(url+' '+json.title+' #bbb12'),
-            //'class': 'twitter button',
-            //'data-video-url': json.url,
-            //'data-video-id': json.id,
-            //'target': '_blank',
-            //'title': 'Compartilhe no Twitter'
-        //}).appendTo( this.div );
-    //}
-//};
-
-
-
