@@ -97,14 +97,6 @@ div.lightplayer.novelas div.header h5 span {
 }
 
 
-/********************************************************
- * MODULO PALCO
- ********************************************************/
-
-div.lightplayer div.palco {
-    margin-bottom:30px;
-}
-
 
 /********************************************************
  * MODULO INFO NOVELAS
@@ -221,18 +213,16 @@ div.lightplayer div.social span.facebook-like {
  * MODULO PLAYLIST
  ********************************************************/
 
-div.lightplayer div.bloco-playlist{
+div.lightplayer.novelas div.playlist {
     height: 225px;
     position: relative;
     padding: 10px 28px 30px;
-    margin-bottom:30px;
-    background-color: #F6F6F6;
-    
+    background-color: #f6f6f6;
 }
 
-div.lightplayer div.bloco-playlist a.seta-esquerda{
+div.lightplayer.novelas div.playlist a.seta-esquerda {
     background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent 0 0 no-repeat;
-    background-color:#0000FF;
+    background-color:#00f;
     position: absolute;
     top: 10px;
     left: 0;
@@ -240,20 +230,20 @@ div.lightplayer div.bloco-playlist a.seta-esquerda{
     width: 26px;
 }
 
-div.lightplayer div.bloco-playlist a.seta-esquerda:hover {
+div.lightplayer.novelas div.playlist a.seta-esquerda:hover {
     background-position: -66px 0;
 }
 
-div.lightplayer div.bloco-playlist a.seta-esquerda:active {
+div.lightplayer.novelas div.playlist a.seta-esquerda:active {
     background-position: -131px 0;
 }
 
-div.lightplayer div.bloco-playlist a.seta-esquerda.inativo {
+div.lightplayer.novelas div.playlist a.seta-esquerda.inativo {
     background-position: -196px 0;
     background-color:#C9C9C9;
 }
 
-div.lightplayer div.bloco-playlist a.seta-direita{
+div.lightplayer.novelas div.playlist a.seta-direita{
     background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent -29px 0 no-repeat;
     background-color:#0000FF;
     position: absolute;
@@ -263,20 +253,20 @@ div.lightplayer div.bloco-playlist a.seta-direita{
     width: 26px;
 }
 
-div.lightplayer div.bloco-playlist a.seta-direita:hover {
+div.lightplayer.novelas div.playlist a.seta-direita:hover {
     background-position: -95px 0;
 }
 
-div.lightplayer div.bloco-playlist a.seta-direita:active {
+div.lightplayer.novelas div.playlist a.seta-direita:active {
     background-position: -160px 0;
 }
 
-div.lightplayer div.bloco-playlist a.seta-direita.inativo {
+div.lightplayer.novelas div.playlist a.seta-direita.inativo {
     background-position: -225px 0;
     background-color:#C9C9C9;
 }
 
-div.lightplayer div.bloco-playlist div.trilho-videos {
+div.lightplayer.novelas div.playlist div.trilho-videos {
     position: relative;
     width: 100%;
     height: 225px;
@@ -288,7 +278,7 @@ div.lightplayer div.bloco-playlist div.trilho-videos {
     -o-transition: text-indent 400ms ease-out; /* Opera */
 }
 
-div.lightplayer div.bloco-playlist ul {
+div.lightplayer.novelas div.playlist ul {
     display: inline-block;
     white-space: normal;
     text-indent:0px;
@@ -296,52 +286,52 @@ div.lightplayer div.bloco-playlist ul {
     margin-right:-4px;
 }
 
-div.lightplayer div.bloco-playlist li {
+div.lightplayer.novelas div.playlist li {
     width: 180px;
     display: inline-block;
     vertical-align: top;
     margin: 0px 4px;
 }
 
-div.lightplayer div.bloco-playlist img {
+div.lightplayer.novelas div.playlist img {
     height: 108px;
     width: 180px;
     margin-bottom: 18px;
     border-radius: 5px;
 }
 
-div.lightplayer div.bloco-playlist span.titulo-item {
+div.lightplayer.novelas div.playlist span.titulo-item {
     display: inline;
     font-size: 12px;
     line-height: 18px;
     color: #666;
 }
 
-div.lightplayer div.bloco-playlist span.exibicao {
+div.lightplayer.novelas div.playlist span.exibicao {
     display: block;
     margin-top: 18px;
     font-size: 12px;
     text-transform: uppercase;
 }
 
-div.lightplayer div.bloco-playlist span.exibicao strong {
+div.lightplayer.novelas div.playlist span.exibicao strong {
     font-family:ProximaNova-Semibold;
 }
 
-div.lightplayer div.bloco-playlist a {
+div.lightplayer.novelas div.playlist a {
     display:block;
     position:relative;
     text-decoration: none;
     color:#999;
 }
 
-div.lightplayer div.bloco-playlist li span.label,
-div.lightplayer div.bloco-playlist li span.layer {
+div.lightplayer.novelas div.playlist li span.label,
+div.lightplayer.novelas div.playlist li span.layer {
     display:none;
 }
 
 
-div.lightplayer div.bloco-playlist li.assistindo span.layer {
+div.lightplayer.novelas div.playlist li.assistindo span.layer {
     width: 180px;
     height: 108px;
     position: absolute;
@@ -355,7 +345,7 @@ div.lightplayer div.bloco-playlist li.assistindo span.layer {
 }
 
 
-div.lightplayer div.bloco-playlist li.assistindo span.label {
+div.lightplayer.novelas div.playlist li.assistindo span.label {
     font-family: ProximaNova-SemiBold;
     letter-spacing: -1px;
     font-size: 12px;
@@ -368,12 +358,12 @@ div.lightplayer div.bloco-playlist li.assistindo span.label {
     display:block;
 }
 
-div.lightplayer div.bloco-playlist a:hover, 
-div.lightplayer div.bloco-playlist a:hover span.titulo-item {
+div.lightplayer.novelas div.playlist a:hover, 
+div.lightplayer.novelas div.playlist a:hover span.titulo-item {
     color:#0000FF;
 }
 
-div.lightplayer div.bloco-playlist span.hover-img {
+div.lightplayer.novelas div.playlist span.hover-img {
     border: 4px solid #0000FF;
     width: 171px;
     height: 100px;
@@ -383,28 +373,27 @@ div.lightplayer div.bloco-playlist span.hover-img {
     display: none;
 }
 
-div.lightplayer div.bloco-playlist a:hover span.hover-img {
+div.lightplayer.novelas div.playlist a:hover span.hover-img {
     display:block;
 }
 
-div.lightplayer div.bloco-playlist span.contador-videos {
+div.lightplayer.novelas div.playlist span.contador-videos {
     display: block;
     font-size: 12px;
     margin-bottom: 5px;
     text-transform: uppercase;
 }
 
-div.lightplayer div.bloco-playlist span.numero {
+div.lightplayer.novelas div.playlist span.numero {
     font-weight: bold;
     font-family:ProximaNova-Semibold;
 }
 
-div.lightplayer div.bloco-playlist span.borda-inferior {
+div.lightplayer.novelas div.playlist span.borda-inferior {
     position: absolute;
     height: 3px;
     bottom: 0;
     background-color: #CCC;
     width: 100%;
     left: 0;
-    border-bottom: 1px solid #999;
 }
