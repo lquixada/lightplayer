@@ -170,13 +170,17 @@ LightPlayer.prototype = {
     },
 
     _render: function () {
-        var html = $( 'script#lightplayer-template' ).html();
+        var htmlClass = this.json.htmlClass || '';
 
-        this.domRoot = $( html );
-
-        if ( this.json.htmlClass ) {
-            this.domRoot.addClass( this.json.htmlClass );
-        }
+        this.domRoot = $( [
+            '<div class="lightplayer '+htmlClass+'">',
+                '<div class="widget-container">',
+                    '<div class="widget"></div>',
+                    '&nbsp;', // needed for preventing scrollbar flickering
+                '</div>',
+                '<div class="widget-overlay"></div>',
+            '</div>'
+        ].join( '' ) );
 
         this.domRoot.appendTo( 'body' );
     }
