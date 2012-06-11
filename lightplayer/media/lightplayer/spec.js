@@ -282,7 +282,18 @@ describe("Module: Basic Module", function() {
             expect( event.origin ).toBe( this.mod.name );
         });
     });
-    
+
+    describe("sub", function () {
+        it("should subscribe to an event", function() {
+            var callback = jasmine.createSpy();
+
+            this.mod.sub( 'some-event', callback );
+
+            this.mod.bus.trigger( 'some-event' );
+
+            expect( callback ).toHaveBeenCalled();
+        }); 
+    });
 
 });
 

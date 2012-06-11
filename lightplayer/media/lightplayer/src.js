@@ -215,6 +215,10 @@ Mod.prototype = {
         } )
     },
 
+    sub: function ( eventName, callback ) {
+        this.bus.bind( eventName, callback );
+    },
+
     // private
 
     _addEvents: function () {
