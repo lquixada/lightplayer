@@ -1,2 +1,2 @@
-recursive-include lightbox/media *
-recursive-include lightbox/templates *
+recursive-include lightplayer/media *
+recursive-include lightplayer/templates *
