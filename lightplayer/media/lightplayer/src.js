@@ -323,7 +323,7 @@ Header.prototype = $.extend( new Mod(), {
         var that = this;
 
         this.domRoot.delegate( 'a.close', 'click', function () {
-            that.bus.trigger( 'lightplayer-close' );
+            that.pub( 'lightplayer-close' );
         });
     },
 
@@ -366,27 +366,25 @@ Stage.prototype = $.extend( new Mod(), {
     _addEvents: function () {
         var that = this;
         
-        this.bus.bind( 'video-change', function ( evt ) {
+        this.sub( 'video-change', function ( evt ) {
             var current, currentNew, item;
 
-            if ( evt.origin !== that.name ) {
-                current = that._getItem( 'current' );
+            current = that._getItem( 'current' );
 
-                that.json = evt.json;
+            that.json = evt.json;
 
-                currentNew = that._getItem( 'current' );
-                
-                if ( currentNew.index < current.index ) {
-                    item = that._getItem( 'next' );
-                    that._setItemAsCurrent( item );
+            currentNew = that._getItem( 'current' );
+            
+            if ( currentNew.index < current.index ) {
+                item = that._getItem( 'next' );
+                that._setItemAsCurrent( item );
 
-                    that._goPrev();
-                } else {
-                    item = that._getItem( 'prev' );
-                    that._setItemAsCurrent( item );
+                that._goPrev();
+            } else {
+                item = that._getItem( 'prev' );
+                that._setItemAsCurrent( item );
 
-                    that._goNext();
-                }
+                that._goNext();
             }
         } );
 
@@ -474,11 +472,7 @@ Stage.prototype = $.extend( new Mod(), {
         this._updateArrows();
         this._updateItem( item );
 
-        this.bus.trigger( {
-            type: 'video-change',
-            origin: this.name,
-            json: this.json
-        } );
+        this.pub( 'video-change', this.json );
     },
 
     _goPrev: function () {
@@ -488,11 +482,7 @@ Stage.prototype = $.extend( new Mod(), {
         this._updateArrows();
         this._updateItem( item );
 
-        this.bus.trigger( {
-            type: 'video-change',
-            origin: this.name,
-            json: this.json
-        } );
+        this.pub( 'video-change', this.json );
     },
 
     _render: function () {
@@ -609,7 +599,7 @@ Social.prototype = $.extend( new Mod(), {
     _addEvents: function () {
         var that = this;
 
-        this.bus.bind( 'video-change', function ( evt ) {
+        this.sub( 'video-change', function ( evt ) {
             that.json = evt.json;
             that._update();
         } );
@@ -733,7 +723,7 @@ Info.prototype = $.extend( new Mod(), {
     _addEvents: function () {
         var that = this;
 
-        this.bus.bind( 'video-change', function ( evt ) {
+        this.sub( 'video-change', function ( evt ) {
             that.json = evt.json;
             that._updateItem();
         } );

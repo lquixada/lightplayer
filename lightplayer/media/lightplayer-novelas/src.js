@@ -92,11 +92,7 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
                 var item = that._getItemById( $( this ).attr( 'item-id' ) );
 
                 that._setItemAsCurrent( item );
-                that.bus.trigger( {
-                    type: 'video-change',
-                    origin: that.name,
-                    json: that.json
-                } );
+                that.pub( 'video-change', that.json );
 
                 that._setAsWatching( $( this ).parent() );
             });
