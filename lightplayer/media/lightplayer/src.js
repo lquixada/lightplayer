@@ -31,13 +31,6 @@ LightPlayer.prototype = {
     },
 
     // private
-    
-    _addMods: function () {
-        this.add( new Header() );
-        this.add( new Stage() );
-        this.add( new Info() );
-        this.add( new Social() );
-    },
 
     _addEvents: function () {
         var that = this;
@@ -58,7 +51,13 @@ LightPlayer.prototype = {
             }
         } );
     },
-
+    
+    _addMods: function () {
+        this.add( new Header() );
+        this.add( new Stage() );
+        this.add( new Info() );
+        this.add( new Social() );
+    },
 
     _animateIn: function ( callback ) {
         var that = this,
