@@ -70,15 +70,15 @@ describe("Light Player", function() {
 
     describe("open", function() {
         it("should have a container", function() {
-            expect( this.lightplayer.div.size() ).toBe( 1 );
+            expect( this.lightplayer.domRoot.size() ).toBe( 1 );
         });
 
         it("should have a box", function() {
-            expect( this.lightplayer.div.find( 'div.widget' ).size() ).toBe( 1 );
+            expect( this.lightplayer.domRoot.find( 'div.widget' ).size() ).toBe( 1 );
         });
 
         it("should have an overlay", function() {
-            expect( this.lightplayer.div.find( 'div.widget-overlay' ).size() ).toBe( 1 );
+            expect( this.lightplayer.domRoot.find( 'div.widget-overlay' ).size() ).toBe( 1 );
         });
 
         it("should set the html class", function() {
@@ -98,7 +98,7 @@ describe("Light Player", function() {
             
             this.lightplayer.open( this.json );
             
-            expect( this.lightplayer.div ).toHaveClass( 'blah' );
+            expect( this.lightplayer.domRoot ).toHaveClass( 'blah' );
         });
         
     });
@@ -133,7 +133,7 @@ describe("Light Player", function() {
         });
 
         it("should close clicking on overlay (container)", function() {
-            this.lightplayer.div.find( 'div.widget-container' ).click();
+            this.lightplayer.domRoot.find( 'div.widget-container' ).click();
             
             expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
         });
@@ -149,19 +149,19 @@ describe("Light Player", function() {
 
     describe("module", function() {
         it("should add a stage as module", function() {
-            expect( this.lightplayer.div.find( 'div.widget' ).find( 'div.palco' ).size() ).toBe( 1 );
+            expect( this.lightplayer.domRoot.find( 'div.widget' ).find( 'div.palco' ).size() ).toBe( 1 );
         });
 
         it("should add a header as module", function() {
-            expect( this.lightplayer.div.find( 'div.widget' ).find( 'div.header' ).size() ).toBe( 1 );
+            expect( this.lightplayer.domRoot.find( 'div.widget' ).find( 'div.header' ).size() ).toBe( 1 );
         });
 
         it("should add a title as module", function() {
-            expect( this.lightplayer.div.find( 'div.widget' ).find( 'div.info' ).size() ).toBe( 1 );
+            expect( this.lightplayer.domRoot.find( 'div.widget' ).find( 'div.info' ).size() ).toBe( 1 );
         });
         
         it("should add a social as module", function() {
-            expect( this.lightplayer.div.find( 'div.widget' ).find( 'div.social' ).size() ).toBe( 1 );
+            expect( this.lightplayer.domRoot.find( 'div.widget' ).find( 'div.social' ).size() ).toBe( 1 );
         });
     });
 

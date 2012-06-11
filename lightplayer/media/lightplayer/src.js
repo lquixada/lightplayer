@@ -18,7 +18,7 @@ LightPlayer.prototype = {
         var that = this;
 
         this._animateOut( function () {
-            that.div.remove(); 
+            that.domRoot.remove(); 
         });
 
         $( document ).unbind( 'keydown.lightplayer' );
@@ -27,7 +27,7 @@ LightPlayer.prototype = {
     add: function ( mod ) {
         var json = $.extend( true, {}, this.json );
 
-        this.div.find( 'div.widget' ).append( mod.init( this.bus, json ) ); 
+        this.domRoot.find( 'div.widget' ).append( mod.init( this.bus, json ) ); 
     },
 
     // private
@@ -39,7 +39,7 @@ LightPlayer.prototype = {
             that.close();
         } );
 
-        this.div.delegate( 'div.widget-container', 'click', function ( evt ) {
+        this.domRoot.delegate( 'div.widget-container', 'click', function ( evt ) {
             if ( evt.target === this ) {
                 that.close();
             }
@@ -62,8 +62,8 @@ LightPlayer.prototype = {
     _animateIn: function ( callback ) {
         var that = this,
             onTransitionEnd = this._getTransitionEndEvent(),
-            divOverlay = this.div.find( 'div.widget-overlay' ),
-            divWidget = that.div.find( 'div.widget' );
+            divOverlay = this.domRoot.find( 'div.widget-overlay' ),
+            divWidget = this.domRoot.find( 'div.widget' );
 
         this._disablePageScroll();
 
@@ -96,8 +96,8 @@ LightPlayer.prototype = {
     _animateOut: function ( callback ) {
         var that = this,
             onTransitionEnd = this._getTransitionEndEvent(),
-            divOverlay = this.div.find( 'div.widget-overlay' ),
-            divWidget = this.div.find( 'div.widget' );
+            divOverlay = this.domRoot.find( 'div.widget-overlay' ),
+            divWidget = this.domRoot.find( 'div.widget' );
 
         divWidget.bind( onTransitionEnd, function () {
             divOverlay.bind( onTransitionEnd, function () {
@@ -172,13 +172,13 @@ LightPlayer.prototype = {
     _render: function () {
         var html = $( 'script#lightplayer-template' ).html();
 
-        this.div = $( html );
+        this.domRoot = $( html );
 
         if ( this.json.htmlClass ) {
-            this.div.addClass( this.json.htmlClass );
+            this.domRoot.addClass( this.json.htmlClass );
         }
 
-        this.div.appendTo( 'body' );
+        this.domRoot.appendTo( 'body' );
     }
 };
 
