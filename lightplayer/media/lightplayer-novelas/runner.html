@@ -11,6 +11,7 @@
   div#TrivialReporter { top:35px; }
   </style>
   <link href="../lightplayer/src.css" rel="stylesheet"/>
+  <link href="src.css" rel="stylesheet"/>
 	
   <!-- dependencies -->
   <script src="../jasmine-1.2.0/jasmine.js"></script>
@@ -30,10 +31,10 @@
       lightplayer = new LightPlayerNovelas();
 
       lightplayer.open( {
-          title: '<span>clássicos</span> do BBB',
-          subtitle: 'os vídeos mais clicados',
+          title: 'capítulo de <span>ontem</span>',
+          subtitle: 'ter 24',
+          htmlClass: 'novelas',
           mode: 'sd',
-          htmlClass: 'bbb',
           prevPage: 'fixtures/1.json',
           nextPage: 'fixtures/3.json',
           list: [
@@ -116,6 +117,17 @@
 jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
 jasmine.getEnv().execute();
 </script>
+
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=238402089541049";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
 
 </body>
 
