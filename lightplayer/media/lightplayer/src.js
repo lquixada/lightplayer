@@ -216,7 +216,13 @@ Mod.prototype = {
     },
 
     sub: function ( eventName, callback ) {
-        this.bus.bind( eventName, callback );
+        var that = this;
+
+        this.bus.bind( eventName, function ( event ) {
+            if ( event.origin !== that.name ) {
+                callback( event );
+            }
+        } );
     },
 
     // private

@@ -284,17 +284,41 @@ describe("Module: Basic Module", function() {
     });
 
     describe("sub", function () {
+        beforeEach(function() {
+            this.callback = jasmine.createSpy();
+        });
+        
         it("should subscribe to an event", function() {
-            var callback = jasmine.createSpy();
-
-            this.mod.sub( 'some-event', callback );
+            this.mod.sub( 'some-event', this.callback );
 
             this.mod.bus.trigger( 'some-event' );
 
-            expect( callback ).toHaveBeenCalled();
+            expect( this.callback ).toHaveBeenCalled();
         }); 
-    });
 
+        it("should not execute callback if published from itself", function() {
+            this.mod.sub( 'some-event', this.callback );
+
+            this.mod.bus.trigger( {
+                type: 'some-event',
+                origin: this.mod.name
+            } );
+
+            expect( this.callback ).not.toHaveBeenCalled();
+        });
+
+        it("should execute callback if not published from itself", function() {
+            this.mod.sub( 'some-event', this.callback );
+
+            this.mod.bus.trigger( {
+                type: 'some-event',
+                origin: 'test-suite'
+            } );
+
+            expect( this.callback ).toHaveBeenCalled();
+        });
+        
+    });
 });
 
 
