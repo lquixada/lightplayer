@@ -1,6 +1,4 @@
-function LightPlayerNovelas () {
-    
-}
+function LightPlayerNovelas () {}
 
 LightPlayerNovelas.prototype = $.extend( new LightPlayer(), {
     _addMods: function () {
@@ -10,6 +8,8 @@ LightPlayerNovelas.prototype = $.extend( new LightPlayer(), {
         this.add( new Stage() );
     }
 });
+
+
 
 function InfoNovelas() {}
 
@@ -33,6 +33,8 @@ InfoNovelas.prototype = $.extend( new Info(), {
         this.domRoot.find( 'h6' ).text( item.title );
     }
 });
+
+
 
 function SocialNovelas() {}
 

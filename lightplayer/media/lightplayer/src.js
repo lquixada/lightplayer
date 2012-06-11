@@ -3,23 +3,11 @@ LightPlayer = function () {};
 
 LightPlayer.prototype = {
     open: function ( json ) {
-        var that = this;
-
-        $( document ).trigger( 'modal-opened.lightplayer' );
-
         // Barramento principal pela qual todos os modulos se comunicam
         this.bus  = $( {} );
         this.json = json;
 
-        this.div = this._renderModal( json );
-        this.ul  = this.div.find( 'ul' );
-
-        this.justOpened = true;
-
-        if ( json.htmlClass ) {
-            this.div.addClass( this.json.htmlClass );
-        }
-
+        this._render();
         this._addMods();
         this._addEvents();
 
@@ -29,8 +17,6 @@ LightPlayer.prototype = {
     close: function () {
         var that = this;
 
-        $( document ).trigger( 'modal-closed.lightplayer' );
-        
         this._animateOut( function () {
             that.div.remove(); 
         });
@@ -40,6 +26,7 @@ LightPlayer.prototype = {
 
     add: function ( mod ) {
         var json = $.extend( true, {}, this.json );
+
         this.div.find( 'div.widget' ).append( mod.init( this.bus, json ) ); 
     },
 
@@ -183,17 +170,16 @@ LightPlayer.prototype = {
        return false;
     },
 
-    _renderModal: function ( json ) {
-        var divlightplayer, html = $( 'script#lightplayer-template' ).html();
+    _render: function () {
+        var html = $( 'script#lightplayer-template' ).html();
 
-        divlightplayer = $( html );
-        divlightplayer.find( 'ul' ).data( {
-            'prev-page': json.prevPage,
-            'next-page': json.nextPage
-        });
-        divlightplayer.appendTo( 'body' );
+        this.div = $( html );
 
-        return divlightplayer;
+        if ( this.json.htmlClass ) {
+            this.div.addClass( this.json.htmlClass );
+        }
+
+        this.div.appendTo( 'body' );
     }
 };
 
