@@ -213,7 +213,8 @@ Mod.prototype = {
     },
 
     _getItem: function ( position ) {
-        var itemChosen, itens = this.json.itens,
+        var chosen,
+            itens = this.json.itens,
             choose = function ( i ) {
                 if ( position === 'current' ) { return itens[i];   }
                 if ( position === 'next' ) {    return itens[i+1]; }
@@ -222,22 +223,35 @@ Mod.prototype = {
         
         $.each( itens, function ( i ) {
             if ( this.current ) {
-                itemChosen = choose( i );
+                chosen = choose( i );
                 return false;
             }
         });
         
-        return itemChosen || {};
+        return chosen;
     },
 
-    _setItemAsCurrent: function ( itemChosen ) {
+    _getItemById: function ( id ) {
+        var chosen;
+
+        $.each( this.json.itens, function () {
+            if ( parseInt( this.id, 10 ) === parseInt( id, 10 ) ) {
+                chosen = this;
+                return false;
+            }
+        });
+        
+        return chosen;
+    },
+
+    _setItemAsCurrent: function ( chosen ) {
         var itens = this.json.itens;
 
         $.each( itens, function () {
             this.current = false;
         });
 
-        itemChosen.current = true;
+        chosen.current = true;
     },
 
     _render: function () {
@@ -316,14 +330,22 @@ Stage.prototype = $.extend( new Mod(), {
         var that = this;
         
         this.bus.bind( 'video-change', function ( evt ) {
-            var itemPrev;
+            var item;
 
             if ( evt.origin !== that.name ) {
                 that.json = evt.json;
+                
+                if ( that.json.itens[0].current ) {
+                    item = that._getItem( 'next' );
+                    that._setItemAsCurrent( item );
 
-                itemPrev = that._getItem( 'prev' );
-                that._setItemAsCurrent( itemPrev );
-                that._goNext();
+                    that._goPrev();
+                } else {
+                    item = that._getItem( 'prev' );
+                    that._setItemAsCurrent( item );
+
+                    that._goNext();
+                }
             }
         } );
 
@@ -372,8 +394,8 @@ Stage.prototype = $.extend( new Mod(), {
         } ); 
     },
 
-    _addItem: function( position ) {
-        var item = this._getItem( position );
+    _addItem: function ( position ) {
+        var item = this._getItem( position ) || {};
         
         this.domRoot.find( 'ul' ).append( [
             '<li id="item-'+item.id+'" class="'+position+'">',
@@ -405,7 +427,7 @@ Stage.prototype = $.extend( new Mod(), {
     },
 
     _goNext: function () {
-        var item = this._getItem( 'next' );
+        var item = this._getItem( 'next' ) || {};
         
         this._go( 'next' );
         this._updateArrows();
@@ -419,7 +441,7 @@ Stage.prototype = $.extend( new Mod(), {
     },
 
     _goPrev: function () {
-        var item = this._getItem('prev');
+        var item = this._getItem( 'prev' ) || {};
 
         this._go( 'prev' );
         this._updateArrows();
@@ -433,7 +455,7 @@ Stage.prototype = $.extend( new Mod(), {
     },
 
     _render: function () {
-        var item = this._getItem( 'current' );
+        var item = this._getItem( 'current' ) || {};
 
         this._renderRoot();
         this._renderArrows();
@@ -507,14 +529,14 @@ Stage.prototype = $.extend( new Mod(), {
     },
 
     _updateNextArrow: function () {
-        var item = this._getItem( 'next' );
+        var item = this._getItem( 'next' ) || {};
 
         this.domRoot.find( 'a.nav.next' ).addClass( 'visible' )
             .find( 'span.titulo' ).text( item.title );
     },
 
     _updatePrevArrow: function () {
-        var item = this._getItem( 'prev' );
+        var item = this._getItem( 'prev' ) || {};
 
         this.domRoot.find( 'a.nav.prev' ).addClass( 'visible' )
             .find( 'span.titulo' ).text( item.title );
@@ -677,7 +699,7 @@ Info.prototype = $.extend( new Mod(), {
     },
 
     _render: function () {
-        var item = this._getItem( 'current' );
+        var item = this._getItem( 'current' ) || {};
 
         this.domRoot = $( [
             '<div class="info">',

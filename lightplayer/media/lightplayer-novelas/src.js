@@ -81,16 +81,49 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
     _addEvents: function () {
         var that = this;
 
-        this.domRoot.delegate( 'a.seta-direita:not(.inativo)', 'click', function () {
+        this.domRoot
+            .delegate( 'a.seta-direita:not(.inativo)', 'click', function () {
                 that._goNext();
             })
             .delegate( 'a.seta-esquerda:not(.inativo)', 'click', function () {
                 that._goPrev();
             })
             .delegate( 'div.trilho-videos a', 'click', function () {
-                var li = $( this ).parent();
-                that._setAsWatching( li );
+                var item = that._getItemById( $( this ).attr( 'item-id' ) );
+
+                that._setItemAsCurrent( item );
+                that.bus.trigger( {
+                    type: 'video-change',
+                    origin: that.name,
+                    json: that.json
+                } );
+
+                that._setAsWatching( $( this ).parent() );
             });
+    },
+
+    _goNext: function () {
+        var ulNext = this.current.next();
+
+        this.offset += -parseInt( ulNext.css( 'width' ), 10 );
+        
+        this._move();
+
+        this._setCurrent( ulNext );
+        this._updateArrows();
+    },
+    
+    _goPrev: function () {
+        this.offset += parseInt( this.current.css( 'width' ), 10 );
+        
+        this._move();
+
+        this._setCurrent( this.current.prev() );
+        this._updateArrows();
+    },
+
+    _move: function ( ul ) {
+        this.domRoot.find( 'div.trilho-videos' ).css( 'text-indent', this.offset );
     },
 
     _render: function () {
@@ -119,7 +152,7 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
             html += (i>0 && i%4 === 0? '</ul><ul>':'');
             html += [
                 '<li>',
-                    '<a href="#">',
+                    '<a href="#" item-id="'+this.id+'">',
                         '<img src="http://img.video.globo.com/180x108/'+this.id+'.jpg">',
                         '<span class="hover-img"></span>',
                         
@@ -141,30 +174,6 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
         html += '</ul>';
 
         this.domRoot.find( 'div.trilho-videos' ).append( html );
-    },
-
-    _goNext: function () {
-        var ulNext = this.current.next();
-
-        this.offset += -parseInt( ulNext.css( 'width' ), 10 );
-        
-        this._move();
-
-        this._setCurrent( ulNext );
-        this._updateArrows();
-    },
-    
-    _goPrev: function () {
-        this.offset += parseInt( this.current.css( 'width' ), 10 );
-        
-        this._move();
-
-        this._setCurrent( this.current.prev() );
-        this._updateArrows();
-    },
-
-    _move: function ( ul ) {
-        this.domRoot.find( 'div.trilho-videos' ).css( 'text-indent', this.offset );
     },
 
     _setAsWatching: function ( li ) {
