@@ -53,7 +53,7 @@ afterEach(function() {
 describe("Light Player", function() {
     beforeEach(function() {
         this.json = {
-            list: [
+            itens: [
                 {
                     id: 123,
                     title: 'Titulo 1',
@@ -84,7 +84,7 @@ describe("Light Player", function() {
         it("should set the html class", function() {
             this.json = {
                 htmlClass: 'blah',
-                list: [
+                itens: [
                     {
                         id: 123,
                         title: 'Titulo 1',
@@ -176,7 +176,7 @@ describe("Light Player", function() {
 describe("Module: Basic Module", function() {
     beforeEach(function() {
         this.json = {
-            list: [
+            itens: [
                 { id: 123, title: 'titulo 1', description: 'desc 1', views: 1000 },
                 { id: 456, title: 'titulo 2', description: 'desc 2', views: 2000, current: true },
                 { id: 789, title: 'titulo 3', description: 'desc 3', views: 3000 }
@@ -193,21 +193,21 @@ describe("Module: Basic Module", function() {
     
     it("should have a json with a list", function() {
         expect( this.mod.json ).toBe( this.json );
-        expect( this.mod.json.list ).toBe( this.json.list );
+        expect( this.mod.json.itens ).toBe( this.json.itens );
     });
 
     describe("getItem", function() {
         it("should get the current item", function() {
-            expect( this.mod._getItem( 'current' ) ).toBe( this.json.list[1] );
+            expect( this.mod._getItem( 'current' ) ).toBe( this.json.itens[1] );
         });
         
         it("should get the next item", function() {
-            expect( this.mod._getItem( 'next' ) ).toBe( this.json.list[2] );
+            expect( this.mod._getItem( 'next' ) ).toBe( this.json.itens[2] );
         });
         
         it("should get the next item as null if current is last", function() {
-            this.json.list[1].current = false;
-            this.json.list[2].current = true;
+            this.json.itens[1].current = false;
+            this.json.itens[2].current = true;
 
             this.mod = new Mod();
             this.mod.init( null, this.json );
@@ -216,12 +216,12 @@ describe("Module: Basic Module", function() {
         });
 
         it("should get the prev item", function () {
-            expect( this.mod._getItem( 'prev' ) ).toBe( this.json.list[0] );
+            expect( this.mod._getItem( 'prev' ) ).toBe( this.json.itens[0] );
         });
 
         it("should get the prev item as null if current is first", function() {
-            this.json.list[1].current = false;
-            this.json.list[0].current = true;
+            this.json.itens[1].current = false;
+            this.json.itens[0].current = true;
 
             this.mod = new Mod();
             this.mod.init( null, this.json );
@@ -232,16 +232,16 @@ describe("Module: Basic Module", function() {
 
     describe("setItemAsCurrent", function() {
         it("should mark new item as current", function() {
-            this.mod._setItemAsCurrent( this.json.list[2] );
+            this.mod._setItemAsCurrent( this.json.itens[2] );
 
-            expect( this.json.list[2].current ).toBe( true );
+            expect( this.json.itens[2].current ).toBe( true );
         });
         
         it("should unmark all the remaining itens as not current", function() {
-            this.mod._setItemAsCurrent( this.json.list[2] );
+            this.mod._setItemAsCurrent( this.json.itens[2] );
 
-            expect( this.json.list[0].current ).toBeFalsy();
-            expect( this.json.list[1].current ).toBeFalsy();
+            expect( this.json.itens[0].current ).toBeFalsy();
+            expect( this.json.itens[1].current ).toBeFalsy();
         });
     });
 
@@ -257,7 +257,7 @@ describe("Module: Header", function() {
     beforeEach(function() {
         this.bus = $({});
         this.json = {
-            list: [
+            itens: [
                 { id: 123, title: 'titulo 1' },
                 { id: 456, title: 'titulo 2' },
                 { id: 789, title: 'titulo 3' }
@@ -325,7 +325,7 @@ describe("Module: Stage", function() {
     beforeEach(function() {
         this.bus = $( {} );
         this.json = {
-            list: [
+            itens: [
                 { id: 123, title: 'titulo 1' },
                 { id: 456, title: 'titulo 2' },
                 { id: 789, title: 'titulo 3' }
@@ -347,7 +347,7 @@ describe("Module: Stage", function() {
 
     describe("first item", function() {
         beforeEach(function() {
-            this.json.list[0].current = true;
+            this.json.itens[0].current = true;
 
             this.stage.init( this.bus, this.json );
 
@@ -366,7 +366,7 @@ describe("Module: Stage", function() {
 
     describe("second item", function() {
         beforeEach(function() {
-            this.json.list[1].current = true;
+            this.json.itens[1].current = true;
 
             this.stage.init( this.bus, this.json );
 
@@ -386,7 +386,7 @@ describe("Module: Stage", function() {
 
     describe("player", function() {
         beforeEach(function() {
-            this.json.list[0].current = true;
+            this.json.itens[0].current = true;
 
             this.stage.init( this.bus, this.json );
 
@@ -398,7 +398,7 @@ describe("Module: Stage", function() {
         });
 
         it("should call player with the current item id", function() {
-            expect( this.playerParams.videosIDs ).toBe( this.json.list[0].id );
+            expect( this.playerParams.videosIDs ).toBe( this.json.itens[0].id );
         });
         
         it("should show the player with the right width", function() {
@@ -471,7 +471,7 @@ describe("Module: Stage", function() {
 
     describe("arrows", function() {
         beforeEach(function() {
-            this.json.list[1].current = true;
+            this.json.itens[1].current = true;
 
             this.stage.init( this.bus, this.json );
         });
@@ -517,7 +517,7 @@ describe("Module: Stage", function() {
         
         describe("beginning", function() {
             beforeEach(function() {
-                this.json.list[0].current = true;
+                this.json.itens[0].current = true;
 
                 this.stage.init( this.bus, this.json );
 
@@ -538,14 +538,14 @@ describe("Module: Stage", function() {
             });
             
             it("should have the NEXT button with the next item title", function () {
-                var nextTitle = this.json.list[1].title;
+                var nextTitle = this.json.itens[1].title;
                 expect( this.nextButton.find( 'span.titulo' ).text() ).toBe( nextTitle );
             });
         });
 
         describe("middle", function() {
             beforeEach(function() {
-                this.json.list[1].current = true;
+                this.json.itens[1].current = true;
 
                 this.stage.init( this.bus, this.json );
 
@@ -558,7 +558,7 @@ describe("Module: Stage", function() {
             });
 
             it("should have the PREV button with the previous item title", function () {
-                var prevTitle = this.json.list[0].title;
+                var prevTitle = this.json.itens[0].title;
                 expect( this.prevButton.find( 'span.titulo' ).text() ).toBe( prevTitle );
             });
 
@@ -567,14 +567,14 @@ describe("Module: Stage", function() {
             });
 
             it("should have the NEXT button with the next item title", function () {
-                var nextTitle = this.json.list[2].title;
+                var nextTitle = this.json.itens[2].title;
                 expect( this.nextButton.find( 'span.titulo' ).text() ).toBe( nextTitle );
             });
         });
 
         describe("end", function() {
             beforeEach(function() {
-                this.json.list[2].current = true;
+                this.json.itens[2].current = true;
 
                 this.stage.init( this.bus, this.json );
 
@@ -587,7 +587,7 @@ describe("Module: Stage", function() {
             });
 
             it("should have the PREV button with the prev item title", function () {
-                var prevTitle = this.json.list[1].title;
+                var prevTitle = this.json.itens[1].title;
                 expect( this.prevButton.find( 'span.titulo' ).text() ).toBe( prevTitle );
             });
 
@@ -603,7 +603,7 @@ describe("Module: Stage", function() {
 
     describe("interaction", function() {
         beforeEach(function() {
-            this.json.list[1].current = true;
+            this.json.itens[1].current = true;
             
             this.stage.init( this.bus, this.json );
 
@@ -629,7 +629,7 @@ describe("Module: Stage", function() {
             });
 
             it("should update json", function() {
-                expect( this.stage.json.list[2].current ).toBe( true );
+                expect( this.stage.json.itens[2].current ).toBe( true );
             });
 
             it("should not be visible", function() {
@@ -641,7 +641,7 @@ describe("Module: Stage", function() {
             });
 
             it("should call player with the current item id", function() {
-                expect( this.playerParams.videosIDs ).toBe( this.json.list[2].id );
+                expect( this.playerParams.videosIDs ).toBe( this.json.itens[2].id );
             });
 
             it("should trigger video-change from it", function() {
@@ -671,7 +671,7 @@ describe("Module: Stage", function() {
             });
 
             it("should update json", function() {
-                expect( this.stage.json.list[0].current ).toBe( true );
+                expect( this.stage.json.itens[0].current ).toBe( true );
             });
 
             it("should not be visible", function() {
@@ -683,7 +683,7 @@ describe("Module: Stage", function() {
             });
 
             it("should call player with the current item id", function() {
-                expect( this.playerParams.videosIDs ).toBe( this.json.list[0].id );
+                expect( this.playerParams.videosIDs ).toBe( this.json.itens[0].id );
             });
 
             it("should trigger video-change from it", function() {
@@ -724,8 +724,8 @@ describe("Module: Stage", function() {
 
         describe("Events", function() {
             it("should change on video-change", function() {
-                this.json.list[1].current = false;
-                this.json.list[2].current = true;
+                this.json.itens[1].current = false;
+                this.json.itens[2].current = true;
                 
                 this.bus.trigger( { type:'video-change', origin: 'testsuite', json: this.json } );
                 
@@ -734,8 +734,8 @@ describe("Module: Stage", function() {
 
 
             it("should not change on video-change from same source", function() {
-                this.json.list[1].current = false;
-                this.json.list[2].current = true;
+                this.json.itens[1].current = false;
+                this.json.itens[2].current = true;
                 
                 this.bus.trigger( { type:'video-change', origin: 'stage' } );
                 
@@ -756,7 +756,7 @@ describe("Module: Info", function() {
     beforeEach(function() {
         this.bus = $({});
         this.json = {
-            list: [
+            itens: [
                 { id: 123, title: 'titulo 1', description: 'desc 1', views: 1000 },
                 { id: 456, title: 'titulo 2', description: 'desc 2', views: 2000, current: true },
                 { id: 789, title: 'titulo 3', description: 'desc 3', views: 3000 }
@@ -774,23 +774,23 @@ describe("Module: Info", function() {
     });
     
     it("should have a default title", function() {
-        expect( this.info.domRoot.find( 'h6' ).html() ).toBe( this.json.list[1].title );
+        expect( this.info.domRoot.find( 'h6' ).html() ).toBe( this.json.itens[1].title );
     });
 
     it("should have a description", function() {
-        expect( this.info.domRoot.find( 'p' ).text() ).toBe( this.json.list[1].description );
+        expect( this.info.domRoot.find( 'p' ).text() ).toBe( this.json.itens[1].description );
     });
 
     it("should have views count", function() {
-        expect( this.info.domRoot.find( 'span.views' ).text() ).toBe( this.json.list[1].views+' exibições' );
+        expect( this.info.domRoot.find( 'span.views' ).text() ).toBe( this.json.itens[1].views+' exibições' );
     });
 
     it("should update on new current item", function() {
         var div = this.info.domRoot,
-            current = this.json.list[2];
+            current = this.json.itens[2];
         
-        this.json.list[1].current = false;
-        this.json.list[2].current = true;
+        this.json.itens[1].current = false;
+        this.json.itens[2].current = true;
 
         this.bus.trigger( { type: 'video-change', json: this.json } );
         
@@ -811,7 +811,7 @@ describe("Module: Social", function() {
     beforeEach(function() {
         this.bus = $({});
         this.json = {
-            list: [
+            itens: [
                 {
                     id: 123,
                     title: 'titulo 1',
@@ -863,25 +863,25 @@ describe("Module: Social", function() {
         });
 
         it("should have a twitter share button with shorten url", function() {
-            var encodedUrl = encodeURIComponent( this.json.list[0].shortUrl );
+            var encodedUrl = encodeURIComponent( this.json.itens[0].shortUrl );
             expect( this.social.domRoot.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
 
         it("should use the regular url if shorten url is not provided", function() {
             var encodedUrl;
             
-            delete this.json.list[0].shortUrl;
+            delete this.json.itens[0].shortUrl;
 
             this.social = new Social();
             this.social.init( this.bus, this.json ); 
 
-            encodedUrl = encodeURIComponent( this.json.list[0].url );
+            encodedUrl = encodeURIComponent( this.json.itens[0].url );
 
             expect( this.social.domRoot.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
 
         it("should have a twitter share button with title", function() {
-            var encodedTitle = encodeURIComponent( this.json.list[0].title );
+            var encodedTitle = encodeURIComponent( this.json.itens[0].title );
 
             expect( this.social.domRoot.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedTitle );
         });
@@ -894,7 +894,7 @@ describe("Module: Social", function() {
         });
 
         it("should use the regular url for the facebook like", function() {
-            expect( this.social.domRoot.find( 'span.facebook > :first-child' ).attr( 'href' ) ).toContain( this.json.list[0].url );
+            expect( this.social.domRoot.find( 'span.facebook > :first-child' ).attr( 'href' ) ).toContain( this.json.itens[0].url );
         });
 
         it("should have a facebook share button", function() {
@@ -902,16 +902,16 @@ describe("Module: Social", function() {
         });
 
         it("should have a facebook share button with shorten url", function() {
-            var encodedUrl = encodeURIComponent( this.json.list[0].shortUrl );
+            var encodedUrl = encodeURIComponent( this.json.itens[0].shortUrl );
             expect( this.social.domRoot.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
 
         it("should use the regular url if shorten url is not provided", function() {
             var encodedUrl;
             
-            delete this.json.list[0].shortUrl;
+            delete this.json.itens[0].shortUrl;
 
-            encodedUrl = encodeURIComponent( this.json.list[0].url );
+            encodedUrl = encodeURIComponent( this.json.itens[0].url );
 
             this.social = new Social();
             this.social.init( this.bus, this.json ); 
@@ -920,7 +920,7 @@ describe("Module: Social", function() {
         });
         
         it("should have a facebook share button with title", function() {
-            var encodedTitle = encodeURIComponent( this.json.list[0].title );
+            var encodedTitle = encodeURIComponent( this.json.itens[0].title );
 
             expect( this.social.domRoot.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedTitle );
         });
@@ -932,16 +932,16 @@ describe("Module: Social", function() {
         });
 
         it("should have a orkut share button with shorten url", function() {
-            var encodedUrl = encodeURIComponent( this.json.list[0].shortUrl );
+            var encodedUrl = encodeURIComponent( this.json.itens[0].shortUrl );
             expect( this.social.domRoot.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
 
         it("should use the regular url if shorten url is not provided", function() {
             var encodedUrl;
 
-            delete this.json.list[0].shortUrl;
+            delete this.json.itens[0].shortUrl;
 
-            encodedUrl = encodeURIComponent( this.json.list[0].url );
+            encodedUrl = encodeURIComponent( this.json.itens[0].url );
 
             this.social = new Social();
             this.social.init( this.bus, this.json ); 
@@ -950,11 +950,11 @@ describe("Module: Social", function() {
         });
 
         it("should have an orkut share button with title", function() {
-            expect( this.social.domRoot.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( encodeURI( this.json.list[0].title ) );
+            expect( this.social.domRoot.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( encodeURI( this.json.itens[0].title ) );
         });
 
         it("should have an orkut share button with thumb url", function() {
-            expect( this.social.domRoot.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( this.json.list[0].thumbUrl );
+            expect( this.social.domRoot.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( this.json.itens[0].thumbUrl );
         });
     });
 
@@ -964,11 +964,11 @@ describe("Module: Social", function() {
         });
 
         it("should display the shortened version of url", function() {
-            expect( this.social.domRoot.find( 'input.globo-url' ).val() ).toContain( this.json.list[0].shortUrl );
+            expect( this.social.domRoot.find( 'input.globo-url' ).val() ).toContain( this.json.itens[0].shortUrl );
         });
 
         it("should not display a field for shortened url when there isn't one", function() {
-            delete this.json.list[0].shortUrl;
+            delete this.json.itens[0].shortUrl;
 
             this.social = new Social();
             this.social.init( this.bus, this.json );  
@@ -979,28 +979,28 @@ describe("Module: Social", function() {
 
     describe("Events", function() {
         beforeEach(function() {
-            this.json.list[0].current = false;
-            this.json.list[2].current = true;
+            this.json.itens[0].current = false;
+            this.json.itens[2].current = true;
             
             this.bus.trigger( { type:'video-change', origin: 'testsuite', json: this.json } );
         });
         
         it("should change twitter button url on video-change", function() {
-            var encodedUrl = encodeURIComponent( this.json.list[2].url );
+            var encodedUrl = encodeURIComponent( this.json.itens[2].url );
             expect( this.social.domRoot.find( 'a.twitter.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
 
         it("should change facebook button url on video-change", function() {
-            var encodedUrl = encodeURIComponent( this.json.list[2].url );
+            var encodedUrl = encodeURIComponent( this.json.itens[2].url );
             expect( this.social.domRoot.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
 
         it("should change facebook xml url on video-change", function() {
-            expect( this.social.domRoot.find( 'span.facebook > :first-child' ).attr( 'href' ) ).toContain( this.json.list[2].url );
+            expect( this.social.domRoot.find( 'span.facebook > :first-child' ).attr( 'href' ) ).toContain( this.json.itens[2].url );
         });
 
         it("should change orkut button url on video-change", function() {
-            var encodedUrl = encodeURIComponent( this.json.list[2].url );
+            var encodedUrl = encodeURIComponent( this.json.itens[2].url );
             expect( this.social.domRoot.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
     });

@@ -224,7 +224,7 @@ Mod.prototype = {
     },
 
     _getItem: function ( position ) {
-        var itemChosen, itens = this.json.list,
+        var itemChosen, itens = this.json.itens,
             choose = function ( i ) {
                 if ( position === 'current' ) { return itens[i];   }
                 if ( position === 'next' ) {    return itens[i+1]; }
@@ -242,7 +242,7 @@ Mod.prototype = {
     },
 
     _setItemAsCurrent: function ( itemChosen ) {
-        var itens = this.json.list;
+        var itens = this.json.itens;
 
         $.each( itens, function () {
             this.current = false;
@@ -482,8 +482,8 @@ Stage.prototype = $.extend( new Mod(), {
     },
 
     _updateArrows: function () {
-        var first = this.json.list[0],
-            last = this.json.list[this.json.list.length-1];
+        var first = this.json.itens[0],
+            last = this.json.itens[this.json.itens.length-1];
 
         this.domRoot.find( 'a.nav' ).removeClass( 'visible' );
 
