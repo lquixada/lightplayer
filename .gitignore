@@ -16,3 +16,5 @@
 .DS_Store
 report.html
 tmp/
+lightplayer.egg-info/
+dist/
