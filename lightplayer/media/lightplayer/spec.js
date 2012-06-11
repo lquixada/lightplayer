@@ -13,9 +13,6 @@ beforeEach(function() {
     // Prevents dealing with Facebook SDK
     window.facebookParse = function () {};
 
-    // Prevents doing real ajax calls (clears console!)
-    spyOn( $, 'ajax' );
-
     // Prevents css3 animations on open
     spyOn( LightPlayer.prototype, '_animateIn' ).andCallFake( function ( callback ) {
         callback();

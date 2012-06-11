@@ -10,19 +10,8 @@ beforeEach(function() {
         that.playerParams = params;
     });
     
-    // Prevents calling tipTip plugin
-    $.fn.tipTip = function () {};
-    
     // Prevents dealing with Facebook SDK
     window.facebookParse = function () {};
-
-    // Prevents doing real ajax calls (clears console!)
-    spyOn( $, 'ajax' );
-
-    // Prevents setTimout async call
-    spyOn( window, 'setTimeout' ).andCallFake( function ( callback ) {
-        callback();
-    });
 
     // Prevents css3 animations on open
     spyOn( LightPlayerNovelas.prototype, '_animateIn' ).andCallFake( function ( callback ) {
@@ -43,6 +32,10 @@ beforeEach(function() {
              }
          }
     });
+});
+
+afterEach(function() { 
+    $.fx.off = false;
 });
 
 describe("LightPlayer Novelas", function() {
