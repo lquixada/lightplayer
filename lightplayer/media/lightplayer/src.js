@@ -108,19 +108,15 @@ LightPlayer.prototype = {
             divOverlay.unbind( onTransitionEnd );
         } );
 
-        // Bugfix: transition doesn't work when element is immediatelly added to the DOM
-        setTimeout( function () {
+        divOverlay.addClass( 'visible' );
+        
+        // For browsers (IEs and FF3.6) that doesn't support css3 animations, just call the callback
+        if ( !that._hasTransitionSupport() ) {
+            divWidget.css( '-moz-transform', 'none' );
+            divWidget.addClass( 'visible' );
             
-            divOverlay.addClass( 'visible' );
-            
-            // For browsers (IEs and FF3.6) that doesn't support css3 animations, just call the callback
-            if ( !that._hasTransitionSupport() ) {
-                divWidget.css( '-moz-transform', 'none' );
-                divWidget.addClass( 'visible' );
-                
-                callback();
-            }
-        }, 250);
+            callback();
+        }
     },
 
     _animateOut: function ( callback ) {
@@ -673,16 +669,15 @@ Stage.prototype = $.extend( new Mod(), {
 
         item = this._addItem( position );
 
-        // Por algum motivo, sem o setTimeout a transicao CSS3 n funfa no Chrome
-        //setTimeout( function () {
-            if ( position === 'next' ) {
-                that.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'prev' );
-                that.domRoot.find( 'li.next' ).removeClass( 'next' ).addClass( 'current' );
-            } else {
-                that.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'next' );
-                that.domRoot.find( 'li.prev' ).removeClass( 'prev' ).addClass( 'current' );
-            }
-        //}, 100);
+        this.domRoot.width();
+
+        if ( position === 'next' ) {
+            this.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'prev' );
+            this.domRoot.find( 'li.next' ).removeClass( 'next' ).addClass( 'current' );
+        } else {
+            this.domRoot.find( 'li.current' ).removeClass( 'current' ).addClass( 'next' );
+            this.domRoot.find( 'li.prev' ).removeClass( 'prev' ).addClass( 'current' );
+        }
         
         this._setItemAsCurrent( item );
     },
