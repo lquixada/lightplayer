@@ -100,18 +100,6 @@
   <!-- HTML fixtures -->
 </div>
 
-<script type="text/plain+template" id="lightplayer-template">
-    <div class="lightplayer">
-        <div class="widget-container">
-            <div class="widget">
-            </div> <!-- .widget -->
-
-            &nbsp; <!-- needed for preventing scrollbar flickering -->
-        </div> <!-- .widget-container -->
-
-        <div class="widget-overlay"></div>
-    </div>
-</script>
 
 <script>
 jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
@@ -119,14 +107,14 @@ jasmine.getEnv().execute();
 </script>
 
 
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=238402089541049";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=238402089541049";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 
 </body>
