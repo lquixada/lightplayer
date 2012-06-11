@@ -206,6 +206,15 @@ Mod.prototype = {
         return this.domRoot;
     },
 
+    pub: function ( eventName, json ) {
+        this.bus.trigger( {
+            type: eventName,
+            origin: this.name,
+            // Create a deep copy of json object
+            json: $.extend(true, {}, json)
+        } )
+    },
+
     // private
 
     _addEvents: function () {
@@ -224,6 +233,11 @@ Mod.prototype = {
         $.each( itens, function ( i ) {
             if ( this.current ) {
                 chosen = choose( i );
+                
+                if ( chosen ) {
+                    chosen.index = i;
+                }
+
                 return false;
             }
         });
@@ -243,6 +257,19 @@ Mod.prototype = {
         
         return chosen;
     },
+
+    //_getItemIndex: function ( item ) {
+        //var index = -1;
+
+        //$.each( this.json.itens, function ( i ) {
+            //if ( this === item ) {
+                //index = i;
+                //return false;
+            //}
+        //});
+        
+        //return index;
+    //},
 
     _setItemAsCurrent: function ( chosen ) {
         var itens = this.json.itens;
@@ -330,12 +357,16 @@ Stage.prototype = $.extend( new Mod(), {
         var that = this;
         
         this.bus.bind( 'video-change', function ( evt ) {
-            var item;
+            var current, currentNew, item;
 
             if ( evt.origin !== that.name ) {
+                current = that._getItem( 'current' );
+
                 that.json = evt.json;
+
+                currentNew = that._getItem( 'current' );
                 
-                if ( that.json.itens[0].current ) {
+                if ( currentNew.index < current.index ) {
                     item = that._getItem( 'next' );
                     that._setItemAsCurrent( item );
 

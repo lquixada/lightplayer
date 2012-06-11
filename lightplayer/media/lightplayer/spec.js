@@ -175,6 +175,7 @@ describe("Light Player", function() {
 
 describe("Module: Basic Module", function() {
     beforeEach(function() {
+        this.bus = $( {} );
         this.json = {
             itens: [
                 { id: 123, title: 'titulo 1', description: 'desc 1', views: 1000 },
@@ -184,7 +185,7 @@ describe("Module: Basic Module", function() {
         };
 
         this.mod = new Mod();
-        this.mod.init( null, this.json );
+        this.mod.init( this.bus, this.json );
     });
 
     it("should have a name", function() {
@@ -244,6 +245,44 @@ describe("Module: Basic Module", function() {
             expect( this.json.itens[1].current ).toBeFalsy();
         });
     });
+
+    describe("pub", function() {
+        it("should publish an event", function() {
+            var callback = jasmine.createSpy();
+
+            this.mod.bus.bind( 'some-event', callback );
+
+            this.mod.pub( 'some-event' );
+
+            expect( callback ).toHaveBeenCalled();
+        });
+
+        it("should publish a json copy", function() {
+            var event;
+            
+            this.mod.bus.bind( 'some-event', function ( evt ) {
+                event = evt;
+            } );
+
+            this.mod.pub( 'some-event', this.json );
+
+            expect( JSON.stringify(event.json) ).toBe( JSON.stringify(this.mod.json) );
+            expect( event.json ).not.toBe( this.mod.json );
+        });
+
+        it("should indicate the event publisher", function() {
+            var event;
+            
+            this.mod.bus.bind( 'some-event', function ( evt ) {
+                event = evt;
+            } );
+
+            this.mod.pub( 'some-event', {} );
+
+            expect( event.origin ).toBe( this.mod.name );
+        });
+    });
+    
 
 });
 
