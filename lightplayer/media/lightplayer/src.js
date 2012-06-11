@@ -268,19 +268,6 @@ Mod.prototype = {
         return chosen;
     },
 
-    //_getItemIndex: function ( item ) {
-        //var index = -1;
-
-        //$.each( this.json.itens, function ( i ) {
-            //if ( this === item ) {
-                //index = i;
-                //return false;
-            //}
-        //});
-        
-        //return index;
-    //},
-
     _setItemAsCurrent: function ( chosen ) {
         var itens = this.json.itens;
 
@@ -376,15 +363,9 @@ Stage.prototype = $.extend( new Mod(), {
             currentNew = that._getItem( 'current' );
             
             if ( currentNew.index < current.index ) {
-                item = that._getItem( 'next' );
-                that._setItemAsCurrent( item );
-
-                that._goPrev();
+                that._simulatePrev();
             } else {
-                item = that._getItem( 'prev' );
-                that._setItemAsCurrent( item );
-
-                that._goNext();
+                that._simulateNext();
             }
         } );
 
@@ -521,6 +502,24 @@ Stage.prototype = $.extend( new Mod(), {
                 '<ul></ul>',
             '</div>'
         ].join( '' ) ); 
+    },
+
+    // When user clicks in a non-adjacent item, it jumps to this item
+    // but simulates it is the next one
+    _simulateNext: function () {
+        var item = this._getItem( 'prev' );
+
+        this._setItemAsCurrent( item );
+        this._goNext();
+    },
+    
+    // When user clicks in a non-adjacent item, it jumps to this item
+    // but simulates it is the previous one
+    _simulatePrev: function () {
+        var item = this._getItem( 'next' );
+
+        this._setItemAsCurrent( item );
+        this._goPrev();        
     },
 
     _updateArrows: function () {
