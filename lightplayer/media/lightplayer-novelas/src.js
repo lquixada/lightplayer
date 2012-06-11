@@ -95,6 +95,8 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
                 that.pub( 'video-change', that.json );
 
                 that._setAsWatching( $( this ).parent() );
+
+                return false;
             });
     },
 
@@ -148,7 +150,7 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
             html += (i>0 && i%4 === 0? '</ul><ul>':'');
             html += [
                 '<li>',
-                    '<a href="#" item-id="'+this.id+'">',
+                    '<a href="javascript:;" item-id="'+this.id+'">',
                         '<img src="http://img.video.globo.com/180x108/'+this.id+'.jpg">',
                         '<span class="hover-img"></span>',
                         
