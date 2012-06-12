@@ -11,7 +11,7 @@ LightPlayer.prototype = {
         this._addMods();
         this._addEvents();
 
-        this._animateIn( function () {} );
+        this._animateIn();
     },
 
     close: function () {
@@ -59,7 +59,7 @@ LightPlayer.prototype = {
         this.add( new Social() );
     },
 
-    _animateIn: function ( callback ) {
+    _animateIn: function () {
         var that = this,
             onTransitionEnd = this._getTransitionEndEvent(),
             divOverlay = this.domRoot.find( 'div.widget-overlay' ),
@@ -72,7 +72,7 @@ LightPlayer.prototype = {
                 /* Firefox bugfix: Flash + css transform doesn't get along very well */
                 divWidget.css( '-moz-transform', 'none' );
 
-                callback();
+                that.bus.trigger( 'lightplayer-opened' );
 
                 divWidget.unbind( onTransitionEnd );
             } );
@@ -89,7 +89,7 @@ LightPlayer.prototype = {
             divWidget.css( '-moz-transform', 'none' );
             divWidget.addClass( 'visible' );
             
-            callback();
+            this.bus.trigger( 'lightplayer-opened' );
         }
     },
 
@@ -353,6 +353,7 @@ Stage.prototype = $.extend( new Mod(), {
         this.name = 'stage';
         this.bus = bus;
         this.json = json;
+        this.autoPlay = false;
 
         this._render();
         this._addEvents();
@@ -378,6 +379,13 @@ Stage.prototype = $.extend( new Mod(), {
                 that._simulatePrev();
             } else {
                 that._simulateNext();
+            }
+        } );
+
+        this.sub( 'lightplayer-opened', function () {
+            if ( that.json.autoPlay ) {
+                that.autoPlay = true;
+                that.domRoot.find( 'li.current div.video-player' ).playerApiCaller( 'playVideo' );
             }
         } );
 
@@ -438,6 +446,10 @@ Stage.prototype = $.extend( new Mod(), {
         return item;
     },
 
+    _clear: function () {
+        this.domRoot.find( 'li.current div.video-player' ).html( '' );
+    },
+
     _go: function ( position ) {
         var item, that = this;
 
@@ -461,6 +473,7 @@ Stage.prototype = $.extend( new Mod(), {
     _goNext: function () {
         var item = this._getItem( 'next' ) || {};
         
+        this._clear();
         this._go( 'next' );
         this._updateArrows();
         this._updateItem( item );
@@ -470,7 +483,8 @@ Stage.prototype = $.extend( new Mod(), {
 
     _goPrev: function () {
         var item = this._getItem( 'prev' ) || {};
-
+        
+        this._clear();
         this._go( 'prev' );
         this._updateArrows();
         this._updateItem( item );
@@ -558,7 +572,7 @@ Stage.prototype = $.extend( new Mod(), {
             .width( width )
             .player( {
                 videosIDs: item.id,
-                autoPlay: this.json.autoPlay || false,
+                autoPlay: this.autoPlay,
                 sitePage: this.json.sitePage || '',
                 width: width,
                 height: 360,
