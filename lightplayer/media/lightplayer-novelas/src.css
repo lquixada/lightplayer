@@ -8,44 +8,6 @@
 }
 
 
-div.lightplayer li {
-    list-style:none;
-    overflow:hidden;
-}
-
-div.lightplayer div.bloco-palco li {
-    position:absolute;
-    display:none;
-    top:0;
-    width:100%;
-    height:100%;
-    text-align:center;
-}
-
-div.lightplayer div.bloco-palco li span {
-    display:none;
-}
-
-div.lightplayer span.views {
-    color:#bbb;
-    font:12px ProximaNova-Regular, Arial, sans-serif;
-}
-
-div.lightplayer ul {
-    margin:0;
-    padding:0;
-    list-style:none;
-    overflow:hidden;
-}
-
-div.lightplayer div.bloco-palco ul {
-    position:relative;
-    display:block;
-    height:359px;
-    background:url(/media/lightplayer/imgs/bg.png) #000 0 0 repeat-x;
-}
-
-
 
 /********************************************************
  * MODULO HEADER
@@ -129,11 +91,9 @@ div.lightplayer.novelas div.social {
     vertical-align: top;
 }
 
-div.lightplayer.novelas div.social div.video-social {
-    vertical-align:top;
+div.lightplayer.novelas div.social span.facebook-like {
     display: inline-block;
-    position: relative;
-    right: 0;
+    margin-top: 3px;
 }
 
 div.lightplayer.novelas div.social span.label {
@@ -142,54 +102,6 @@ div.lightplayer.novelas div.social span.label {
     color: #999;
     margin-bottom: 12px;
     text-transform: uppercase;
-}
-
-div.lightplayer.novelas div.social div.video-social a.button {
-    display:inline-block;
-    *display:inline;
-    *zoom:1;
-    margin-right:6px;
-    width:24px;
-    height:24px;
-    vertical-align:middle;
-    text-indent:-5000px;
-    *text-indent:0;
-    overflow:hidden;
-    background:url(/media/lightplayer/imgs/btn.social.png) transparent 0 0 no-repeat;
-}
-
-div.lightplayer.novelas div.social div.video-social a.button.facebook {
-    background-position:-24px 0;
-}
-
-div.lightplayer.novelas div.social div.video-social a.button.orkut {
-    background-position:0 0;
-}
-
-div.lightplayer.novelas div.social div.video-social a.button.twitter {
-    background-position:-48px 0;
-}
-
-div.lightplayer.novelas div.social div.video-social iframe {
-    width:240px;
-    height:100px;
-}
-
-div.lightplayer.novelas div.social div.video-social input {
-    padding:0 5px;
-    height:22px;
-    color:#666;
-    font-size:12px;
-    line-height:20px;
-    vertical-align:middle;
-    border-radius:3px;
-    border:1px inset #888;
-    cursor:text;
-}
-
-div.lightplayer.novelas div.social span.facebook-like {
-    display: inline-block;
-    margin-top: 3px;
 }
 
 
@@ -203,6 +115,45 @@ div.lightplayer.novelas div.playlist {
     position: relative;
     padding: 10px 28px 30px;
     background-color: #f6f6f6;
+}
+
+div.lightplayer.novelas div.playlist a.next {
+    background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent -29px 0 no-repeat;
+    background-color:#00f;
+    position: absolute;
+    top: 10px;
+    right: 0;
+    height: 108px;
+    width: 26px;
+}
+
+div.lightplayer.novelas div.playlist a {
+    display:block;
+    position:relative;
+    text-decoration: none;
+    color:#999;
+}
+
+div.lightplayer.novelas div.playlist a:hover, 
+div.lightplayer.novelas div.playlist a:hover span.titulo-item {
+    color:#00f;
+}
+
+div.lightplayer.novelas div.playlist a:hover span.hover-img {
+    display:block;
+}
+
+div.lightplayer.novelas div.playlist a.next:hover {
+    background-position: -95px 0;
+}
+
+div.lightplayer.novelas div.playlist a.next:active {
+    background-position: -160px 0;
+}
+
+div.lightplayer.novelas div.playlist a.next.inativo {
+    background-position: -225px 0;
+    background-color:#c9c9c9;
 }
 
 div.lightplayer.novelas div.playlist a.prev {
@@ -228,29 +179,6 @@ div.lightplayer.novelas div.playlist a.prev.inativo {
     background-color:#c9c9c9;
 }
 
-div.lightplayer.novelas div.playlist a.next {
-    background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent -29px 0 no-repeat;
-    background-color:#00f;
-    position: absolute;
-    top: 10px;
-    right: 0;
-    height: 108px;
-    width: 26px;
-}
-
-div.lightplayer.novelas div.playlist a.next:hover {
-    background-position: -95px 0;
-}
-
-div.lightplayer.novelas div.playlist a.next:active {
-    background-position: -160px 0;
-}
-
-div.lightplayer.novelas div.playlist a.next.inativo {
-    background-position: -225px 0;
-    background-color:#c9c9c9;
-}
-
 div.lightplayer.novelas div.playlist div.trilho-videos {
     position: relative;
     width: 100%;
@@ -263,12 +191,17 @@ div.lightplayer.novelas div.playlist div.trilho-videos {
     -o-transition: text-indent 400ms ease-out; /* Opera */
 }
 
-div.lightplayer.novelas div.playlist ul {
-    display: inline-block;
-    white-space: normal;
-    text-indent:0px;
-    margin: 0px;
-    margin-right:-4px;
+div.lightplayer.novelas div.playlist img {
+    height: 108px;
+    width: 180px;
+    margin-bottom: 18px;
+    border-radius: 5px;
+}
+
+
+div.lightplayer.novelas div.playlist li span.label,
+div.lightplayer.novelas div.playlist li span.layer {
+    display:none;
 }
 
 div.lightplayer.novelas div.playlist li {
@@ -277,58 +210,6 @@ div.lightplayer.novelas div.playlist li {
     vertical-align: top;
     margin: 0px 4px;
 }
-
-div.lightplayer.novelas div.playlist img {
-    height: 108px;
-    width: 180px;
-    margin-bottom: 18px;
-    border-radius: 5px;
-}
-
-div.lightplayer.novelas div.playlist span.titulo-item {
-    display: inline;
-    font-size: 12px;
-    line-height: 18px;
-    color: #666;
-}
-
-div.lightplayer.novelas div.playlist span.exibicao {
-    display: block;
-    margin-top: 18px;
-    font-size: 12px;
-    text-transform: uppercase;
-}
-
-div.lightplayer.novelas div.playlist span.exibicao strong {
-    font-family:ProximaNova-Semibold, Arial, sans-serif;
-}
-
-div.lightplayer.novelas div.playlist a {
-    display:block;
-    position:relative;
-    text-decoration: none;
-    color:#999;
-}
-
-div.lightplayer.novelas div.playlist li span.label,
-div.lightplayer.novelas div.playlist li span.layer {
-    display:none;
-}
-
-
-div.lightplayer.novelas div.playlist li.assistindo span.layer {
-    width: 180px;
-    height: 108px;
-    position: absolute;
-    top: 0px;
-    border-radius: 5px;
-    background-color: #000;
-    opacity:0.3;
-    -moz-opacity: 0.3;
-    filter: alpha(opacity=3);
-    display:block;
-}
-
 
 div.lightplayer.novelas div.playlist li.assistindo span.label {
     font-family: ProximaNova-SemiBold, Arial, sans-serif;
@@ -343,9 +224,44 @@ div.lightplayer.novelas div.playlist li.assistindo span.label {
     display:block;
 }
 
-div.lightplayer.novelas div.playlist a:hover, 
-div.lightplayer.novelas div.playlist a:hover span.titulo-item {
-    color:#00f;
+div.lightplayer.novelas div.playlist li.assistindo span.layer {
+    width: 180px;
+    height: 108px;
+    position: absolute;
+    top: 0px;
+    border-radius: 5px;
+    background-color: #000;
+    opacity:0.3;
+    -moz-opacity: 0.3;
+    filter: alpha(opacity=3);
+    display:block;
+}
+
+div.lightplayer.novelas div.playlist span.borda-inferior {
+    position: absolute;
+    height: 3px;
+    bottom: 0;
+    background-color: #ccc;
+    width: 100%;
+    left: 0;
+}
+
+div.lightplayer.novelas div.playlist span.chapeu {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+div.lightplayer.novelas div.playlist span.exibicao {
+    display: block;
+    margin-top: 18px;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+div.lightplayer.novelas div.playlist span.exibicao strong {
+    font-family:ProximaNova-Semibold, Arial, sans-serif;
 }
 
 div.lightplayer.novelas div.playlist span.hover-img {
@@ -358,27 +274,25 @@ div.lightplayer.novelas div.playlist span.hover-img {
     display: none;
 }
 
-div.lightplayer.novelas div.playlist a:hover span.hover-img {
-    display:block;
-}
-
-div.lightplayer.novelas div.playlist span.chapeu {
-    display: block;
-    font-size: 12px;
-    margin-bottom: 5px;
-    text-transform: uppercase;
-}
-
 div.lightplayer.novelas div.playlist span.numero {
     font-weight: bold;
     font-family: ProximaNova-Semibold, Arial, sans-serif;
 }
 
-div.lightplayer.novelas div.playlist span.borda-inferior {
-    position: absolute;
-    height: 3px;
-    bottom: 0;
-    background-color: #ccc;
-    width: 100%;
-    left: 0;
+div.lightplayer.novelas div.playlist span.titulo-item {
+    display: inline;
+    font-size: 12px;
+    line-height: 18px;
+    color: #666;
+}
+
+div.lightplayer.novelas div.playlist ul {
+    display: inline-block;
+    white-space: normal;
+    text-indent:0;
+    margin:0;
+    margin-right:-4px;
+    padding:0;
+    list-style:none;
+    overflow:hidden;
 }
