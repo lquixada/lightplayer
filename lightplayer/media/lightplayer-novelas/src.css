@@ -58,6 +58,8 @@ div.lightplayer.novelas div.info {
 }
 
 div.lightplayer.novelas div.info h6 {
+    display:block;
+    margin: 0 5px 0 0;
     color:#533475;
     font:bold 24px/26px Arial, sans-serif;
     letter-spacing:-1px;

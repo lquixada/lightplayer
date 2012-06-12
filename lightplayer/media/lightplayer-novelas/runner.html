@@ -35,6 +35,7 @@
           subtitle: 'ter 24',
           htmlClass: 'novelas',
           mode: 'sd',
+          autoPlay: true,
           itens: [
               {
                   id: 1673168,
@@ -91,6 +92,28 @@
           ]
       } );
   }
+
+  function abrir1item() {
+      lightplayer = new LightPlayerNovelas();
+
+      lightplayer.open( {
+          title: 'capítulo de <span>ontem</span>',
+          subtitle: 'ter 24',
+          htmlClass: 'novelas',
+          mode: 'sd',
+          itens: [
+              {
+                  id: 1673168,
+                  hat: 'cena <span class="numero">1</span> de <span class="numero">23</span>',
+                  title: 'Maurício anuncia os últimos dias de inscrições para o BBB12',
+                  description: 'O ex-BBB alerta os condidatos para os últimos momentos das inscrições',
+                  url: 'http://www.globo.com',
+                  views: 3412,
+                  current: true
+              }
+          ]
+      } );
+  }
   </script>
 </head>
 
@@ -98,6 +121,7 @@
 
 <div id="buttons">
     <button onclick="abrir()">abrir</button>
+    <button onclick="abrir1item()">abrir com 1 item</button>
 </div>
 
 <div id="main">

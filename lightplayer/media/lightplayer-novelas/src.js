@@ -29,18 +29,24 @@ InfoNovelas.prototype = $.extend( new Info(), {
     },
 
     _updateItem: function () {
-        var font, item = this._getItem( 'current' );
+        var style, item = this._getItem( 'current' );
         
         this.domRoot.find( 'span.chapeu' ).html( item.hat || '' );
 
         if ( item.title.length > 70 ) {
-            font = 'bold 18px/20px Arial, sans-serif';
+            style = {
+                font: 'bold 18px/20px Arial, sans-serif',
+                marginTop: '8px'
+            };
         } else {
-            font = 'bold 24px/26px Arial, sans-serif';
+            style = {
+                font: 'bold 24px/26px Arial, sans-serif',
+                marginTop: '0px'
+            };
         }
         
         this.domRoot.find( 'h6' )
-            .css( 'font', font )
+            .css( style )
             .html( this.truncate( item.title, 90 ) );
     }
 });
