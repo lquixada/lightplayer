@@ -93,10 +93,10 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
         } );
 
         this.domRoot
-            .delegate( 'a.seta-direita:not(.inativo)', 'click', function () {
+            .delegate( 'a.next:not(.inativo)', 'click', function () {
                 that._goNext();
             })
-            .delegate( 'a.seta-esquerda:not(.inativo)', 'click', function () {
+            .delegate( 'a.prev:not(.inativo)', 'click', function () {
                 that._goPrev();
             })
             .delegate( 'div.trilho-videos a', 'click', function () {
@@ -146,9 +146,9 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
     _renderContainer: function () {
         this.domRoot = $( [
             '<div class="playlist">',
-                '<a class="seta-esquerda"></a>',
+                '<a class="nav prev"></a>',
                 '<div class="trilho-videos"></div>',
-                '<a class="seta-direita"></a>',
+                '<a class="nav next"></a>',
                 '<span class="borda-inferior"></span>',
             '</div>'
         ].join( '' ) );
@@ -201,14 +201,14 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
     },
 
     _updateArrows: function () {
-        this.domRoot.find( 'a.seta-esquerda, a.seta-direita' ).removeClass( 'inativo' );
+        this.domRoot.find( 'a.nav' ).removeClass( 'inativo' );
 
         if ( this.current.next().size() === 0 ) {
-            this.domRoot.find( 'a.seta-direita' ).addClass( 'inativo' );
+            this.domRoot.find( 'a.next' ).addClass( 'inativo' );
         }
 
         if ( this.current.prev().size() === 0 ) {
-            this.domRoot.find( 'a.seta-esquerda' ).addClass( 'inativo' );
+            this.domRoot.find( 'a.prev' ).addClass( 'inativo' );
         }
     }
 });

@@ -205,7 +205,7 @@ div.lightplayer.novelas div.playlist {
     background-color: #f6f6f6;
 }
 
-div.lightplayer.novelas div.playlist a.seta-esquerda {
+div.lightplayer.novelas div.playlist a.prev {
     background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent 0 0 no-repeat;
     background-color:#00f;
     position: absolute;
@@ -215,20 +215,20 @@ div.lightplayer.novelas div.playlist a.seta-esquerda {
     width: 26px;
 }
 
-div.lightplayer.novelas div.playlist a.seta-esquerda:hover {
+div.lightplayer.novelas div.playlist a.prev:hover {
     background-position: -66px 0;
 }
 
-div.lightplayer.novelas div.playlist a.seta-esquerda:active {
+div.lightplayer.novelas div.playlist a.prev:active {
     background-position: -131px 0;
 }
 
-div.lightplayer.novelas div.playlist a.seta-esquerda.inativo {
+div.lightplayer.novelas div.playlist a.prev.inativo {
     background-position: -196px 0;
     background-color:#c9c9c9;
 }
 
-div.lightplayer.novelas div.playlist a.seta-direita{
+div.lightplayer.novelas div.playlist a.next {
     background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent -29px 0 no-repeat;
     background-color:#00f;
     position: absolute;
@@ -238,15 +238,15 @@ div.lightplayer.novelas div.playlist a.seta-direita{
     width: 26px;
 }
 
-div.lightplayer.novelas div.playlist a.seta-direita:hover {
+div.lightplayer.novelas div.playlist a.next:hover {
     background-position: -95px 0;
 }
 
-div.lightplayer.novelas div.playlist a.seta-direita:active {
+div.lightplayer.novelas div.playlist a.next:active {
     background-position: -160px 0;
 }
 
-div.lightplayer.novelas div.playlist a.seta-direita.inativo {
+div.lightplayer.novelas div.playlist a.next.inativo {
     background-position: -225px 0;
     background-color:#c9c9c9;
 }
