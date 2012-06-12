@@ -610,15 +610,7 @@ Social.prototype = $.extend( new Mod(), {
 
     _render: function () {
         this._renderContainer();
-        this._renderSocials();
-    },
-
-    _renderSocials: function () {
-        this._renderFacebookXML();
-        this._renderTwitterButton();
-        this._renderFacebookButton();
-        this._renderOrkutButton();
-        this._renderGloboInput();
+        this._renderContent();
     },
 
     _renderContainer: function () {
@@ -626,6 +618,14 @@ Social.prototype = $.extend( new Mod(), {
             '<div class="social">',
             '</div>'
         ].join( '' ) );
+    },
+
+    _renderContent: function () {
+        this._renderFacebookXML();
+        this._renderTwitterButton();
+        this._renderFacebookButton();
+        this._renderOrkutButton();
+        this._renderGloboInput();
     },
 
     _renderFacebookButton: function () {
@@ -693,7 +693,7 @@ Social.prototype = $.extend( new Mod(), {
         var item = this._getItem( 'current' );
 
         this._clear();
-        this._renderSocials();
+        this._renderContent();
     }
 });
 

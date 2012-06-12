@@ -5,7 +5,7 @@ LightPlayerNovelas.prototype = $.extend( new LightPlayer(), {
         this.add( new Header() );
         this.add( new InfoNovelas() );
         this.add( new SocialNovelas() );
-        this.add( new Stage() );
+        this.add( new StageNovelas() );
         this.add( new PlaylistNovelas() );
     }
 });
@@ -37,27 +37,47 @@ InfoNovelas.prototype = $.extend( new Info(), {
 });
 
 
+function StageNovelas() {}
+
+StageNovelas.prototype = $.extend( new Stage(), {
+    _updateNextArrow: function () {
+        var item = this._getItem( 'next' ) || {};
+
+        this.domRoot.find( 'a.nav.next' ).addClass( 'visible' )
+            .find( 'span.chapeu' ).html( item.hat || '' ).end()
+            .find( 'span.titulo' ).text( item.title );
+    },
+
+    _updatePrevArrow: function () {
+        var item = this._getItem( 'prev' ) || {};
+
+        this.domRoot.find( 'a.nav.prev' ).addClass( 'visible' )
+            .find( 'span.chapeu' ).html( item.hat || '' ).end()
+            .find( 'span.titulo' ).text( item.title );
+    }
+});
+
 
 function SocialNovelas() {}
 
 SocialNovelas.prototype = $.extend( new Social(), {
     _renderContainer: function () {
         this.domRoot = $( [
-            '<div class="social">',
-                '<span class="label">compartilhe esse vídeo</span>',
-            '</div>'
+            '<div class="social"></div>'
         ].join( '' ) );
     },
 
-    _renderSocials: function () {
+    _renderContent: function () {
+        this._renderTitle();
         this._renderTwitterButton();
         this._renderFacebookButton();
         this._renderOrkutButton();
-        this._renderFacebookXML();
     },
 
-    _renderFacebookXML: function () {
-        //<div class="fb-like fb_edge_widget_with_comment fb_iframe_widget" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div>
+    _renderTitle: function () {
+        this.domRoot.append( [
+            '<span class="label">compartilhe esse vídeo</span>'
+        ].join( '' ) );
     }
 });
 
