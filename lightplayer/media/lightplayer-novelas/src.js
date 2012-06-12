@@ -32,15 +32,16 @@ InfoNovelas.prototype = $.extend( new Info(), {
         var font, item = this._getItem( 'current' );
         
         this.domRoot.find( 'span.chapeu' ).html( item.hat || '' );
-        this.domRoot.find( 'h6' ).html( item.title );
 
         if ( item.title.length > 70 ) {
             font = 'bold 18px/20px Arial, sans-serif';
         } else {
             font = 'bold 24px/26px Arial, sans-serif';
         }
-
-        this.domRoot.find( 'h6' ).css( 'font', font );
+        
+        this.domRoot.find( 'h6' )
+            .css( 'font', font )
+            .html( this.truncate( item.title, 90 ) );
     }
 });
 
@@ -184,7 +185,7 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
     },
 
     _renderItens: function () {
-        var html = '<ul>';
+        var html = '<ul>', that = this;
 
         $.each( this.json.itens, function ( i ) {
             html += (i>0 && i%4 === 0? '</ul><ul>':'');
@@ -197,11 +198,9 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
                         '<span class="layer"></span>',
                         '<span class="label">assistindo</span>',
                         
-                        (this.hat?
-                            '<span class="chapeu">'+this.hat+'</span>': ''
-                        ),
+                        (this.hat? '<span class="chapeu">'+this.hat+'</span>': ''),
                         
-                        '<span class="titulo-item">'+this.title+'</span>',
+                        '<span class="titulo-item">'+that.truncate(this.title, 50)+'</span>',
                         '<span class="exibicao"><strong>'+this.views+'</strong> exibições</span>',
                     '</a>',
                 '</li>',

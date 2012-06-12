@@ -225,6 +225,18 @@ Mod.prototype = {
         } );
     },
 
+    truncate: function ( str, count ) {
+        var cutIndex;
+
+        if ( str.length > count ) {
+            str = str.substring(0, count);
+            cutIndex = str.lastIndexOf(' ');
+            return str.substring( 0, cutIndex )+'...';
+        }
+
+        return str;
+    },
+
     // private
 
     _addEvents: function () {
