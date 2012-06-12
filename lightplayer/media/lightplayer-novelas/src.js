@@ -20,10 +20,12 @@ InfoNovelas.prototype = $.extend( new Info(), {
 
         this.domRoot = $( [
             '<div class="info">',
-                '<span class="chapeu">'+(item.hat || '')+'</span>',
-                '<h6>'+item.title+'</h6>',
+                '<span class="chapeu"></span>',
+                '<h6></h6>',
             '</div>'
         ].join( '' ) );
+
+        this._updateItem();
     },
 
     _updateItem: function () {
