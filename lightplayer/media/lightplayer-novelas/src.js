@@ -81,6 +81,17 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
     _addEvents: function () {
         var that = this;
 
+        this.sub( 'video-change', function ( event ) {
+            var a, item;
+
+            that.json = event.json;
+
+            item = that._getItem( 'current' );
+
+            a = that.domRoot.find( 'a[item-id='+item.id+']' );
+            that._setAsWatching( a.parent() );
+        } );
+
         this.domRoot
             .delegate( 'a.seta-direita:not(.inativo)', 'click', function () {
                 that._goNext();
@@ -149,7 +160,7 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
         $.each( this.json.itens, function ( i ) {
             html += (i>0 && i%4 === 0? '</ul><ul>':'');
             html += [
-                '<li>',
+                '<li '+(this.current? 'class="assistindo"': '')+'>',
                     '<a href="javascript:;" item-id="'+this.id+'">',
                         '<img src="http://img.video.globo.com/180x108/'+this.id+'.jpg">',
                         '<span class="hover-img"></span>',
@@ -181,9 +192,8 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
     },
 
     _setCurrent: function ( newCurrent ) {
-        if ( newCurrent.size() != 1 ) {
+        if ( newCurrent.size() === 0 ) {
             this.current = this.domRoot.find( 'ul:first' ).addClass( 'current' );
-            this._setAsWatching( this.current.find( 'li:first' ) );
         } else {
             this.current.removeClass( 'current' );
             this.current = newCurrent.addClass( 'current' );
