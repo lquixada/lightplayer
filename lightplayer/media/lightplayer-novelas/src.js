@@ -203,8 +203,7 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
                         '<span class="titulo-item">'+that.truncate(this.title, 50)+'</span>',
                         '<span class="exibicao"><strong>'+this.views+'</strong> exibições</span>',
                     '</a>',
-                '</li>',
-                '&nbsp;'
+                '</li>'
             ].join( '' );
         } );
 
