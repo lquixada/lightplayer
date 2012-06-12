@@ -20,9 +20,7 @@ InfoNovelas.prototype = $.extend( new Info(), {
 
         this.domRoot = $( [
             '<div class="info">',
-                '<span class="contador">',
-                    'cena <span class="numero">1</span> de <span class="numero">23</span>',
-                '</span>',
+                '<span class="chapeu">'+(item.hat || '')+'</span>',
                 '<h6>'+item.title+'</h6>',
             '</div>'
         ].join( '' ) );
@@ -30,8 +28,9 @@ InfoNovelas.prototype = $.extend( new Info(), {
 
     _updateItem: function () {
         var item = this._getItem( 'current' );
-
-        this.domRoot.find( 'h6' ).text( item.title );
+        
+        this.domRoot.find( 'span.chapeu' ).html( item.hat || '' );
+        this.domRoot.find( 'h6' ).html( item.title );
     }
 });
 
@@ -168,9 +167,9 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
                         '<span class="layer"></span>',
                         '<span class="label">assistindo</span>',
                         
-                        '<span class="contador-videos">',
-                            'cena <span class="numero">1</span> de <span class="numero">23</span>',
-                        '</span>',
+                        (this.hat?
+                            '<span class="chapeu">'+this.hat+'</span>': ''
+                        ),
                         
                         '<span class="titulo-item">'+this.title+'</span>',
                         '<span class="exibicao"><strong>'+this.views+'</strong> exibições</span>',

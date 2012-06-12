@@ -101,7 +101,7 @@ div.lightplayer.novelas div.info h6 {
     letter-spacing:-1px;
 }
 
-div.lightplayer.novelas div.info span.contador {
+div.lightplayer.novelas div.info span.chapeu {
     display: block;
     color:#666;
     font:12px ProximaNova-Light, Arial, sans-serif;
@@ -362,7 +362,7 @@ div.lightplayer.novelas div.playlist a:hover span.hover-img {
     display:block;
 }
 
-div.lightplayer.novelas div.playlist span.contador-videos {
+div.lightplayer.novelas div.playlist span.chapeu {
     display: block;
     font-size: 12px;
     margin-bottom: 5px;

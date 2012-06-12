@@ -167,10 +167,10 @@ describe("Light Player", function() {
 
 
 /***********************************************
- * MODULO BASIC
+ * MODULO MOD
  ***********************************************/
 
-describe("Module: Basic Module", function() {
+describe("Module: Mod", function() {
     beforeEach(function() {
         this.bus = $( {} );
         this.json = {
