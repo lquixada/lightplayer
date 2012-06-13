@@ -10,7 +10,7 @@ LightPlayer.prototype = {
         this._render();
         this._addMods();
         this._addEvents();
-
+        
         this._animateIn();
     },
 
@@ -81,7 +81,10 @@ LightPlayer.prototype = {
             
             divOverlay.unbind( onTransitionEnd );
         } );
-
+        
+        // CSS3 has problems with recentlya added dom elements
+        // Needs to call .width() to force reflow.
+        divOverlay.width();
         divOverlay.addClass( 'visible' );
         
         // For browsers (IEs and FF3.6) that doesn't support css3 animations, just call the callback
