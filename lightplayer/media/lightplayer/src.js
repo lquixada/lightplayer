@@ -499,6 +499,10 @@ Stage.prototype = $.extend( new Mod(), {
         this._renderArrows();
         this._addItem( 'current' );
         this._updateItem( item );
+
+        if ( this.json.itens.length == 1 ) {
+            this.domRoot.css( 'margin-bottom', '30px' );
+        }
     },
 
     _renderArrow: function ( position ) {

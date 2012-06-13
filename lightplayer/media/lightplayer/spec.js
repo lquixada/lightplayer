@@ -415,16 +415,24 @@ describe("Module: Stage", function() {
     });
 
     describe("one item", function() {
-        it("should not have arrows visible", function() {
+        beforeEach(function() {
             this.json = {
                 itens: [
                     { id: 123, title: 'titulo 1' }
                 ]
             };
-
+        });
+        
+        it("should not have arrows visible", function() {
             this.stage.init( this.bus, this.json );
 
             expect( this.stage.domRoot.find( 'a.nav.visible' ).size() ).toBe( 0 );
+        });
+
+        it("should add some margin at the bottom", function() {
+            this.stage.init( this.bus, this.json );
+
+            expect( this.stage.domRoot.css( 'margin-bottom' ) ).not.toBe( '' );
         });
     });
     
