@@ -105,9 +105,11 @@ PlaylistNovelas.prototype = $.extend( new Mod(), {
         this.bus = bus;
         this.json = json;
         this.offset = 0; 
-
-        this._render();
-        this._addEvents();
+        
+        if ( this.json.itens.length > 1 ) {
+            this._render();
+            this._addEvents();
+        }
 
         return this.domRoot;
     },

@@ -553,6 +553,10 @@ Stage.prototype = $.extend( new Mod(), {
             last = this.json.itens[this.json.itens.length-1];
 
         this.domRoot.find( 'a.nav' ).removeClass( 'visible' );
+        
+        if ( first == last ) {
+            return;
+        }
 
         if ( first.current ) {
             this._updateNextArrow();

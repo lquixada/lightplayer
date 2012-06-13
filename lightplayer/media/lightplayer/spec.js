@@ -414,6 +414,20 @@ describe("Module: Stage", function() {
         expect( this.stage.name ).toBe( 'stage' );
     });
 
+    describe("one item", function() {
+        it("should not have arrows visible", function() {
+            this.json = {
+                itens: [
+                    { id: 123, title: 'titulo 1' }
+                ]
+            };
+
+            this.stage.init( this.bus, this.json );
+
+            expect( this.stage.domRoot.find( 'a.nav.visible' ).size() ).toBe( 0 );
+        });
+    });
+    
     describe("first item", function() {
         beforeEach(function() {
             this.json.itens[0].current = true;
