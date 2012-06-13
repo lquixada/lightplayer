@@ -417,21 +417,12 @@ div.lightplayer div.playlist {
     background-color: #f6f6f6;
 }
 
-div.lightplayer div.playlist a.next {
-    background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent -29px 0 no-repeat;
-    background-color:#c51883;
-    position: absolute;
-    top: 10px;
-    right: 0;
-    height: 108px;
-    width: 26px;
-}
-
 div.lightplayer div.playlist a {
     display:block;
     position:relative;
-    text-decoration: none;
+    text-decoration:none;
     color:#999;
+    width:100%;
 }
 
 div.lightplayer div.playlist a:hover, 
@@ -441,6 +432,16 @@ div.lightplayer div.playlist a:hover span.titulo-item {
 
 div.lightplayer div.playlist a:hover span.hover-img {
     display:block;
+}
+
+div.lightplayer div.playlist a.next {
+    background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent -29px 0 no-repeat;
+    background-color:#c51883;
+    position: absolute;
+    top: 10px;
+    right: 0;
+    height: 108px;
+    width: 26px;
 }
 
 div.lightplayer div.playlist a.next:hover {
@@ -495,20 +496,24 @@ div.lightplayer div.playlist img {
     height: 108px;
     width: 180px;
     margin-bottom: 18px;
+    border:none;
     border-radius: 5px;
+}
+
+div.lightplayer div.playlist li {
+    display:inline-block;
+    *display:inline;
+    *zoom:1;
+    margin: 0 5px;
+    width: 180px;
+    white-space: normal;
+    vertical-align: top;
 }
 
 
 div.lightplayer div.playlist li span.label,
 div.lightplayer div.playlist li span.layer {
     display:none;
-}
-
-div.lightplayer div.playlist li {
-    width: 180px;
-    display: inline-block;
-    vertical-align: top;
-    margin: 0 5px;
 }
 
 div.lightplayer div.playlist li.assistindo span.label {
@@ -525,16 +530,19 @@ div.lightplayer div.playlist li.assistindo span.label {
 }
 
 div.lightplayer div.playlist li.assistindo span.layer {
+    position: absolute;
+    display:block;
+    top:0;
+    left:0;
     width: 180px;
     height: 108px;
-    position: absolute;
-    top: 0px;
     border-radius: 5px;
     background-color: #000;
     opacity:0.3;
-    -moz-opacity: 0.3;
-    filter: alpha(opacity=3);
-    display:block;
+    -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=30); /* IE8 */
+    filter:alpha(opacity=30); /* IE7- */
+    zoom:1;
+    float:left;
 }
 
 div.lightplayer div.playlist span.borda-inferior {
@@ -565,34 +573,36 @@ div.lightplayer div.playlist span.exibicao strong {
 }
 
 div.lightplayer div.playlist span.hover-img {
-    border: 4px solid #c51883;
-    width: 171px;
-    height: 100px;
     position: absolute;
-    top: 0px;
-    border-radius: 5px;
     display: none;
+    width: 172px;
+    height: 100px;
+    top: 0;
+    left:0;
+    border-radius: 5px;
+    border: 4px solid #c51883;
 }
 
 div.lightplayer div.playlist span.numero {
-    font-weight: bold;
-    font-family: ProximaNova-Semibold, Arial, sans-serif;
+    font-family:ProximaNova-Semibold, Arial, sans-serif;
+    font-weight:bold;
 }
 
 div.lightplayer div.playlist span.titulo-item {
-    display: inline;
+    display:block;
+    color: #666;
     font-size: 12px;
     line-height: 18px;
-    color: #666;
 }
 
 div.lightplayer div.playlist ul {
-    display: inline-block;
-    white-space: normal;
-    text-indent:0;
+    display:inline-block;
+    *display:inline;
+    *zoom:1;
     margin:0;
     margin-right:-4px;
     padding:0;
+    text-indent:0;
     list-style:none;
     overflow:hidden;
 }
