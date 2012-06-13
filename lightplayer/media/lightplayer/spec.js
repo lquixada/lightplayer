@@ -392,9 +392,9 @@ describe("Module: Stage", function() {
         this.bus = $( {} );
         this.json = {
             itens: [
-                { id: 123, title: 'titulo 1' },
-                { id: 456, title: 'titulo 2' },
-                { id: 789, title: 'titulo 3' }
+                { id: 123, title: 'titulo 1', hat: 'chapeu 1' },
+                { id: 456, title: 'titulo 2', hat: 'chapeu 2' },
+                { id: 789, title: 'titulo 3', hat: 'chapeu 3' }
             ]
         };
 
@@ -580,7 +580,7 @@ describe("Module: Stage", function() {
             });
 
             it("should have an chapeu", function() {
-                expect( this.nextButton.find( 'span.chapeu' ).text() ).toBe( 'Próximo' );
+                expect( this.nextButton.find( 'span.chapeu' ).text() ).toBe( 'chapeu 3' );
             });
         });
 
@@ -598,7 +598,7 @@ describe("Module: Stage", function() {
             });
 
             it("should have an chapeu", function() {
-                expect( this.prevButton.find( 'span.chapeu' ).text() ).toBe( 'Anterior' );
+                expect( this.prevButton.find( 'span.chapeu' ).text() ).toBe( 'chapeu 1' );
             });
         });
     });
@@ -847,9 +847,9 @@ describe("Module: Info", function() {
         this.bus = $({});
         this.json = {
             itens: [
-                { id: 123, title: 'titulo 1', description: 'desc 1', views: 1000 },
-                { id: 456, title: 'titulo 2', description: 'desc 2', views: 2000, current: true },
-                { id: 789, title: 'titulo 3', description: 'desc 3', views: 3000 }
+                { id: 123, title: 'titulo 1', description: 'desc 1', hat: 'chapeu 1', views: 1000 },
+                { id: 456, title: 'titulo 2', description: 'desc 2', hat: 'chapeu 2', views: 2000, current: true },
+                { id: 789, title: 'titulo 3', description: 'desc 3', hat: 'chapeu 3', views: 3000 }
             ]
         };
 
@@ -858,8 +858,6 @@ describe("Module: Info", function() {
     });
 
     it("should have a name", function() {
-        this.info.init( this.bus, this.json );
-
         expect( this.info.name ).toBe( 'info' );
     });
     
@@ -867,12 +865,8 @@ describe("Module: Info", function() {
         expect( this.info.domRoot.find( 'h6' ).html() ).toBe( this.json.itens[1].title );
     });
 
-    it("should have a description", function() {
-        expect( this.info.domRoot.find( 'p' ).text() ).toBe( this.json.itens[1].description );
-    });
-
     it("should have views count", function() {
-        expect( this.info.domRoot.find( 'span.views' ).text() ).toBe( this.json.itens[1].views+' exibições' );
+        expect( this.info.domRoot.find( 'span.chapeu' ).text() ).toBe( this.json.itens[1].hat );
     });
 
     it("should update on new current item", function() {
@@ -885,8 +879,7 @@ describe("Module: Info", function() {
         this.bus.trigger( { type: 'video-change', json: this.json } );
         
         expect( div.find( 'h6' ).text() ).toBe( current.title );
-        expect( div.find( 'p' ).text() ).toBe( current.description );
-        expect( div.find( 'span.views' ).text() ).toBe( current.views+' exibições' );
+        expect( div.find( 'span.chapeu' ).text() ).toBe( current.hat );
     });
     
 });
@@ -979,13 +972,6 @@ describe("Module: Social", function() {
     });
    
     describe("facebook", function() {
-        //it("should have facebook likes", function() {
-            //expect( this.social.domRoot.find( 'span.facebook > :first-child' ).size() ).toBe( 1 );
-        //});
-
-        //it("should use the regular url for the facebook like", function() {
-            //expect( this.social.domRoot.find( 'span.facebook > :first-child' ).attr( 'href' ) ).toContain( this.json.itens[0].url );
-        //});
 
         it("should have a facebook share button", function() {
             expect( this.social.domRoot.find( 'a.facebook.button' ).size() ).toBe( 1 );
@@ -1048,25 +1034,6 @@ describe("Module: Social", function() {
         });
     });
 
-    //describe("glo.bo", function() {
-        //it("should have a field for shortened url", function() {
-            //expect( this.social.domRoot.find( 'input.globo-url' ).size() ).toBe( 1 );
-        //});
-
-        //it("should display the shortened version of url", function() {
-            //expect( this.social.domRoot.find( 'input.globo-url' ).val() ).toContain( this.json.itens[0].shortUrl );
-        //});
-
-        //it("should not display a field for shortened url when there isn't one", function() {
-            //delete this.json.itens[0].shortUrl;
-
-            //this.social = new Social();
-            //this.social.init( this.bus, this.json );  
-
-            //expect( this.social.domRoot.find( 'input.globo-url' ).size() ).toBe( 0 );
-        //});
-    //});
-
     describe("Events", function() {
         beforeEach(function() {
             this.json.itens[0].current = false;
@@ -1084,10 +1051,6 @@ describe("Module: Social", function() {
             var encodedUrl = encodeURIComponent( this.json.itens[2].url );
             expect( this.social.domRoot.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
-
-        //it("should change facebook xml url on video-change", function() {
-            //expect( this.social.domRoot.find( 'span.facebook > :first-child' ).attr( 'href' ) ).toContain( this.json.itens[2].url );
-        //});
 
         it("should change orkut button url on video-change", function() {
             var encodedUrl = encodeURIComponent( this.json.itens[2].url );
