@@ -234,6 +234,10 @@ Mod.prototype = {
     truncate: function ( str, count ) {
         var cutIndex;
 
+        if ( !str ) {
+            return str;
+        }
+
         if ( str.length > count ) {
             str = str.substring(0, count);
             cutIndex = str.lastIndexOf(' ');
@@ -626,7 +630,7 @@ Stage.prototype = $.extend( new Mod(), {
 
         this.domRoot.find( 'a.nav.next' ).addClass( 'visible' )
             .find( 'span.chapeu' ).html( item.hat || '' ).end()
-            .find( 'span.titulo' ).text( item.title );
+            .find( 'span.titulo' ).text( this.truncate( item.title, 100 ) );
     },
 
     _updatePrevArrow: function () {
@@ -930,7 +934,7 @@ Playlist.prototype = $.extend( new Mod(), {
             html += (i>0 && i%4 === 0? '</ul><ul>':'');
             html += [
                 '<li '+(this.current? 'class="assistindo"': '')+'>',
-                    '<a href="javascript:;" item-id="'+this.id+'">',
+                    '<a href="javascript:;" item-id="'+this.id+'" title="'+this.title+'">',
                         '<img src="http://img.video.globo.com/180x108/'+this.id+'.jpg">',
                         '<span class="hover-img"></span>',
                         
