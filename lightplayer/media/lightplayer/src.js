@@ -148,11 +148,13 @@ LightPlayer.prototype = {
     _getTransitionEndEvent: function () {
         if ( $.browser.webkit ) {
             return 'webkitTransitionEnd';
-        } else if ( $.browser.opera ) {
-            return 'oTransitionEnd';
-        } else {
-            return 'transitionend';
         }
+        
+        if ( $.browser.opera ) {
+            return 'oTransitionEnd';
+        }
+
+        return 'transitionend';
     },
 
     _hasTransitionSupport: function() {
