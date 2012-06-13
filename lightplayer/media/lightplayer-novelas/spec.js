@@ -14,9 +14,7 @@ beforeEach(function() {
     window.facebookParse = function () {};
 
     // Prevents css3 animations on open
-    spyOn( LightPlayerNovelas.prototype, '_animateIn' ).andCallFake( function ( callback ) {
-        callback();
-    });
+    spyOn( LightPlayerNovelas.prototype, '_animateIn' );
 
     // Prevents css3 animations on close
     spyOn( LightPlayerNovelas.prototype, '_animateOut' ).andCallFake( function ( callback ) {
