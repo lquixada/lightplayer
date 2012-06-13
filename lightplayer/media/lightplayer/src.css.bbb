@@ -1,13 +1,4 @@
 
-@font-face {
-    font-family: 'ProximaNova-Light';
-    src: url('http://s.glbimg.com/po/fo/webfonts/842dbd395d12ce251a03727028b17d6e.eot');
-    src: url('http://s.glbimg.com/po/fo/webfonts/842dbd395d12ce251a03727028b17d6e.eot?#iefix') format('embedded-opentype'),
-    url('http://s.glbimg.com/po/fo/webfonts/842dbd395d12ce251a03727028b17d6e.woff') format('woff'),
-    url('http://s.glbimg.com/po/fo/webfonts/842dbd395d12ce251a03727028b17d6e.ttf') format('truetype');
-}
-
-
 
 /********************************************************
  * LIGHTPLAYER
@@ -96,8 +87,8 @@ div.lightplayer div.widget-overlay.visible {
  ********************************************************/
 
 div.lightplayer div.header {
-    padding:28px 28px 13px;
-    height:auto;
+    padding:28px 23px 12px;
+    height:40px;
     overflow:hidden;
 }
 
@@ -119,8 +110,8 @@ div.lightplayer div.header a.close:hover {
 
 div.lightplayer div.header em.subtitulo {
     color:#999;
-    font:22px ProximaNova-Light, Georgia, serif;
-    text-transform:uppercase;
+    font:italic 18px Georgia, serif;
+    letter-spacing:-1px;
 }
 
 div.lightplayer div.header h5 {
@@ -129,14 +120,13 @@ div.lightplayer div.header h5 {
     *zoom:1;
     margin:0 5px 0 0;
     padding:0;
-    color:#c51883;
-    font:22px/1em ProximaNova-Light, Arial, sans-serif;
+    color:#333;
+    font:36px/1em Arial, sans-serif;
     letter-spacing:-2px;
-    text-transform:uppercase;
 }
 
 div.lightplayer div.header h5 span {
-    color:inherit;
+    color:#ff8706;
     font-weight:bold;
 }
 
@@ -323,11 +313,9 @@ div.lightplayer div.social {
     display:inline-block;
     *display:inline;
     *zoom:1;
-    margin:0 0 0 28px;
-    padding:39px 0 0;
-    width:305px;
-    height:26px;
-    text-align:right;
+    margin:30px 20px 30px 0;
+    width:240px;
+    height:170px;
     vertical-align:top;
 }
 
@@ -335,7 +323,7 @@ div.lightplayer div.social a.button {
     display:inline-block;
     *display:inline;
     *zoom:1;
-    margin:0 0 0 10px;
+    margin-right:6px;
     width:24px;
     height:24px;
     vertical-align:middle;
@@ -357,17 +345,30 @@ div.lightplayer div.social a.button.twitter {
     background-position:-48px 0;
 }
 
-div.lightplayer div.social span.label {
-    display: inline-block;
-    *display: inline;
-    *zoom: 1;
-    height:24px;
-    color: #999;
-    font-size: 12px;
-    line-height: 40px;
-    text-transform: uppercase;
-    vertical-align: middle;
+div.lightplayer div.social iframe {
+    width:240px;
+    height:100px;
 }
+
+div.lightplayer div.social input {
+    padding:0 5px;
+    height:22px;
+    color:#666;
+    font-size:12px;
+    line-height:20px;
+    vertical-align:middle;
+    border-radius:3px;
+    border:1px inset #888;
+    cursor:text;
+}
+
+div.lightplayer div.social span.facebook {
+    display:block;
+    margin-bottom:20px;
+    padding-bottom:20px;
+    border-bottom:1px solid #ccc;
+}
+
 
 
 /********************************************************
@@ -378,222 +379,29 @@ div.lightplayer div.info {
     display:inline-block;
     *display:inline;
     *zoom:1;
-    margin:0;
-    padding: 0 0 20px 28px;
-    width:430px;
-    height:70px;
+    margin:30px 28px 30px 30px;
+    width:490px;
     vertical-align:top;
 }
 
 div.lightplayer div.info h6 {
-    display:block;
-    margin: 0 5px 0 0;
-    color:#533475;
-    font:bold 24px/26px Arial, sans-serif;
-    letter-spacing:-1px;
+    display:inline;
+    margin-right:5px;
+    color:#333;
+    font:bold 26px/28px Arial, sans-serif;
+    letter-spacing:-2px;
 }
 
-div.lightplayer div.info span.chapeu {
-    display: block;
-    color:#666;
-    font:12px ProximaNova-Light, Arial, sans-serif;
-    text-transform: uppercase;
-}
-
-div.lightplayer div.info span.numero {
-    font-family:ProximaNova-Bold, Arial, sans-serif;
-}
-
-
-
-/********************************************************
- * MODULO PLAYLIST
- ********************************************************/
-
-div.lightplayer div.playlist {
-    height: 225px;
-    position: relative;
-    padding: 10px 30px 30px;
-    background-color: #f6f6f6;
-}
-
-div.lightplayer div.playlist a.next {
-    background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent -29px 0 no-repeat;
-    background-color:#c51883;
-    position: absolute;
-    top: 10px;
-    right: 0;
-    height: 108px;
-    width: 26px;
-}
-
-div.lightplayer div.playlist a {
-    display:block;
-    position:relative;
-    text-decoration: none;
+div.lightplayer div.info p {
+    margin-top:15px;
     color:#999;
+    font:14px/18px Arial, sans-serif;
+    letter-spacing: -0.4px;
 }
 
-div.lightplayer div.playlist a:hover, 
-div.lightplayer div.playlist a:hover span.titulo-item {
-    color:#c51883;
+div.lightplayer div.info span.views {
+    color:#bbb;
+    font:12px Arial, sans-serif;
 }
 
-div.lightplayer div.playlist a:hover span.hover-img {
-    display:block;
-}
-
-div.lightplayer div.playlist a.next:hover {
-    background-position: -95px 0;
-}
-
-div.lightplayer div.playlist a.next:active {
-    background-position: -160px 0;
-}
-
-div.lightplayer div.playlist a.next.inativo {
-    background-position: -225px 0;
-    background-color:#c9c9c9;
-}
-
-div.lightplayer div.playlist a.prev {
-    background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent 0 0 no-repeat;
-    background-color:#c51883;
-    position: absolute;
-    top: 10px;
-    left: 0;
-    height: 108px;
-    width: 26px;
-}
-
-div.lightplayer div.playlist a.prev:hover {
-    background-position: -66px 0;
-}
-
-div.lightplayer div.playlist a.prev:active {
-    background-position: -131px 0;
-}
-
-div.lightplayer div.playlist a.prev.inativo {
-    background-position: -196px 0;
-    background-color:#c9c9c9;
-}
-
-div.lightplayer div.playlist div.trilho-videos {
-    position: relative;
-    width: 100%;
-    height: 225px;
-    overflow: hidden;
-    white-space: nowrap;
-    transition: text-indent 400ms ease-out;
-    -webkit-transition: text-indent 400ms ease-out; /* Safari and Chrome */
-    -moz-transition: text-indent 400ms ease-out; /* Firefox 4 */
-    -o-transition: text-indent 400ms ease-out; /* Opera */
-}
-
-div.lightplayer div.playlist img {
-    height: 108px;
-    width: 180px;
-    margin-bottom: 18px;
-    border-radius: 5px;
-}
-
-
-div.lightplayer div.playlist li span.label,
-div.lightplayer div.playlist li span.layer {
-    display:none;
-}
-
-div.lightplayer div.playlist li {
-    width: 180px;
-    display: inline-block;
-    vertical-align: top;
-    margin: 0 5px;
-}
-
-div.lightplayer div.playlist li.assistindo span.label {
-    font-family: ProximaNova-SemiBold, Arial, sans-serif;
-    letter-spacing: -1px;
-    font-size: 12px;
-    color:#fff;
-    position: absolute;
-    top: 50px;
-    left: 55px;
-    text-transform: uppercase;
-    font-weight: bold;
-    display:block;
-}
-
-div.lightplayer div.playlist li.assistindo span.layer {
-    width: 180px;
-    height: 108px;
-    position: absolute;
-    top: 0px;
-    border-radius: 5px;
-    background-color: #000;
-    opacity:0.3;
-    -moz-opacity: 0.3;
-    filter: alpha(opacity=3);
-    display:block;
-}
-
-div.lightplayer div.playlist span.borda-inferior {
-    position: absolute;
-    height: 3px;
-    bottom: 0;
-    background-color: #ccc;
-    width: 100%;
-    left: 0;
-}
-
-div.lightplayer div.playlist span.chapeu {
-    display: block;
-    font-size: 12px;
-    margin-bottom: 5px;
-    text-transform: uppercase;
-}
-
-div.lightplayer div.playlist span.exibicao {
-    display: block;
-    margin-top: 18px;
-    font-size: 12px;
-    text-transform: uppercase;
-}
-
-div.lightplayer div.playlist span.exibicao strong {
-    font-family:ProximaNova-Semibold, Arial, sans-serif;
-}
-
-div.lightplayer div.playlist span.hover-img {
-    border: 4px solid #c51883;
-    width: 171px;
-    height: 100px;
-    position: absolute;
-    top: 0px;
-    border-radius: 5px;
-    display: none;
-}
-
-div.lightplayer div.playlist span.numero {
-    font-weight: bold;
-    font-family: ProximaNova-Semibold, Arial, sans-serif;
-}
-
-div.lightplayer div.playlist span.titulo-item {
-    display: inline;
-    font-size: 12px;
-    line-height: 18px;
-    color: #666;
-}
-
-div.lightplayer div.playlist ul {
-    display: inline-block;
-    white-space: normal;
-    text-indent:0;
-    margin:0;
-    margin-right:-4px;
-    padding:0;
-    list-style:none;
-    overflow:hidden;
-}
 

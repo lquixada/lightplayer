@@ -9,9 +9,6 @@ beforeEach(function() {
     spyOn( $.fn, 'player' ).andCallFake( function ( params ) {
         that.playerParams = params;
     });
-    
-    // Prevents dealing with Facebook SDK
-    window.facebookParse = function () {};
 
     // Prevents css3 animations on open
     spyOn( LightPlayer.prototype, '_animateIn' );
@@ -982,13 +979,13 @@ describe("Module: Social", function() {
     });
    
     describe("facebook", function() {
-        it("should have facebook likes", function() {
-            expect( this.social.domRoot.find( 'span.facebook > :first-child' ).size() ).toBe( 1 );
-        });
+        //it("should have facebook likes", function() {
+            //expect( this.social.domRoot.find( 'span.facebook > :first-child' ).size() ).toBe( 1 );
+        //});
 
-        it("should use the regular url for the facebook like", function() {
-            expect( this.social.domRoot.find( 'span.facebook > :first-child' ).attr( 'href' ) ).toContain( this.json.itens[0].url );
-        });
+        //it("should use the regular url for the facebook like", function() {
+            //expect( this.social.domRoot.find( 'span.facebook > :first-child' ).attr( 'href' ) ).toContain( this.json.itens[0].url );
+        //});
 
         it("should have a facebook share button", function() {
             expect( this.social.domRoot.find( 'a.facebook.button' ).size() ).toBe( 1 );
@@ -1051,24 +1048,24 @@ describe("Module: Social", function() {
         });
     });
 
-    describe("glo.bo", function() {
-        it("should have a field for shortened url", function() {
-            expect( this.social.domRoot.find( 'input.globo-url' ).size() ).toBe( 1 );
-        });
+    //describe("glo.bo", function() {
+        //it("should have a field for shortened url", function() {
+            //expect( this.social.domRoot.find( 'input.globo-url' ).size() ).toBe( 1 );
+        //});
 
-        it("should display the shortened version of url", function() {
-            expect( this.social.domRoot.find( 'input.globo-url' ).val() ).toContain( this.json.itens[0].shortUrl );
-        });
+        //it("should display the shortened version of url", function() {
+            //expect( this.social.domRoot.find( 'input.globo-url' ).val() ).toContain( this.json.itens[0].shortUrl );
+        //});
 
-        it("should not display a field for shortened url when there isn't one", function() {
-            delete this.json.itens[0].shortUrl;
+        //it("should not display a field for shortened url when there isn't one", function() {
+            //delete this.json.itens[0].shortUrl;
 
-            this.social = new Social();
-            this.social.init( this.bus, this.json );  
+            //this.social = new Social();
+            //this.social.init( this.bus, this.json );  
 
-            expect( this.social.domRoot.find( 'input.globo-url' ).size() ).toBe( 0 );
-        });
-    });
+            //expect( this.social.domRoot.find( 'input.globo-url' ).size() ).toBe( 0 );
+        //});
+    //});
 
     describe("Events", function() {
         beforeEach(function() {
@@ -1088,9 +1085,9 @@ describe("Module: Social", function() {
             expect( this.social.domRoot.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
 
-        it("should change facebook xml url on video-change", function() {
-            expect( this.social.domRoot.find( 'span.facebook > :first-child' ).attr( 'href' ) ).toContain( this.json.itens[2].url );
-        });
+        //it("should change facebook xml url on video-change", function() {
+            //expect( this.social.domRoot.find( 'span.facebook > :first-child' ).attr( 'href' ) ).toContain( this.json.itens[2].url );
+        //});
 
         it("should change orkut button url on video-change", function() {
             var encodedUrl = encodeURIComponent( this.json.itens[2].url );
