@@ -1,3 +1,19 @@
+/* Lightplayer embeded dependency */
+$.extend( jQuery.easing, {
+    easeOutBounce: function (x, t, b, c, d) {
+        if ((t/=d) < (1/2.75)) {
+            return c*(7.5625*t*t) + b;
+        } else if (t < (2/2.75)) {
+            return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+        } else if (t < (2.5/2.75)) {
+            return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+        } else {
+            return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+        }
+    }
+});
+
+
 function LightPlayerNovelas () {}
 
 LightPlayerNovelas.prototype = $.extend( new LightPlayer(), {
@@ -55,6 +71,31 @@ InfoNovelas.prototype = $.extend( new Info(), {
 function StageNovelas() {}
 
 StageNovelas.prototype = $.extend( new Stage(), {
+    _onVideoCompleted: function () {
+        if ( this.json.autoNext ) {
+            this._goNext();
+        } else {
+            this._startArrowAnimation();
+        }
+    },
+
+    _animateArrow: function () {
+        this.domRoot.find( 'a.nav.next.visible span.arrow' )
+            .animate( { right: '25px', opacity: 1 }, 200, function () {
+                $( this ).animate( { right:'15px' }, 550, 'easeOutBounce' );
+            } );
+    },
+
+    _startArrowAnimation: function () {
+        this._animateArrow();
+
+        this.timer = setInterval( $.proxy( this, '_animateArrow' ), 1400 );
+    },
+
+    _stopArrowAnimation: function () {
+        clearInterval( this.timer );
+    },
+
     _updateNextArrow: function () {
         var item = this._getItem( 'next' ) || {};
 

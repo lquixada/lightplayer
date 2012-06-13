@@ -403,6 +403,8 @@ Stage.prototype = $.extend( new Mod(), {
             } )
             .delegate( 'a.nav:not(.loading)', 'mouseenter', function () {
                 var a = $( this );
+
+                clearInterval( that.timer );
                 
                 // Show arrow
                 a.stop().find( 'span.arrow' ).fadeTo( 250, 1 );
@@ -589,12 +591,14 @@ Stage.prototype = $.extend( new Mod(), {
                 sitePage: this.json.sitePage || '',
                 width: width,
                 height: 360,
-                complete: function () {
-                    if ( that.json.autoNext ) {
-                        that._goNext();
-                    }
-                }
+                complete: $.proxy( this, "_onVideoCompleted" )
             });
+    },
+
+    _onVideoCompleted: function () {
+        if ( this.json.autoNext ) {
+            this._goNext();
+        }
     },
 
     _updateNextArrow: function () {

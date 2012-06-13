@@ -94,6 +94,10 @@ div.lightplayer.novelas div.social {
     vertical-align: top;
 }
 
+div.lightplayer.novelas div.social a.button {
+    margin:0 0 0 10px;
+}
+
 div.lightplayer.novelas div.social span.facebook-like {
     display: inline-block;
     margin-top: 3px;
@@ -109,10 +113,6 @@ div.lightplayer.novelas div.social span.label {
     line-height: 40px;
     text-transform: uppercase;
     vertical-align: middle;
-}
-
-div.lightplayer.novelas div.social a.button {
-    margin:0 0 0 10px;
 }
 
 
