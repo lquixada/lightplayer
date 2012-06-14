@@ -407,30 +407,10 @@ Stage.prototype = $.extend( new Mod(), {
                 that._goPrev();
             } )
             .delegate( 'a.nav:not(.loading)', 'mouseenter', function () {
-                var a = $( this );
-
-                clearInterval( that.timer );
-                
-                // Show arrow
-                a.stop().find( 'span.arrow' ).fadeTo( 250, 1 );
-
-                // First open box
-                a.stop().animate( { width: 245 }, 250, function () {
-                    // Then show info
-                    a.find( 'span.info' ).fadeIn();
-                } );
+                that._unfoldInfo( $( this ) );
             } )
             .delegate( 'a.nav:not(.loading)', 'mouseleave', function () {
-                var a = $( this );
-                
-                // Hide arrow
-                a.stop().find( 'span.arrow' ).fadeTo( 250, 0.2 );
-
-                // First hide info
-                a.stop().find( 'span.info' ).fadeOut( 300, function () {
-                    // Then close box
-                    a.stop().animate( { width: 0 }, 250 );
-                });
+                that._foldInfo( $( this ) );
             } );
         
         $( document ).bind( 'keydown.lightplayer', function ( evt ) {
@@ -444,6 +424,30 @@ Stage.prototype = $.extend( new Mod(), {
                 that.domRoot.find( 'a.prev.visible' ).click();
             }
         } ); 
+    },
+
+    _unfoldInfo: function ( a ) {
+        clearInterval( this.timer );
+        
+        // Show arrow
+        a.stop().find( 'span.arrow' ).fadeTo( 250, 1 );
+
+        // First open box
+        a.stop().animate( { width: 245 }, 250, function () {
+            // Then show info
+            a.find( 'span.info' ).fadeIn();
+        } ); 
+    },
+
+    _foldInfo: function ( a ) {
+        // Hide arrow
+        a.stop().find( 'span.arrow' ).fadeTo( 250, 0.2 );
+
+        // First hide info
+        a.stop().find( 'span.info' ).fadeOut( 300, function () {
+            // Then close box
+            a.stop().animate( { width: 0 }, 250 );
+        });
     },
 
     _addItem: function ( position ) {
@@ -596,15 +600,18 @@ Stage.prototype = $.extend( new Mod(), {
                 sitePage: this.json.sitePage || '',
                 width: width,
                 height: 360,
-                complete: $.proxy( this, "_onVideoCompleted" )
+                complete: $.proxy( this, '_onVideoCompleted' )
             });
     },
 
     _onVideoCompleted: function () {
+        var a;
+
         if ( this.json.autoNext ) {
             this._goNext();
         } else {
-            this._startArrowAnimation();
+            a = this.domRoot.find( 'a.nav.next.visible' );
+            this._unfoldInfo( a );
         }
     },
 
