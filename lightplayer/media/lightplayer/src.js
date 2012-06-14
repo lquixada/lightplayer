@@ -426,30 +426,6 @@ Stage.prototype = $.extend( new Mod(), {
         } ); 
     },
 
-    _unfoldInfo: function ( a ) {
-        clearInterval( this.timer );
-        
-        // Show arrow
-        a.stop().find( 'span.arrow' ).fadeTo( 250, 1 );
-
-        // First open box
-        a.stop().animate( { width: 245 }, 250, function () {
-            // Then show info
-            a.find( 'span.info' ).fadeIn();
-        } ); 
-    },
-
-    _foldInfo: function ( a ) {
-        // Hide arrow
-        a.stop().find( 'span.arrow' ).fadeTo( 250, 0.2 );
-
-        // First hide info
-        a.stop().find( 'span.info' ).fadeOut( 300, function () {
-            // Then close box
-            a.stop().animate( { width: 0 }, 250 );
-        });
-    },
-
     _addItem: function ( position ) {
         var item = this._getItem( position ) || {};
         
@@ -462,8 +438,26 @@ Stage.prototype = $.extend( new Mod(), {
         return item;
     },
 
+    _animateArrow: function () {
+        this.domRoot.find( 'a.nav.next.visible span.arrow' )
+            .animate( { right: '25px', opacity: 1 }, 200, function () {
+                $( this ).animate( { right:'15px' }, 550, 'easeOutBounce' );
+            } );
+    },
+
     _clear: function () {
         this.domRoot.find( 'li.current div.video-player' ).html( '' );
+    },
+
+    _foldInfo: function ( a ) {
+        // Hide arrow
+        a.stop().find( 'span.arrow' ).fadeTo( 250, 0.2 );
+
+        // First hide info
+        a.stop().find( 'span.info' ).fadeOut( 300, function () {
+            // Then close box
+            a.stop().animate( { width: 0 }, 250 );
+        });
     },
 
     _go: function ( position ) {
@@ -506,6 +500,17 @@ Stage.prototype = $.extend( new Mod(), {
         this._updateItem( item );
 
         this.pub( 'video-change', this.json );
+    },
+
+    _onVideoCompleted: function () {
+        var a;
+
+        if ( this.json.autoNext ) {
+            this._goNext();
+        } else {
+            a = this.domRoot.find( 'a.nav.next.visible' );
+            this._unfoldInfo( a );
+        }
     },
 
     _render: function () {
@@ -568,6 +573,29 @@ Stage.prototype = $.extend( new Mod(), {
         this._goPrev();        
     },
 
+    _startArrowAnimation: function () {
+        this._animateArrow();
+
+        this.timer = setInterval( $.proxy( this, '_animateArrow' ), 1400 );
+    },
+
+    _stopArrowAnimation: function () {
+        clearInterval( this.timer );
+    },
+
+    _unfoldInfo: function ( a ) {
+        clearInterval( this.timer );
+        
+        // Show arrow
+        a.stop().find( 'span.arrow' ).fadeTo( 250, 1 );
+
+        // First open box
+        a.stop().animate( { width: 245 }, 250, function () {
+            // Then show info
+            a.find( 'span.info' ).fadeIn();
+        } ); 
+    },
+
     _updateArrows: function () {
         var first = this.json.itens[0],
             last = this.json.itens[this.json.itens.length-1];
@@ -602,34 +630,6 @@ Stage.prototype = $.extend( new Mod(), {
                 height: 360,
                 complete: $.proxy( this, '_onVideoCompleted' )
             });
-    },
-
-    _onVideoCompleted: function () {
-        var a;
-
-        if ( this.json.autoNext ) {
-            this._goNext();
-        } else {
-            a = this.domRoot.find( 'a.nav.next.visible' );
-            this._unfoldInfo( a );
-        }
-    },
-
-    _animateArrow: function () {
-        this.domRoot.find( 'a.nav.next.visible span.arrow' )
-            .animate( { right: '25px', opacity: 1 }, 200, function () {
-                $( this ).animate( { right:'15px' }, 550, 'easeOutBounce' );
-            } );
-    },
-
-    _startArrowAnimation: function () {
-        this._animateArrow();
-
-        this.timer = setInterval( $.proxy( this, '_animateArrow' ), 1400 );
-    },
-
-    _stopArrowAnimation: function () {
-        clearInterval( this.timer );
     },
 
     _updateNextArrow: function () {
