@@ -496,9 +496,10 @@ div.lightplayer div.playlist div.trilho-videos {
 }
 
 div.lightplayer div.playlist img {
-    height: 108px;
-    width: 180px;
+    display:block;
     margin-bottom: 18px;
+    width: 180px;
+    height: 108px;
     border:none;
     border-radius: 2px;
 }
