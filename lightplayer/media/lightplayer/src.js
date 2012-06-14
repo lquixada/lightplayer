@@ -717,7 +717,7 @@ Social.prototype = $.extend( new Mod(), {
 
     _renderTitle: function () {
         this.domRoot.append( [
-            '<span class="label">compartilhe esse vídeo</span>'
+            '<span class="label">compartilhe este vídeo</span>'
         ].join( '' ) );
     },
 
@@ -834,6 +834,8 @@ Info.prototype = $.extend( new Mod(), {
             .html( this.truncate( item.title, 90 ) );
     }
 });
+
+
 
 /***********************************************
  * MODULO PLAYLIST
@@ -962,7 +964,7 @@ Playlist.prototype = $.extend( new Mod(), {
                         
                         (this.hat? '<span class="chapeu">'+this.hat+'</span>': ''),
                         
-                        '<span class="titulo-item">'+that.truncate(this.title, 50)+'</span>',
+                        '<span class="titulo-item">'+that.truncate(this.title, 40)+'</span>',
                         '<span class="exibicao"><strong>'+this.views+'</strong> exibições</span>',
                     '</a>',
                 '</li>'
