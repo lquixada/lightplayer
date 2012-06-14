@@ -415,12 +415,12 @@ Stage.prototype = $.extend( new Mod(), {
         
         $( document ).bind( 'keydown.lightplayer', function ( evt ) {
             /* RIGHT key */
-            if ( evt.which === 39 ) {
+            if ( !evt.shiftKey && evt.which === 39 ) {
                 that.domRoot.find( 'a.next.visible' ).click();
             }
             
             /* LEFT key */
-            if ( evt.which === 37 ) {
+            if ( !evt.shiftKey && evt.which === 37 ) {
                 that.domRoot.find( 'a.prev.visible' ).click();
             }
         } ); 
@@ -889,6 +889,18 @@ Playlist.prototype = $.extend( new Mod(), {
 
                 return false;
             });
+
+        $( document ).bind( 'keydown.lightplayer', function ( evt ) {
+            /* RIGHT key */
+            if ( evt.shiftKey && evt.which === 39 ) {
+                that.domRoot.find( 'a.next' ).click();
+            }
+            
+            /* LEFT key */
+            if ( evt.shiftKey && evt.which === 37 ) {
+                that.domRoot.find( 'a.prev' ).click();
+            }
+        } ); 
     },
 
     _goNext: function () {
