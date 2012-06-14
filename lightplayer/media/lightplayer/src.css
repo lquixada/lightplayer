@@ -23,7 +23,6 @@ div.lightplayer {
     z-index:100000;
 }
 
-
 div.lightplayer div.widget {
     position:relative;
     margin:10px auto;
@@ -390,7 +389,7 @@ div.lightplayer div.info h6 {
     margin: 0 5px 0 0;
     color:#533475;
     font:bold 24px/26px Arial, sans-serif;
-    letter-spacing:-1px;
+    letter-spacing:-2px;
 }
 
 div.lightplayer div.info span.chapeu {
@@ -418,11 +417,11 @@ div.lightplayer div.playlist {
 }
 
 div.lightplayer div.playlist a {
-    display:block;
     position:relative;
-    text-decoration:none;
-    color:#999;
+    display:block;
     width:100%;
+    color:#999;
+    text-decoration:none;
 }
 
 div.lightplayer div.playlist a:hover, 
@@ -435,25 +434,25 @@ div.lightplayer div.playlist a:hover span.hover-img {
 }
 
 div.lightplayer div.playlist a.next {
-    background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent -29px 0 no-repeat;
+    background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent -28px 0 no-repeat;
     background-color:#c51883;
     position: absolute;
     top: 10px;
     right: 0;
     height: 108px;
-    width: 26px;
+    width: 27px;
 }
 
 div.lightplayer div.playlist a.next:hover {
-    background-position: -95px 0;
+    background-position: -94px 0;
 }
 
 div.lightplayer div.playlist a.next:active {
-    background-position: -160px 0;
+    background-position: -159px 0;
 }
 
 div.lightplayer div.playlist a.next.inativo {
-    background-position: -225px 0;
+    background-position: -224px 0;
     background-color:#c9c9c9;
 }
 
@@ -464,7 +463,7 @@ div.lightplayer div.playlist a.prev {
     top: 10px;
     left: 0;
     height: 108px;
-    width: 26px;
+    width: 27px;
 }
 
 div.lightplayer div.playlist a.prev:hover {
@@ -500,7 +499,7 @@ div.lightplayer div.playlist img {
     width: 180px;
     margin-bottom: 18px;
     border:none;
-    border-radius: 5px;
+    border-radius: 2px;
 }
 
 div.lightplayer div.playlist li {
@@ -535,11 +534,12 @@ div.lightplayer div.playlist li.assistindo span.label {
 div.lightplayer div.playlist li.assistindo span.layer {
     position: absolute;
     display:block;
+    *display:none;
     top:0;
     left:0;
     width: 180px;
     height: 108px;
-    border-radius: 5px;
+    border-radius: 2px;
     background-color: #000;
     opacity:0.3;
     -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=30); /* IE8 */
@@ -552,15 +552,15 @@ div.lightplayer div.playlist span.borda-inferior {
     position: absolute;
     height: 3px;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #eaeaea;
     width: 100%;
     left: 0;
 }
 
 div.lightplayer div.playlist span.chapeu {
     display: block;
-    font-size: 12px;
     margin-bottom: 5px;
+    font:12px ProximaNova-Light, Arial, sans-serif;
     text-transform: uppercase;
 }
 
@@ -582,20 +582,18 @@ div.lightplayer div.playlist span.hover-img {
     height: 100px;
     top: 0;
     left:0;
-    border-radius: 5px;
+    border-radius: 2px;
     border: 4px solid #c51883;
 }
 
 div.lightplayer div.playlist span.numero {
-    font-family:ProximaNova-Semibold, Arial, sans-serif;
-    font-weight:bold;
+    font:bold 12px ProximaNova-Semibold, Arial, sans-serif;
 }
 
 div.lightplayer div.playlist span.titulo-item {
     display:block;
     color: #666;
-    font-size: 12px;
-    line-height: 18px;
+    font: 14px/18px Arial, Helvetica, Freesans, sans-serif;
 }
 
 div.lightplayer div.playlist ul {
