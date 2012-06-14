@@ -421,14 +421,13 @@ div.lightplayer div.playlist a {
     position:relative;
     display:block;
     width:100%;
-    color:#999;
     text-decoration:none;
+    color:#666;
+}
+div.lightplayer div.playlist li.assistindo a:hover span.hover-img {
+    display:none;
 }
 
-div.lightplayer div.playlist a:hover, 
-div.lightplayer div.playlist a:hover span.titulo-item {
-    color:#c51883;
-}
 
 div.lightplayer div.playlist a:hover span.hover-img {
     display:block;
@@ -519,7 +518,10 @@ div.lightplayer div.playlist li span.label,
 div.lightplayer div.playlist li span.layer {
     display:none;
 }
-
+div.lightplayer div.playlist li.assistindo a{
+    color: #666 !important;
+    cursor: default;
+}
 div.lightplayer div.playlist li.assistindo span.label {
     position:absolute;
     display:block;
@@ -572,6 +574,7 @@ div.lightplayer div.playlist span.exibicao {
     margin-top: 18px;
     font-size: 10px;
     text-transform: uppercase;
+    color:#666;
 }
 
 div.lightplayer div.playlist span.exibicao strong {
@@ -586,7 +589,8 @@ div.lightplayer div.playlist span.hover-img {
     top: 0;
     left:0;
     border-radius: 2px;
-    border: 4px solid #c51883;
+    border: 4px solid;
+    border-color:#c51883;
 }
 
 div.lightplayer div.playlist span.numero {
@@ -595,7 +599,6 @@ div.lightplayer div.playlist span.numero {
 
 div.lightplayer div.playlist span.titulo-item {
     display:block;
-    color: #666;
     font: 14px/18px Arial, Helvetica, Freesans, sans-serif;
 }
 
