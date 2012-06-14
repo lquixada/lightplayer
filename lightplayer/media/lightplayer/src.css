@@ -147,6 +147,7 @@ div.lightplayer div.header h5 span {
 
 div.lightplayer div.palco {
     position:relative;
+    overflow:hidden;
 }
 
 div.lightplayer div.palco a.nav {
@@ -606,5 +607,6 @@ div.lightplayer div.playlist ul {
     text-indent:0;
     list-style:none;
     overflow:hidden;
+    vertical-align:top;
 }
 
