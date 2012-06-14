@@ -521,16 +521,17 @@ div.lightplayer div.playlist li span.layer {
 }
 
 div.lightplayer div.playlist li.assistindo span.label {
-    font-family: ProximaNova-SemiBold, Arial, sans-serif;
-    letter-spacing: -1px;
-    font-size: 12px;
-    color:#fff;
-    position: absolute;
-    top: 50px;
-    left: 55px;
-    text-transform: uppercase;
-    font-weight: bold;
+    position:absolute;
     display:block;
+    top:0;
+    left:0;
+    padding:48px 0;
+    width: 180px;
+    color:#fff;
+    font:bold 12px ProximaNova-SemiBold, Arial, sans-serif;
+    letter-spacing: -1px;
+    text-align:center;
+    text-transform: uppercase;
 }
 
 div.lightplayer div.playlist li.assistindo span.layer {
