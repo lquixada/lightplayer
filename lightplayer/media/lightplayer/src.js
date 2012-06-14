@@ -912,7 +912,7 @@ Playlist.prototype = $.extend( new Mod(), {
     },
 
     _move: function ( ul ) {
-        this.domRoot.find( 'div.trilho-videos' ).css( 'text-indent', this.offset );
+        this.domRoot.find( 'div.film-strip' ).css( 'margin-left', this.offset );
     },
 
     _render: function () {
@@ -927,7 +927,7 @@ Playlist.prototype = $.extend( new Mod(), {
         this.domRoot = $( [
             '<div class="playlist">',
                 '<a class="nav prev"></a>',
-                '<div class="trilho-videos"></div>',
+                '<div class="trilho-videos"><div class="film-strip"></div></div>',
                 '<a class="nav next"></a>',
                 '<span class="borda-inferior"></span>',
             '</div>'
@@ -959,7 +959,7 @@ Playlist.prototype = $.extend( new Mod(), {
 
         html += '</ul>';
 
-        this.domRoot.find( 'div.trilho-videos' ).append( html );
+        this.domRoot.find( 'div.film-strip' ).append( html );
     },
 
     _setAsWatching: function ( li ) {
