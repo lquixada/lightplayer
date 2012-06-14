@@ -536,16 +536,16 @@ div.lightplayer div.playlist li.assistindo span.label {
 div.lightplayer div.playlist li.assistindo span.layer {
     position: absolute;
     display:block;
-    *display:none;
+    *display:none; /* IE7 has some rendering problems */
     top:0;
     left:0;
     width: 180px;
     height: 108px;
     border-radius: 2px;
     background-color: #000;
-    opacity:0.3;
-    -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=30); /* IE8 */
-    filter:alpha(opacity=30); /* IE7- */
+    opacity:0.6;
+    -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=60); /* IE8 */
+    filter:alpha(opacity=60); /* IE7- */
     zoom:1;
     float:left;
 }
