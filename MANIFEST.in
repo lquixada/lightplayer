@@ -1,2 +1,1 @@
 recursive-include lightplayer/media *
-recursive-include lightplayer/templates *
