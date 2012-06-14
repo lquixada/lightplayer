@@ -341,7 +341,8 @@ describe("Module: Header", function() {
     });
 
     it("should have a default title", function() {
-        expect( this.header.domRoot.find( 'h5' ).html() ).toBe( '<span>mais</span> videos' );
+        // .toLowerCase() to pass on IE7
+        expect( this.header.domRoot.find( 'h5' ).html().toLowerCase() ).toBe( '<span>mais</span> videos' );
     });
 
     it("should not have a default subtitle", function() {
