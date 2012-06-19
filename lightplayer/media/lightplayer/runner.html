@@ -18,6 +18,10 @@
   <script src="../jquery-1.4.3.min.js"></script>
   <script src="../json2.js"></script>
   <script src="http://s.videos.globo.com/p2/j/api.min.js"></script>
+    <script>
+    if (location.hash === '#testem')
+        document.write('<'+'script src="/testem.js"></'+'script>')
+    </script>
 	
   <!-- source code -->
   <script src="src.js"></script>
@@ -117,10 +121,22 @@
   <!-- HTML fixtures -->
 </div>
 
+<!--<script>-->
+<!--jasmine.getEnv().addReporter(new jasmine.TrivialReporter());-->
+<!--jasmine.getEnv().execute();-->
+<!--</script>-->
 <script>
-jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-jasmine.getEnv().execute();
+var reporter = new jasmine.TrivialReporter,
+    env = jasmine.getEnv();
+
+env.specFilter = function(spec){
+    return reporter.specFilter(spec)
+}
+
+env.addReporter(reporter)
+env.execute()
 </script>
+
 
 </body>
 
