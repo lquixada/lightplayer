@@ -442,6 +442,12 @@ Stage.prototype = $.extend( new Mod(), {
         this.domRoot.find( 'a.nav.next.visible span.arrow' )
             .animate( { right: '25px', opacity: 1 }, 200, function () {
                 $( this ).animate( { right:'15px' }, 550, 'easeOutBounce' );
+                    //remove the opacity in IE
+                    jQuery.each(jQuery.browser, function(i) {
+                        if($.browser.msie){
+                            this.domRoot.find('a.nav.next.visible span.arrow').css({opacity:''});
+                        }
+                    });
             } );
     },
 
