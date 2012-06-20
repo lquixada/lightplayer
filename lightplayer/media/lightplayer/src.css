@@ -1,4 +1,3 @@
-
 @font-face {
     font-family: 'ProximaNova-Light';
     src: url('http://s.glbimg.com/po/fo/webfonts/842dbd395d12ce251a03727028b17d6e.eot');
@@ -398,6 +397,7 @@ div.lightplayer div.info span.chapeu {
     color:#666;
     font:12px ProximaNova-Light, Arial, sans-serif;
     text-transform: uppercase;
+    margin-bottom: 3px;
 }
 
 div.lightplayer div.info span.numero {
