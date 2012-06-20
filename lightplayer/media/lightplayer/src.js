@@ -1,7 +1,40 @@
 
+/**
+ * Essa é classe que gera o container, fornece o barramento de eventos,
+ * atalhos de teclado, etc do LightPlayer.
+ *
+ * @class LightPlayer
+ * @constructor
+ */
+
 LightPlayer = function () {};
 
 LightPlayer.prototype = {
+
+    /**
+     * Abre o LightPlayer
+     *
+     * @method open
+     * @param json {Object} A config object
+     * @example
+     *  var lightplayer = new LightPlayer();
+     *
+     *  lightplayer.open( {
+     *      title: 'capítulo de <span>ontem</span>',
+     *      subtitle: 'qua 13',
+     *      mode: 'hd',
+     *      itens: [
+     *          {
+     *              id: 1991493,
+     *              hat: 'cena <span class="numero">1</span> de <span class="numero">6</span>',
+     *              title: 'Rosário se emociona com o quartinho reformado por Inácio',
+     *              url: 'http://www.globo.com',
+     *              views: 3412,
+     *              current: true
+     *          }
+     *      ]
+     *  } );
+     */
     open: function ( json ) {
         // Barramento principal pela qual todos os modulos se comunicam
         this.bus  = $( {} );
@@ -14,6 +47,11 @@ LightPlayer.prototype = {
         this._animateIn();
     },
 
+    /**
+     * Fecha o LightPlayer
+     *
+     * @method close
+     */
     close: function () {
         var that = this;
 
@@ -194,16 +232,39 @@ LightPlayer.prototype = {
 
 
 
-/***********************************************
- * MODULO MOD
- ***********************************************/
+/**
+ * @class Mod
+ * @constructor
+ */ 
 
 Mod = function () {};
 
 Mod.prototype = {
+    /**
+     * Inicializa o módulo com o barramento e o json
+     *
+     * @method init
+     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
+     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
+     * @return {Object} O nó raiz da subárvore DOM do módulo
+     */
     init: function ( bus, json ) {
+        /**
+         * @property name
+         * @type String
+         */
         this.name = 'mod-name';
+
+        /**
+         * @property bus
+         * @type Object
+         */
         this.bus = bus;
+
+        /**
+         * @property json
+         * @type Object
+         */
         this.json = json;
 
         this._render();
@@ -308,16 +369,40 @@ Mod.prototype = {
 
 
 
-/***********************************************
- * MODULO HEADER
- ***********************************************/
+/**
+ * @class Header
+ * @extends Mod
+ * @constructor
+ */
 
 Header = function () {};
 
 Header.prototype = $.extend( new Mod(), {
+    /**
+     * Inicializa o Header com o barramento e o json
+     *
+     * @method init
+     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
+     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
+     * @return {Object} O nó raiz da subárvore DOM do módulo
+     */
     init: function ( bus, json ) {
+        /**
+         * @property name
+         * @type String
+         */
         this.name = 'header';
+
+        /**
+         * @property bus
+         * @type Object
+         */
         this.bus = bus;
+
+        /**
+         * @property json
+         * @type Object
+         */
         this.json = json;
 
         this._render();
@@ -352,17 +437,42 @@ Header.prototype = $.extend( new Mod(), {
 
 
 
-/***********************************************
- * MODULO STAGE
- ***********************************************/
+/**
+ * @class Stage
+ * @extends Mod
+ * @constructor
+ */
 
 Stage = function () {};
 
 Stage.prototype = $.extend( new Mod(), {
+    /**
+     * Inicializa o Placo com o barramento e o json
+     *
+     * @method init
+     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
+     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
+     * @return {Object} O nó raiz da subárvore DOM do módulo
+     */
     init: function ( bus, json ) {
+        /**
+         * @property name
+         * @type String
+         */
         this.name = 'stage';
+
+        /**
+         * @property bus
+         * @type Object
+         */
         this.bus = bus;
+
+        /**
+         * @property json
+         * @type Object
+         */
         this.json = json;
+
         this.autoPlay = false;
 
         this._render();
@@ -651,16 +761,40 @@ Stage.prototype = $.extend( new Mod(), {
 
 
 
-/***********************************************
- * MODULO SOCIAL
- ***********************************************/
+/**
+ * @class Social
+ * @extends Mod
+ * @constructor
+ */
 
 Social = function () {};
 
 Social.prototype = $.extend( new Mod(), {
+    /**
+     * Inicializa o Social com o barramento e o json
+     *
+     * @method init
+     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
+     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
+     * @return {Object} O nó raiz da subárvore DOM do módulo
+     */
     init: function ( bus, json ) {
+        /**
+         * @property name
+         * @type String
+         */
         this.name = 'social';
+
+        /**
+         * @property bus
+         * @type Object
+         */
         this.bus = bus;
+
+        /**
+         * @property json
+         * @type Object
+         */
         this.json = json;
 
         this._render();
@@ -770,16 +904,40 @@ Social.prototype = $.extend( new Mod(), {
 
 
 
-/***********************************************
- * MODULO INFO
- ***********************************************/
+/**
+ * @class Info
+ * @extends Mod
+ * @constructor
+ */
 
 Info = function () {};
 
 Info.prototype = $.extend( new Mod(), {
+    /**
+     * Inicializa o módulo com o barramento e o json
+     *
+     * @method init
+     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
+     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
+     * @return {Object} O nó raiz da subárvore DOM do módulo
+     */
     init: function ( bus, json ) {
+        /**
+         * @property name
+         * @type String
+         */
         this.name = 'info';
+
+        /**
+         * @property bus
+         * @type Object
+         */
         this.bus = bus;
+
+        /**
+         * @property json
+         * @type Object
+         */
         this.json = json;
 
         this._render();
@@ -837,16 +995,39 @@ Info.prototype = $.extend( new Mod(), {
 
 
 
-/***********************************************
- * MODULO PLAYLIST
- ***********************************************/
+/**
+ * @class Playlist
+ * @extends Mod
+ */
 
 function Playlist() {}
 
 Playlist.prototype = $.extend( new Mod(), {
+    /**
+     * Inicializa a Playlist com o barramento e o json
+     *
+     * @method init
+     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
+     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
+     * @return {Object} O nó raiz da subárvore DOM do módulo
+     */
     init: function ( bus, json ) {
+        /**
+         * @property name
+         * @type String
+         */
         this.name = 'playlist';
+
+        /**
+         * @property bus
+         * @type Object
+         */
         this.bus = bus;
+
+        /**
+         * @property json
+         * @type Object
+         */
         this.json = json;
         this.offset = 0; 
         

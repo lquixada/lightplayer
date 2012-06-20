@@ -1,0 +1,9 @@
+{
+    "name": "LightPlayer",
+    "description": "LightPlayer da Globo.com",
+    "version": "0.0.10",
+    "options": {
+        "paths": "src.js",
+        "outdir": "docs"
+    }
+}
