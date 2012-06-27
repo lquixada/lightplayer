@@ -451,9 +451,11 @@ div.lightplayer div.playlist a.next:active {
     background-position: -159px 0;
 }
 
+div.lightplayer div.playlist .inativo{
+    background-color:#c9c9c9!important;
+}
 div.lightplayer div.playlist a.next.inativo {
     background-position: -224px 0;
-    background-color:#c9c9c9;
 }
 
 div.lightplayer div.playlist a.prev {
@@ -476,7 +478,6 @@ div.lightplayer div.playlist a.prev:active {
 
 div.lightplayer div.playlist a.prev.inativo {
     background-position: -196px 0;
-    background-color:#c9c9c9;
 }
 
 div.lightplayer div.playlist div.film-strip {
