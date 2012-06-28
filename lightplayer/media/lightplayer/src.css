@@ -260,6 +260,8 @@ div.lightplayer div.palco div.video-player {
     *zoom:1;
     height:359px !important;
     background-color:#000;
+    -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100); /* IE8 */
+    filter:alpha(opacity=100); /* IE7- */
 }
 
 div.lightplayer div.palco li {

@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'lightplayer',
-    version = '1.0.2',
+    version = '1.0.3',
     description = u'Lightbox de videos ds projetos de Entretenimento'.encode('utf-8'),
     author = 'Entretenimento',
     author_email = 'entretenimento@corp.globo.com',
