@@ -12,6 +12,7 @@ Na página em que o lightplayer vai rodar, adicionar as tags:
 
     <script src="/media/lightplayer/src.js"></script>
 
+
 ## QuickStart
 
 Para ver o LightPlayer funcionando rapidamente na sua página, o set mais básico
@@ -122,6 +123,40 @@ lightplayer.close();
 
 Para ver o funcionamento do lightplayer, rode os testes, veja o
 código no runner.html e clique nos botões da tela.
+
+
+## Interface jQuery
+
+Para você, meu amigo, que é preguiçoso (e de mau gosto, diga-se de passagem),
+existe a opção de usar a interface jquery também. Neste formato, você só
+precisa passar para o método $.lightplayer.open() o mesmo json que você
+passaria para o lightplayer.open do exemplo anterior.
+
+Neste caso, você não precisa fazer a instanciação. Isso é feito internamente.
+
+```
+$.lightplayer.open( {
+  itens: [
+      {
+          id: 1991493,
+          hat: 'cena <span class="numero">1</span> de <span class="numero">6</span>',
+          title: 'Rosário se emociona com o quartinho reformado por Inácio',
+          url: 'http://www.globo.com',
+          views: 3412,
+          current: true
+      }
+  ]
+} );
+```
+
+Para fechar, o sistema é o mesmo.
+
+```
+$.lightplayer.close();
+```
+
+Note que, nesse caso, sempre que você chamar $.lightplayer.open(), a mesma
+instância de LightPlayer() será utilizada.
 
 
 ## Testes

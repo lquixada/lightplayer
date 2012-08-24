@@ -230,6 +230,17 @@ LightPlayer.prototype = {
     }
 };
 
+jQuery.lightplayer = {
+    _instance: new LightPlayer(),
+
+    open: function ( options ) {
+        this._instance.open( options );
+    },
+
+    close: function () {
+        this._instance.close();
+    }
+}
 
 
 /**

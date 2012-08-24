@@ -137,7 +137,6 @@ describe("Light Player", function() {
         
     });
     
-
     describe("module", function() {
         it("should add a stage as module", function() {
             expect( this.lightplayer.domRoot.find( 'div.widget' ).find( 'div.palco' ).size() ).toBe( 1 );
@@ -158,6 +157,47 @@ describe("Light Player", function() {
 
 });
 
+
+describe("jQuery interface", function() {
+    
+    it("should open the lightplayer", function() {
+        $.lightplayer.open( {
+            itens: [
+                {
+                    id: 123,
+                    title: 'Titulo 1',
+                    description: 'Descricao 1',
+                    views: '100',
+                    url: 'http://www.globo.com',
+                    current: true
+                }
+            ]
+        } );
+
+        expect( $( 'div.lightplayer' ).size() ).toBe( 1 );
+    });
+    
+    it("should close the lightplayer", function() {
+        $.lightplayer.open( {
+            itens: [
+                {
+                    id: 123,
+                    title: 'Titulo 1',
+                    description: 'Descricao 1',
+                    views: '100',
+                    url: 'http://www.globo.com',
+                    current: true
+                }
+            ]
+        } );
+
+        $.lightplayer.close();
+
+        expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
+        
+    });
+    
+});
 
 
 /***********************************************
