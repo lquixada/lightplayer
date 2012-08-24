@@ -6,22 +6,25 @@
   <meta charset="utf-8">
   <title>Light Player Test Runner</title>
   
-  <link href="../jasmine-1.2.0/jasmine.css" rel="stylesheet"/>
+  <link href="../libs/jasmine-1.2.0/jasmine.css" rel="stylesheet"/>
   <style>
   div#TrivialReporter { top:35px; }
   </style>
   <link href="src.css" rel="stylesheet"/>
 	
   <!-- dependencies -->
-  <script src="../jasmine-1.2.0/jasmine.js"></script>
-  <script src="../jasmine-1.2.0/jasmine-html.js"></script>
-  <script src="../jquery-1.4.3.min.js"></script>
-  <script src="../json2.js"></script>
+  <script src="../libs/jasmine-1.2.0/jasmine.js"></script>
+  <script src="../libs/jasmine-1.2.0/jasmine-html.js"></script>
+  <script src="../libs/jquery-1.4.3.min.js"></script>
+  <script src="../libs/json2.js"></script>
   <script src="http://s.videos.globo.com/p2/j/api.min.js"></script>
-    <script>
-    if (location.hash === '#testem')
-        document.write('<'+'script src="/testem.js"></'+'script>')
-    </script>
+
+  <!-- testing testem -->
+  <script>
+  if (location.hash === '#testem') {
+    document.write('<'+'script src="/testem.js"></'+'script>')
+  }
+  </script>
 	
   <!-- source code -->
   <script src="src.js"></script>
@@ -31,7 +34,7 @@
 
   <script>
   function abrir() {
-      lightplayer = new LightPlayer();
+      var lightplayer = new LightPlayer();
 
       lightplayer.open( {
           title: 'capítulo de <span>ontem</span>',
@@ -89,7 +92,7 @@
   }
 
   function abrir1item() {
-      lightplayer = new LightPlayer();
+      var lightplayer = new LightPlayer();
 
       lightplayer.open( {
           title: 'capítulo de <span>ontem</span>',
@@ -121,10 +124,6 @@
   <!-- HTML fixtures -->
 </div>
 
-<!--<script>-->
-<!--jasmine.getEnv().addReporter(new jasmine.TrivialReporter());-->
-<!--jasmine.getEnv().execute();-->
-<!--</script>-->
 <script>
 var reporter = new jasmine.TrivialReporter,
     env = jasmine.getEnv();
