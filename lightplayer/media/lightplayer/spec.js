@@ -92,7 +92,6 @@ describe("Light Player", function() {
             
             expect( this.lightplayer.domRoot ).toHaveClass( 'blah' );
         });
-
     });
 
     describe("close", function() {

@@ -1029,6 +1029,7 @@ Playlist.prototype = $.extend( new Mod(), {
          * @type Object
          */
         this.json = json;
+        this.thumbHost = json.thumbHost || 'img.video.globo.com';
         this.offset = 0; 
         
         if ( this.json.itens.length > 1 ) {
@@ -1130,14 +1131,15 @@ Playlist.prototype = $.extend( new Mod(), {
     },
 
     _renderItens: function () {
-        var html = '<ul>', that = this;
+        var html = '<ul>',
+            that = this;
 
         $.each( this.json.itens, function ( i ) {
             html += (i>0 && i%4 === 0? '</ul><ul>':'');
             html += [
                 '<li '+(this.current? 'class="assistindo"': '')+'>',
                     '<a href="javascript:;" item-id="'+this.id+'" title="'+this.title+'">',
-                        '<img src="http://img.video.globo.com/180x108/'+this.id+'.jpg">',
+                        '<img src="http://'+that.thumbHost+'/180x108/'+this.id+'.jpg">',
                         '<span class="hover-img"></span>',
                         
                         '<span class="layer"></span>',
