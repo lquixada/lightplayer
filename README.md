@@ -159,11 +159,24 @@ Note que, nesse caso, sempre que você chamar $.lightplayer.open(), a mesma
 instância de LightPlayer() será utilizada.
 
 
-## Testes
+## Desenvolvimento
 
-Para rodar os testes jasmine, execute os seguintes commandos
+### Instalação de dependências
 
-    $ ./runtests
+    $ npm install --dev
+
+Isso irá instalar os pacotes necessários localmente no root deste projeto.
+
+
+### Testes
+
+Para rodar os testes jasmine no browser, execute os seguintes commandos
+
+    $ npm test
+
+ou se você não tiver npm instalado:
+
+    $ ./scripts/test
 
 Se o browser não carregar de primero, dê reload para dar tempo
 do servidor rodar.
