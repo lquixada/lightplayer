@@ -1,4 +1,5 @@
 
+
 /**
  * Essa é classe que gera o container, fornece o barramento de eventos,
  * atalhos de teclado, etc do LightPlayer.
@@ -240,24 +241,7 @@ jQuery.lightplayer = {
     close: function () {
         this._instance.close();
     }
-};
-
-
-/* Lightplayer embeded dependency */
-
-jQuery.extend( jQuery.easing, {
-    easeOutBounce: function (x, t, b, c, d) {
-        if ((t/=d) < (1/2.75)) {
-            return c*(7.5625*t*t) + b;
-        } else if (t < (2/2.75)) {
-            return c*(7.5625*(t-=(1.5/2.75))*t + 0.75) + b;
-        } else if (t < (2.5/2.75)) {
-            return c*(7.5625*(t-=(2.25/2.75))*t + 0.9375) + b;
-        } else {
-            return c*(7.5625*(t-=(2.625/2.75))*t + 0.984375) + b;
-        }
-    }
-});
+}
 
 
 /**
@@ -307,7 +291,7 @@ Mod.prototype = {
             origin: this.name,
             // Create a deep copy of json object
             json: $.extend(true, {}, json)
-        } );
+        } )
     },
 
     sub: function ( eventName, callback ) {
@@ -397,9 +381,6 @@ Mod.prototype = {
 
 
 
-
-
-
 /**
  * @class Header
  * @extends Mod
@@ -463,432 +444,6 @@ Header.prototype = $.extend( new Mod(), {
                 '<a href="javascript:;" class="close">fechar</a>',
             '</div>'
         ].join( '' ) ); 
-    }
-});
-
-
-/**
- * @class Info
- * @extends Mod
- * @constructor
- */
-
-Info = function () {};
-
-Info.prototype = $.extend( new Mod(), {
-    /**
-     * Inicializa o módulo com o barramento e o json
-     *
-     * @method init
-     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
-     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
-     * @return {Object} O nó raiz da subárvore DOM do módulo
-     */
-    init: function ( bus, json ) {
-        /**
-         * @property name
-         * @type String
-         */
-        this.name = 'info';
-
-        /**
-         * @property bus
-         * @type Object
-         */
-        this.bus = bus;
-
-        /**
-         * @property json
-         * @type Object
-         */
-        this.json = json;
-
-        this._render();
-        this._addEvents();
-        
-        return this.domRoot;
-    },
-
-    // private
-
-    _addEvents: function () {
-        var that = this;
-
-        this.sub( 'video-change', function ( evt ) {
-            that.json = evt.json;
-            that._updateItem();
-        } );
-    },
-
-    _render: function () {
-        var item = this._getItem( 'current' );
-
-        this.domRoot = $( [
-            '<div class="info">',
-                '<span class="chapeu"></span>',
-                '<h6></h6>',
-            '</div>'
-        ].join( '' ) );
-
-        this._updateItem();
-    },
-
-    _updateItem: function () {
-        var style, item = this._getItem( 'current' );
-        
-        this.domRoot.find( 'span.chapeu' ).html( item.hat || '' );
-
-        if ( item.title.length > 70 ) {
-            style = {
-                font: 'bold 18px/20px Arial, sans-serif',
-                marginTop: '8px'
-            };
-        } else {
-            style = {
-                font: 'bold 24px/26px Arial, sans-serif',
-                marginTop: '0px'
-            };
-        }
-        
-        this.domRoot.find( 'h6' )
-            .css( style )
-            .html( this.truncate( item.title, 90 ) );
-    }
-});
-
-
-/**
- * @class Playlist
- * @extends Mod
- */
-
-function Playlist() {}
-
-Playlist.prototype = $.extend( new Mod(), {
-    /**
-     * Inicializa a Playlist com o barramento e o json
-     *
-     * @method init
-     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
-     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
-     * @return {Object} O nó raiz da subárvore DOM do módulo
-     */
-    init: function ( bus, json ) {
-        /**
-         * @property name
-         * @type String
-         */
-        this.name = 'playlist';
-
-        /**
-         * @property bus
-         * @type Object
-         */
-        this.bus = bus;
-
-        /**
-         * @property json
-         * @type Object
-         */
-        this.json = json;
-        this.thumbHost = json.thumbHost || 'img.video.globo.com';
-        this.offset = 0; 
-        
-        if ( this.json.itens.length > 1 ) {
-            this._render();
-            this._addEvents();
-        }
-
-        return this.domRoot;
-    },
-
-    // private
-
-    _addEvents: function () {
-        var that = this;
-
-        this.sub( 'video-change', function ( event ) {
-            var a, item;
-
-            that.json = event.json;
-
-            item = that._getItem( 'current' );
-
-            a = that.domRoot.find( 'a[item-id='+item.id+']' );
-            that._setAsWatching( a.parent() );
-        } );
-
-        this.domRoot
-            .delegate( 'a.next:not(.inativo)', 'click', function () {
-                that._goNext();
-            })
-            .delegate( 'a.prev:not(.inativo)', 'click', function () {
-                that._goPrev();
-            })
-            .delegate( 'div.trilho-videos a', 'click', function () {
-                var item = that._getItemById( $( this ).attr( 'item-id' ) );
-
-                that._setItemAsCurrent( item );
-                that.pub( 'video-change', that.json );
-
-                that._setAsWatching( $( this ).parent() );
-
-                return false;
-            });
-
-        $( document ).bind( 'keydown.lightplayer', function ( evt ) {
-            /* RIGHT key */
-            if ( evt.shiftKey && evt.which === 39 ) {
-                that.domRoot.find( 'a.next' ).click();
-            }
-            
-            /* LEFT key */
-            if ( evt.shiftKey && evt.which === 37 ) {
-                that.domRoot.find( 'a.prev' ).click();
-            }
-        } ); 
-    },
-
-    _goNext: function () {
-        var ulNext = this.current.next();
-
-        this.offset += -parseInt( ulNext.css( 'width' ), 10 );
-        
-        this._move();
-
-        this._setCurrent( ulNext );
-        this._updateArrows();
-    },
-    
-    _goPrev: function () {
-        this.offset += parseInt( this.current.css( 'width' ), 10 );
-        
-        this._move();
-
-        this._setCurrent( this.current.prev() );
-        this._updateArrows();
-    },
-
-    _move: function ( ul ) {
-        this.domRoot.find( 'div.film-strip' ).css( 'margin-left', this.offset );
-    },
-
-    _render: function () {
-        this._renderContainer();
-        this._renderItens();
-
-        this._setCurrent( this.domRoot.find( 'ul.current' ) );
-        this._updateArrows();
-    },
-
-    _renderContainer: function () {
-        this.domRoot = $( [
-            '<div class="playlist">',
-                '<a class="nav prev"></a>',
-                '<div class="trilho-videos"><div class="film-strip"></div></div>',
-                '<a class="nav next"></a>',
-                '<span class="borda-inferior"></span>',
-            '</div>'
-        ].join( '' ) );
-    },
-
-    _renderItens: function () {
-        var html = '<ul>',
-            that = this;
-
-        $.each( this.json.itens, function ( i ) {
-            html += (i>0 && i%4 === 0? '</ul><ul>':'');
-            html += [
-                '<li '+(this.current? 'class="assistindo"': '')+'>',
-                    '<a href="javascript:;" item-id="'+this.id+'" title="'+this.title+'">',
-                        '<img src="http://'+that.thumbHost+'/180x108/'+this.id+'.jpg">',
-                        '<span class="hover-img"></span>',
-                        
-                        '<span class="layer"></span>',
-                        '<span class="label">assistindo</span>',
-                        
-                        (this.hat? '<span class="chapeu">'+this.hat+'</span>': ''),
-                        
-                        '<span class="titulo-item">'+that.truncate(this.title, 40)+'</span>',
-                        '<span class="exibicao"><strong>'+this.views+'</strong> exibições</span>',
-                    '</a>',
-                '</li>'
-            ].join( '' );
-        } );
-
-        html += '</ul>';
-
-        this.domRoot.find( 'div.film-strip' ).append( html );
-    },
-
-    _setAsWatching: function ( li ) {
-        this.domRoot.find( 'li.assistindo' ).removeClass( 'assistindo' );
-
-        li.addClass( 'assistindo' );
-    },
-
-    _setCurrent: function ( newCurrent ) {
-        if ( newCurrent.size() === 0 ) {
-            this.current = this.domRoot.find( 'ul:first' ).addClass( 'current' );
-        } else {
-            this.current.removeClass( 'current' );
-            this.current = newCurrent.addClass( 'current' );
-        }
-    },
-
-    _updateArrows: function () {
-        this.domRoot.find( 'a.nav' ).removeClass( 'inativo' );
-
-        if ( this.current.next().size() === 0 ) {
-            this.domRoot.find( 'a.next' ).addClass( 'inativo' );
-        }
-
-        if ( this.current.prev().size() === 0 ) {
-            this.domRoot.find( 'a.prev' ).addClass( 'inativo' );
-        }
-    }
-});
-
-
-
-/**
- * @class Social
- * @extends Mod
- * @constructor
- */
-
-Social = function () {};
-
-Social.prototype = $.extend( new Mod(), {
-    /**
-     * Inicializa o Social com o barramento e o json
-     *
-     * @method init
-     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
-     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
-     * @return {Object} O nó raiz da subárvore DOM do módulo
-     */
-    init: function ( bus, json ) {
-        /**
-         * @property name
-         * @type String
-         */
-        this.name = 'social';
-
-        /**
-         * @property bus
-         * @type Object
-         */
-        this.bus = bus;
-
-        /**
-         * @property json
-         * @type Object
-         */
-        this.json = json;
-
-        this._render();
-        this._addEvents();
-        
-        return this.domRoot;
-    },
-
-    // private
-
-    _addEvents: function () {
-        var that = this;
-
-        this.sub( 'video-change', function ( evt ) {
-            that.json = evt.json;
-            that._update();
-        } );
-    },
-
-    _clear: function () {
-        this.domRoot.html( '' );
-    },
-
-    _render: function () {
-        this._renderContainer();
-        this._renderContent();
-    },
-
-    _renderContainer: function () {
-        this.domRoot = $( [
-            '<div class="social">',
-            '</div>'
-        ].join( '' ) );
-    },
-
-    _renderContent: function () {
-        this._renderTitle();
-        this._renderTwitterButton();
-        this._renderFacebookButton();
-        this._renderOrkutButton();
-    },
-
-    _renderFacebookButton: function () {
-        var item = this._getItem( 'current' ),
-            url = item.shortUrl || item.url;
-
-        $( '<a></a>', {
-            'href': 'http://www.facebook.com/share.php?t='+encodeURIComponent(item.title)+'&u='+encodeURIComponent(url),
-            'class': 'facebook button',
-            'target': '_blank',
-            'title': 'Compartilhe no Facebook'
-        }).appendTo( this.domRoot );
-    },
-
-    _renderTitle: function () {
-        this.domRoot.append( [
-            '<span class="label">compartilhe este vídeo</span>'
-        ].join( '' ) );
-    },
-
-    _renderOrkutButton: function () {
-        var item = this._getItem( 'current' ),
-            url = item.shortUrl || item.url;
-
-        $( '<a></a>', {
-            'href': 'http://promote.orkut.com/preview?nt=orkut.com&tt='+encodeURI(item.title)+'&cn='+encodeURI(item.description)+'&du='+encodeURIComponent(url)+'&tn='+item.thumbUrl,
-            'class': 'orkut button',
-            'target': '_blank',
-            'title': 'Compartilhe no Orkut'
-        }).appendTo( this.domRoot );
-    },
-
-    _renderTwitterButton: function () {
-        var item = this._getItem( 'current' ),
-            url = item.shortUrl || item.url;
-
-        $( '<a></a>', {
-            'href': 'http://twitter.com?status='+encodeURIComponent(url+' '+item.title),
-            'class': 'twitter button',
-            'target': '_blank',
-            'title': 'Compartilhe no Twitter'
-        }).appendTo( this.domRoot );
-    },
-
-    _renderGloboInput: function () {
-        var item = this._getItem( 'current' );
-
-        if ( !item.shortUrl ) {
-            return;
-        }
-
-        $( '<input />', {
-            type: 'text',
-            value: item.shortUrl,
-            readonly: 'readonly',
-            'class': 'globo-url'
-        }).appendTo( this.domRoot );
-    },
-
-    _update: function () {
-        var item = this._getItem( 'current' );
-
-        this._clear();
-        this._renderContent();
     }
 });
 
@@ -1217,3 +772,447 @@ Stage.prototype = $.extend( new Mod(), {
 });
 
 
+
+/**
+ * @class Social
+ * @extends Mod
+ * @constructor
+ */
+
+Social = function () {};
+
+Social.prototype = $.extend( new Mod(), {
+    /**
+     * Inicializa o Social com o barramento e o json
+     *
+     * @method init
+     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
+     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
+     * @return {Object} O nó raiz da subárvore DOM do módulo
+     */
+    init: function ( bus, json ) {
+        /**
+         * @property name
+         * @type String
+         */
+        this.name = 'social';
+
+        /**
+         * @property bus
+         * @type Object
+         */
+        this.bus = bus;
+
+        /**
+         * @property json
+         * @type Object
+         */
+        this.json = json;
+
+        this._render();
+        this._addEvents();
+        
+        return this.domRoot;
+    },
+
+    // private
+
+    _addEvents: function () {
+        var that = this;
+
+        this.sub( 'video-change', function ( evt ) {
+            that.json = evt.json;
+            that._update();
+        } );
+    },
+
+    _clear: function () {
+        this.domRoot.html( '' );
+    },
+
+    _render: function () {
+        this._renderContainer();
+        this._renderContent();
+    },
+
+    _renderContainer: function () {
+        this.domRoot = $( [
+            '<div class="social">',
+            '</div>'
+        ].join( '' ) );
+    },
+
+    _renderContent: function () {
+        this._renderTitle();
+        this._renderTwitterButton();
+        this._renderFacebookButton();
+        this._renderOrkutButton();
+    },
+
+    _renderFacebookButton: function () {
+        var item = this._getItem( 'current' ),
+            url = item.shortUrl || item.url;
+
+        $( '<a></a>', {
+            'href': 'http://www.facebook.com/share.php?t='+encodeURIComponent(item.title)+'&u='+encodeURIComponent(url),
+            'class': 'facebook button',
+            'target': '_blank',
+            'title': 'Compartilhe no Facebook'
+        }).appendTo( this.domRoot );
+    },
+
+    _renderTitle: function () {
+        this.domRoot.append( [
+            '<span class="label">compartilhe este vídeo</span>'
+        ].join( '' ) );
+    },
+
+    _renderOrkutButton: function () {
+        var item = this._getItem( 'current' ),
+            url = item.shortUrl || item.url;
+
+        $( '<a></a>', {
+            'href': 'http://promote.orkut.com/preview?nt=orkut.com&tt='+encodeURI(item.title)+'&cn='+encodeURI(item.description)+'&du='+encodeURIComponent(url)+'&tn='+item.thumbUrl,
+            'class': 'orkut button',
+            'target': '_blank',
+            'title': 'Compartilhe no Orkut'
+        }).appendTo( this.domRoot );
+    },
+
+    _renderTwitterButton: function () {
+        var item = this._getItem( 'current' ),
+            url = item.shortUrl || item.url;
+
+        $( '<a></a>', {
+            'href': 'http://twitter.com?status='+encodeURIComponent(url+' '+item.title),
+            'class': 'twitter button',
+            'target': '_blank',
+            'title': 'Compartilhe no Twitter'
+        }).appendTo( this.domRoot );
+    },
+
+    _renderGloboInput: function () {
+        var item = this._getItem( 'current' );
+
+        if ( !item.shortUrl ) {
+            return;
+        }
+
+        $( '<input />', {
+            type: 'text',
+            value: item.shortUrl,
+            readonly: 'readonly',
+            'class': 'globo-url'
+        }).appendTo( this.domRoot );
+    },
+
+    _update: function () {
+        var item = this._getItem( 'current' );
+
+        this._clear();
+        this._renderContent();
+    }
+});
+
+
+
+/**
+ * @class Info
+ * @extends Mod
+ * @constructor
+ */
+
+Info = function () {};
+
+Info.prototype = $.extend( new Mod(), {
+    /**
+     * Inicializa o módulo com o barramento e o json
+     *
+     * @method init
+     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
+     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
+     * @return {Object} O nó raiz da subárvore DOM do módulo
+     */
+    init: function ( bus, json ) {
+        /**
+         * @property name
+         * @type String
+         */
+        this.name = 'info';
+
+        /**
+         * @property bus
+         * @type Object
+         */
+        this.bus = bus;
+
+        /**
+         * @property json
+         * @type Object
+         */
+        this.json = json;
+
+        this._render();
+        this._addEvents();
+        
+        return this.domRoot;
+    },
+
+    // private
+
+    _addEvents: function () {
+        var that = this;
+
+        this.sub( 'video-change', function ( evt ) {
+            that.json = evt.json;
+            that._updateItem();
+        } );
+    },
+
+    _render: function () {
+        var item = this._getItem( 'current' );
+
+        this.domRoot = $( [
+            '<div class="info">',
+                '<span class="chapeu"></span>',
+                '<h6></h6>',
+            '</div>'
+        ].join( '' ) );
+
+        this._updateItem();
+    },
+
+    _updateItem: function () {
+        var style, item = this._getItem( 'current' );
+        
+        this.domRoot.find( 'span.chapeu' ).html( item.hat || '' );
+
+        if ( item.title.length > 70 ) {
+            style = {
+                font: 'bold 18px/20px Arial, sans-serif',
+                marginTop: '8px'
+            };
+        } else {
+            style = {
+                font: 'bold 24px/26px Arial, sans-serif',
+                marginTop: '0px'
+            };
+        }
+        
+        this.domRoot.find( 'h6' )
+            .css( style )
+            .html( this.truncate( item.title, 90 ) );
+    }
+});
+
+
+
+/**
+ * @class Playlist
+ * @extends Mod
+ */
+
+function Playlist() {}
+
+Playlist.prototype = $.extend( new Mod(), {
+    /**
+     * Inicializa a Playlist com o barramento e o json
+     *
+     * @method init
+     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
+     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
+     * @return {Object} O nó raiz da subárvore DOM do módulo
+     */
+    init: function ( bus, json ) {
+        /**
+         * @property name
+         * @type String
+         */
+        this.name = 'playlist';
+
+        /**
+         * @property bus
+         * @type Object
+         */
+        this.bus = bus;
+
+        /**
+         * @property json
+         * @type Object
+         */
+        this.json = json;
+        this.thumbHost = json.thumbHost || 'img.video.globo.com';
+        this.offset = 0; 
+        
+        if ( this.json.itens.length > 1 ) {
+            this._render();
+            this._addEvents();
+        }
+
+        return this.domRoot;
+    },
+
+    // private
+
+    _addEvents: function () {
+        var that = this;
+
+        this.sub( 'video-change', function ( event ) {
+            var a, item;
+
+            that.json = event.json;
+
+            item = that._getItem( 'current' );
+
+            a = that.domRoot.find( 'a[item-id='+item.id+']' );
+            that._setAsWatching( a.parent() );
+        } );
+
+        this.domRoot
+            .delegate( 'a.next:not(.inativo)', 'click', function () {
+                that._goNext();
+            })
+            .delegate( 'a.prev:not(.inativo)', 'click', function () {
+                that._goPrev();
+            })
+            .delegate( 'div.trilho-videos a', 'click', function () {
+                var item = that._getItemById( $( this ).attr( 'item-id' ) );
+
+                that._setItemAsCurrent( item );
+                that.pub( 'video-change', that.json );
+
+                that._setAsWatching( $( this ).parent() );
+
+                return false;
+            });
+
+        $( document ).bind( 'keydown.lightplayer', function ( evt ) {
+            /* RIGHT key */
+            if ( evt.shiftKey && evt.which === 39 ) {
+                that.domRoot.find( 'a.next' ).click();
+            }
+            
+            /* LEFT key */
+            if ( evt.shiftKey && evt.which === 37 ) {
+                that.domRoot.find( 'a.prev' ).click();
+            }
+        } ); 
+    },
+
+    _goNext: function () {
+        var ulNext = this.current.next();
+
+        this.offset += -parseInt( ulNext.css( 'width' ), 10 );
+        
+        this._move();
+
+        this._setCurrent( ulNext );
+        this._updateArrows();
+    },
+    
+    _goPrev: function () {
+        this.offset += parseInt( this.current.css( 'width' ), 10 );
+        
+        this._move();
+
+        this._setCurrent( this.current.prev() );
+        this._updateArrows();
+    },
+
+    _move: function ( ul ) {
+        this.domRoot.find( 'div.film-strip' ).css( 'margin-left', this.offset );
+    },
+
+    _render: function () {
+        this._renderContainer();
+        this._renderItens();
+
+        this._setCurrent( this.domRoot.find( 'ul.current' ) );
+        this._updateArrows();
+    },
+
+    _renderContainer: function () {
+        this.domRoot = $( [
+            '<div class="playlist">',
+                '<a class="nav prev"></a>',
+                '<div class="trilho-videos"><div class="film-strip"></div></div>',
+                '<a class="nav next"></a>',
+                '<span class="borda-inferior"></span>',
+            '</div>'
+        ].join( '' ) );
+    },
+
+    _renderItens: function () {
+        var html = '<ul>',
+            that = this;
+
+        $.each( this.json.itens, function ( i ) {
+            html += (i>0 && i%4 === 0? '</ul><ul>':'');
+            html += [
+                '<li '+(this.current? 'class="assistindo"': '')+'>',
+                    '<a href="javascript:;" item-id="'+this.id+'" title="'+this.title+'">',
+                        '<img src="http://'+that.thumbHost+'/180x108/'+this.id+'.jpg">',
+                        '<span class="hover-img"></span>',
+                        
+                        '<span class="layer"></span>',
+                        '<span class="label">assistindo</span>',
+                        
+                        (this.hat? '<span class="chapeu">'+this.hat+'</span>': ''),
+                        
+                        '<span class="titulo-item">'+that.truncate(this.title, 40)+'</span>',
+                        '<span class="exibicao"><strong>'+this.views+'</strong> exibições</span>',
+                    '</a>',
+                '</li>'
+            ].join( '' );
+        } );
+
+        html += '</ul>';
+
+        this.domRoot.find( 'div.film-strip' ).append( html );
+    },
+
+    _setAsWatching: function ( li ) {
+        this.domRoot.find( 'li.assistindo' ).removeClass( 'assistindo' );
+
+        li.addClass( 'assistindo' );
+    },
+
+    _setCurrent: function ( newCurrent ) {
+        if ( newCurrent.size() === 0 ) {
+            this.current = this.domRoot.find( 'ul:first' ).addClass( 'current' );
+        } else {
+            this.current.removeClass( 'current' );
+            this.current = newCurrent.addClass( 'current' );
+        }
+    },
+
+    _updateArrows: function () {
+        this.domRoot.find( 'a.nav' ).removeClass( 'inativo' );
+
+        if ( this.current.next().size() === 0 ) {
+            this.domRoot.find( 'a.next' ).addClass( 'inativo' );
+        }
+
+        if ( this.current.prev().size() === 0 ) {
+            this.domRoot.find( 'a.prev' ).addClass( 'inativo' );
+        }
+    }
+});
+
+
+
+/* Lightplayer embeded dependency */
+
+$.extend( jQuery.easing, {
+    easeOutBounce: function (x, t, b, c, d) {
+        if ((t/=d) < (1/2.75)) {
+            return c*(7.5625*t*t) + b;
+        } else if (t < (2/2.75)) {
+            return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+        } else if (t < (2.5/2.75)) {
+            return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+        } else {
+            return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+        }
+    }
+});
