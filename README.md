@@ -163,20 +163,41 @@ instância de LightPlayer() será utilizada.
 
 ### Instalação de dependências
 
+
     $ npm install --dev
 
 Isso irá instalar os pacotes necessários localmente no root deste projeto.
 
 
+### Build
+
+O lightplayer está dividido em modulos, para unificá-los em um arquivo só,
+segue o comando:
+
+    $ grunt concat
+
+Para além de unificar, minificar, rode o seguinte:
+
+    $ grunt min
+
+Para buildar o projeto, faça
+
+    $ grunt build
+
+Isso linta, concatena e minifica os sources. Caso o lint acuse algum problema,
+ele não vai gerar o build.
+
+
 ### Testes
 
-Para rodar os testes jasmine no browser, execute os seguintes commandos
+Para rodar os testes jasmine no browser
 
-    $ npm test
-
-ou se você não tiver npm instalado:
-
-    $ ./scripts/test
+    $ grunt test browser
 
 Se o browser não carregar de primero, dê reload para dar tempo
 do servidor rodar.
+
+Para rodar os testes jasmine no phantom:
+
+    $ grunt test phantom
+
