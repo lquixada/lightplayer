@@ -33,7 +33,7 @@ Playlist.prototype = $.extend( new Mod(), {
          * @type Object
          */
         this.json = json;
-        this.thumbHost = json.thumbHost || 'img.video.globo.com';
+        this.thumbHost = json.thumbHost || 'http://img.video.globo.com';
         this.offset = 0; 
         
         if ( this.json.itens.length > 1 ) {
@@ -143,7 +143,7 @@ Playlist.prototype = $.extend( new Mod(), {
             html += [
                 '<li '+(this.current? 'class="assistindo"': '')+'>',
                     '<a href="javascript:;" item-id="'+this.id+'" title="'+this.title+'">',
-                        '<img src="http://'+that.thumbHost+'/180x108/'+this.id+'.jpg">',
+                        '<img src="'+that.thumbHost+'/180x108/'+this.id+'.jpg">',
                         '<span class="hover-img"></span>',
                         
                         '<span class="layer"></span>',
