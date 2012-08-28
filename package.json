@@ -3,10 +3,6 @@
   "version": "1.0.4",
   "author": "Leonardo Quixadá <lquixada@gmail.com>",
   "description": "Lightbox de videos",
-  "scripts": {
-    "test": "./scripts/test"
-  },
-  "main": "./lib/http-server",
   "repository": {
     "type": "git",
     "url": "git://ngit.globoi.com/lightplayer/lightplayer.git"
@@ -18,8 +14,7 @@
     "playlist"
   ],
   "devDependencies": {
-    "grunt"  : "*",
-    "testem" : "*"
+    "grunt": "*"
   },
   "license": "MIT"
 }
