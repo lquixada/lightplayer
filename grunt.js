@@ -1,7 +1,6 @@
 
 module.exports = function ( grunt ) {
-    var path = 'lightplayer/media/lightplayer',
-        connect = require('connect');
+    var path = 'lightplayer/media/lightplayer';
 
     grunt.initConfig({
       concat: {
@@ -28,6 +27,8 @@ module.exports = function ( grunt ) {
         base: './lightplayer'
       }
     });
+
+  grunt.registerTask('build', 'concat min');
 
   grunt.registerTask('test', 'server');
 
