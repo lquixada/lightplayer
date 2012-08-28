@@ -28,7 +28,7 @@ module.exports = function ( grunt ) {
       }
     });
 
-  grunt.registerTask('build', 'concat min');
+  grunt.registerTask('build', 'lint concat min');
 
   grunt.registerTask('test', 'server');
 
