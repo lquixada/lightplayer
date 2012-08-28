@@ -243,7 +243,7 @@ jQuery.lightplayer = {
 };
 
 
-/* Lightplayer embeded dependency */
+/* Lightplayer embedded dependency */
 
 jQuery.extend( jQuery.easing, {
     easeOutBounce: function (x, t, b, c, d) {
@@ -260,47 +260,15 @@ jQuery.extend( jQuery.easing, {
 });
 
 
+
 /**
- * @class Mod
+ * @class PubSub
  * @constructor
  */ 
 
-Mod = function () {};
+PubSub = function () {};
 
-Mod.prototype = {
-    /**
-     * Inicializa o módulo com o barramento e o json
-     *
-     * @method init
-     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
-     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
-     * @return {Object} O nó raiz da subárvore DOM do módulo
-     */
-    init: function ( bus, json ) {
-        /**
-         * @property name
-         * @type String
-         */
-        this.name = 'mod-name';
-
-        /**
-         * @property bus
-         * @type Object
-         */
-        this.bus = bus;
-
-        /**
-         * @property json
-         * @type Object
-         */
-        this.json = json;
-
-        this._render();
-        this._addEvents();
-        
-        return this.domRoot;
-    },
-
+PubSub.prototype = {
     pub: function ( eventName, json ) {
         this.bus.trigger( {
             type: eventName,
@@ -318,30 +286,18 @@ Mod.prototype = {
                 callback( event );
             }
         } );
-    },
+    }
+};
 
-    truncate: function ( str, count ) {
-        var cutIndex;
 
-        if ( !str ) {
-            return str;
-        }
+/**
+ * @class ItensManager
+ * @constructor
+ */ 
 
-        if ( str.length > count ) {
-            str = str.substring(0, count);
-            cutIndex = str.lastIndexOf(' ');
-            return str.substring( 0, cutIndex )+'...';
-        }
+ItensManager = function () {};
 
-        return str;
-    },
-
-    // private
-
-    _addEvents: function () {
-        // Define all events attachments here
-    },
-
+ItensManager.prototype = {
     _getItem: function ( position ) {
         var chosen,
             itens = this.json.itens,
@@ -387,12 +343,79 @@ Mod.prototype = {
         });
 
         chosen.current = true;
+    }
+};
+
+
+
+/**
+ * @class Mod
+ * @constructor
+ */ 
+
+Mod = function () {};
+
+Mod.prototype = $.extend( new PubSub(), new ItensManager(), {
+    /**
+     * Inicializa o módulo com o barramento e o json
+     *
+     * @method init
+     * @param bus {Object} O barramento com o qual o módulo vai se comunicar
+     * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
+     * @return {Object} O nó raiz da subárvore DOM do módulo
+     */
+    init: function ( bus, json ) {
+        /**
+         * @property name
+         * @type String
+         */
+        this.name = 'mod-name';
+
+        /**
+         * @property bus
+         * @type Object
+         */
+        this.bus = bus;
+
+        /**
+         * @property json
+         * @type Object
+         */
+        this.json = json;
+
+        this._render();
+        this._addEvents();
+        
+        return this.domRoot;
     },
+
+    truncate: function ( str, count ) {
+        var cutIndex;
+
+        if ( !str ) {
+            return str;
+        }
+
+        if ( str.length > count ) {
+            str = str.substring(0, count);
+            cutIndex = str.lastIndexOf(' ');
+            return str.substring( 0, cutIndex )+'...';
+        }
+
+        return str;
+    },
+
+    // private
+
+    _addEvents: function () {
+        // Define all events attachments here
+    },
+
 
     _render: function () {
         // Create all the DOM subtree here
         // And then assign the root to this.domRoot
     }
-};
+});
 
 
