@@ -264,6 +264,13 @@ div.lightplayer div.palco div.video-player {
     filter:alpha(opacity=100); /* IE7- */
 }
 
+/* Resolvendo problema do buraco no IE7/8 */
+div.lightplayer div.palco div.wm-poster-wrapper,
+div.lightplayer div.palco div.wm-poster-inner-wrapper {
+    -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100); /* IE8 */
+    filter:alpha(opacity=100); /* IE7- */
+}
+
 div.lightplayer div.palco li {
     position:absolute;
     display:none;
