@@ -20,7 +20,7 @@ LightPlayer.prototype = {
      *  var lightplayer = new LightPlayer();
      *
      *  lightplayer.open( {
-     *      title: 'capítulo de <span>ontem</span>',
+     *      title: 'capitulo de <span>ontem</span>',
      *      subtitle: 'qua 13',
      *      mode: 'hd',
      *      itens: [

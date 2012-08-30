@@ -72,6 +72,10 @@ lightplayer.open( {
   // será tocado automaticamente. Default: false
   autoNext: true,
 
+  // Indica a partir de qual host que o LightPlayer vai exibir
+  // os thumbs da playlist. Default: 'http://img.video.globoi.com'
+  thumbHost: 'http://img.video.qa01.globoi.com',
+
   // Lista com todas as informações de todos os videos que
   // irão constar na playlist. Se houver só um, a playlista não
   // aparece. Parâmetro obrigatório
