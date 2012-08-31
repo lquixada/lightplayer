@@ -24,4 +24,8 @@
                                     * atualiza versão do setup.py
                                     * gera tag no git com versão
                                 * pusha para o repositório
+    * grunt version        - mostrar versão do lightplayer
+    * grunt version 1.0    - seta versão do player
+                                * criauma tag do git
+                                * altera a versão no setup.py
     * grunt help           - mostrar todos os comandos disponíveis
