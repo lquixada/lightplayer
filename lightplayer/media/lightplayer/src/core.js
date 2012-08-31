@@ -114,7 +114,7 @@ LightPlayer.prototype = {
                 that.bus.trigger( 'lightplayer-opened' );
 
                 if ( callback ) {
-                    callback();
+                    callback.call( that );
                 }
 
                 divWidget.unbind( onTransitionEnd );

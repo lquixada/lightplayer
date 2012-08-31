@@ -95,27 +95,6 @@ describe("Light Player", function() {
             expect( this.lightplayer.domRoot ).toHaveClass( 'blah' );
         });
 
-        it("should call the onOpen callback", function() {
-            var callback = jasmine.createSpy();
-
-            this.json = {
-                onOpen: callback,
-                itens: [
-                    {
-                        id: 123,
-                        title: 'Titulo 1',
-                        description: 'Descricao 1',
-                        views: '100',
-                        url: 'http://www.globo.com',
-                        current: true
-                    }
-                ]
-            };
-            
-            this.lightplayer.open( this.json );
-            
-            expect( callback ).toHaveBeenCalled();
-        });
     });
 
     describe("close", function() {
