@@ -36,12 +36,12 @@ module.exports = function ( grunt ) {
     var url = 'http://localhost:8088/media/lightplayer/runner.html',
         done = this.async();
 
-    grunt.utils.spawn( { cmd : 'phantomjs', args: ['./scripts/jasmine.js', url] }, function (e,result,code) {
-        grunt.log.writeln( e );
+    grunt.utils.spawn( { cmd : 'phantomjs', args: ['./scripts/jasmine.js', url] }, function ( err, result, code ) {
+        grunt.log.writeln( err );
         grunt.log.writeln( result );
         
         if ( code ) {
-            grunt.warn("erro", code);
+            grunt.warn( 'erro', code );
         }
 
         done();
@@ -53,6 +53,12 @@ module.exports = function ( grunt ) {
 
     this.async();
 
-    grunt.utils.spawn( { cmd : 'open', args: [ url ] }, function () {});
+    grunt.utils.spawn( { cmd : 'open', args: [ url ] }, function ( err, result, code ) {
+        grunt.log.writeln( 'Opening browser to run the test suite.' );
+        
+        if ( code ) {
+            grunt.warn( 'erro', code );
+        }
+    });
   });
 };
