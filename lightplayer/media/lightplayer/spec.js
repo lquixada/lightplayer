@@ -11,7 +11,9 @@ beforeEach(function() {
     });
 
     // Prevents css3 animations on open
-    spyOn( LightPlayer.prototype, '_animateIn' );
+    spyOn( LightPlayer.prototype, '_animateIn' ).andCallFake( function ( callback ) {
+        callback && callback();
+    });
 
     // Prevents css3 animations on close
     spyOn( LightPlayer.prototype, '_animateOut' ).andCallFake( function ( callback ) {
@@ -91,6 +93,28 @@ describe("Light Player", function() {
             this.lightplayer.open( this.json );
             
             expect( this.lightplayer.domRoot ).toHaveClass( 'blah' );
+        });
+
+        it("should call the onOpen callback", function() {
+            var callback = jasmine.createSpy();
+
+            this.json = {
+                onOpen: callback,
+                itens: [
+                    {
+                        id: 123,
+                        title: 'Titulo 1',
+                        description: 'Descricao 1',
+                        views: '100',
+                        url: 'http://www.globo.com',
+                        current: true
+                    }
+                ]
+            };
+            
+            this.lightplayer.open( this.json );
+            
+            expect( callback ).toHaveBeenCalled();
         });
     });
 

@@ -44,7 +44,7 @@ LightPlayer.prototype = {
         this._addMods();
         this._addEvents();
         
-        this._animateIn();
+        this._animateIn( this.json.onOpen );
     },
 
     /**
@@ -98,7 +98,7 @@ LightPlayer.prototype = {
         this.add( new Playlist() );
     },
 
-    _animateIn: function () {
+    _animateIn: function ( callback ) {
         var that = this,
             onTransitionEnd = this._getTransitionEndEvent(),
             divOverlay = this.domRoot.find( 'div.widget-overlay' ),
@@ -112,6 +112,10 @@ LightPlayer.prototype = {
                 divWidget.css( '-moz-transform', 'none' );
 
                 that.bus.trigger( 'lightplayer-opened' );
+
+                if ( callback ) {
+                    callback();
+                }
 
                 divWidget.unbind( onTransitionEnd );
             } );
