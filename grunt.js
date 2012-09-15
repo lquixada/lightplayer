@@ -5,19 +5,31 @@ module.exports = function ( grunt ) {
     grunt.initConfig({
       concat: {
         dist: {
-          src: [path+'/src/*.js'],
-          dest: path+'/src.js'
+          src: [path+'/js/*.js'],
+          dest: path+'/build/src.js'
+        },
+
+        css: {
+          src: [path+'/css/*.css'],
+          dest: path+'/build/src.css'
         }
       },
 
       lint: {
-        files: [path+'/src/*.js']
+        files: [path+'/js/*.js']
       },
 
       min: {
         dist: {
-          src: [path+'/src/*.js'],
-          dest: path+'/min.js'
+          src: [path+'/build/src.js'],
+          dest: path+'/build/min.js'
+        }
+      },
+
+      cssmin: {
+        dist: {
+          src: [path+'/build/src.css'],
+          dest: path+'/build/min.css'
         }
       },
 
@@ -28,12 +40,15 @@ module.exports = function ( grunt ) {
       }
     });
 
-  grunt.registerTask('build', 'lint concat min');
+  grunt.registerTask('jsmin', 'min');
+  grunt.registerTask('jslint', 'lint');
+
+  grunt.registerTask('build', 'jslint concat jsmin cssmin');
 
   grunt.registerTask('test', 'server');
 
   grunt.registerTask('phantom', function () {
-    var url = 'http://localhost:8088/media/lightplayer/runner.html',
+    var url = 'http://localhost:8088/media/lightplayer/tests/runner.html',
         done = this.async();
 
     grunt.utils.spawn( { cmd : 'phantomjs', args: ['./scripts/jasmine.js', url] }, function ( err, result, code ) {
@@ -49,7 +64,7 @@ module.exports = function ( grunt ) {
   });
 
   grunt.registerTask('browser', function () {
-    var url = 'http://localhost:8088/media/lightplayer/runner.html';
+    var url = 'http://localhost:8088/media/lightplayer/tests/runner.html';
 
     this.async();
 
@@ -61,4 +76,6 @@ module.exports = function ( grunt ) {
         }
     });
   });
+
+  grunt.loadNpmTasks('grunt-css')
 };
