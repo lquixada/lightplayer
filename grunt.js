@@ -59,7 +59,7 @@ module.exports = function ( grunt ) {
   grunt.registerTask('jsmin', 'min');
   grunt.registerTask('jslint', 'lint');
   /* Still testing the csslint workflow */
-  grunt.registerTask('build', 'jslint concat jsmin cssmin');
+  grunt.registerTask('build', 'jasmine jslint concat jsmin cssmin');
   grunt.registerTask('jasmine', 'test phantom');
   grunt.registerTask('test', 'server');
 
