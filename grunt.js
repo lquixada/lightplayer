@@ -71,11 +71,7 @@ module.exports = function ( grunt ) {
     phantom = grunt.utils.spawn( { cmd : 'phantomjs', args: ['./scripts/jasmine.js', url] }, function ( err, result, code ) {
         grunt.log.writeln( result.stdout );
         
-        //if ( code ) {
-            //grunt.warn( 'erro', code );
-        //}
-
-        done( code );
+        done( code>0? false: true );
     });
   });
 
