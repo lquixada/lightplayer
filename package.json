@@ -14,7 +14,8 @@
     "playlist"
   ],
   "devDependencies": {
-    "grunt": "*"
+    "grunt": "*",
+    "grunt-css": "*"
   },
   "license": "MIT"
 }

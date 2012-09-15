@@ -19,6 +19,19 @@ module.exports = function ( grunt ) {
         files: [path+'/js/*.js']
       },
 
+      csslint: {
+        dist: {
+          src: path+'/css/*.css',
+          rules: {
+            "import": false,
+            "overqualified-elements": false,
+            "star-property-hack": false,
+            "box-model": false,
+            "adjoining-classes": false
+          }
+        }
+      },
+
       min: {
         dist: {
           src: [path+'/build/src.js'],
@@ -40,9 +53,13 @@ module.exports = function ( grunt ) {
       }
     });
 
+  grunt.loadNpmTasks('grunt-css')
+
+  /* Aliased just for readability purposes on "build" task */
   grunt.registerTask('jsmin', 'min');
   grunt.registerTask('jslint', 'lint');
 
+  /* Still testing the csslint workflow */
   grunt.registerTask('build', 'jslint concat jsmin cssmin');
 
   grunt.registerTask('test', 'server');
@@ -77,5 +94,4 @@ module.exports = function ( grunt ) {
     });
   });
 
-  grunt.loadNpmTasks('grunt-css')
 };
