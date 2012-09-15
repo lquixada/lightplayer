@@ -12,6 +12,7 @@
 .pydevproject
 .ropeproject
 .pydevproject
+.sass-cache/
 .settings
 .DS_Store
 report.html
