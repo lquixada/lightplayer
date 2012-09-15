@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Light Player Test Runner</title>
+  
+
+  <!-- dependencies -->
+  <link href="lib/jasmine-1.2.0/jasmine.css" rel="stylesheet" />
+  <link href="helpers.css" rel="stylesheet" />
+
+  <!-- source code -->
+  <link href="../css/core.css" rel="stylesheet" />
+  <link href="../css/header.css" rel="stylesheet" />
+  <link href="../css/info.css" rel="stylesheet" />
+  <link href="../css/playlist.css" rel="stylesheet" />
+  <link href="../css/social.css" rel="stylesheet" />
+  <link href="../css/stage.css" rel="stylesheet" />
+  
+
+  <!-- dependencies -->
+  <script src="lib/jasmine-1.2.0/jasmine.js"></script>
+  <script src="lib/jasmine-1.2.0/jasmine-html.js"></script>
+  <script src="lib/jquery-1.4.3.min.js"></script>
+  <script src="lib/json2.js"></script>
+  <script src="helpers.js"></script>
+  <script src="http://s.videos.globo.com/p2/j/api.min.js"></script>
+
+  <!-- source code -->
+  <script src="../js/core.js"></script>
+  <script src="../js/header.js"></script>
+  <script src="../js/info.js"></script>
+  <script src="../js/playlist.js"></script>
+  <script src="../js/social.js"></script>
+  <script src="../js/stage.js"></script>
+
+  <!-- specs -->
+  <script src="specs.js"></script>
+</head>
+
+<body>
+
+<div id="main">
+  <!-- HTML fixtures -->
+</div>
+
+<script>
+var reporter = new jasmine.TrivialReporter,
+    env = jasmine.getEnv();
+
+env.specFilter = function(spec){
+    return reporter.specFilter(spec)
+}
+
+env.addReporter(reporter)
+env.execute()
+</script>
+
+
+</body>
+
+</html>
+

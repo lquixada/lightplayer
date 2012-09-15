@@ -1,0 +1,47 @@
+
+/********************************************************
+ * MODULO HEADER
+ ********************************************************/
+
+div.lightplayer div.header {
+    padding:28px 28px 13px;
+    height:auto;
+    overflow:hidden;
+}
+
+div.lightplayer div.header a.close {
+    position:absolute;
+    display:block;
+    top:25px;
+    right:25px;
+    width:30px;
+    height:30px;
+    text-indent:-5000px;
+    background:url(/media/lightplayer/imgs/btn.sprite.png) transparent 0 0 no-repeat;
+    overflow:hidden;
+}
+
+div.lightplayer div.header a.close:hover {
+    background-position:0 -30px;
+}
+
+div.lightplayer div.header em.subtitulo {
+    color:#999;
+    font:22px ProximaNova-Light, Georgia, serif;
+    text-transform:uppercase;
+}
+
+div.lightplayer div.header h5 {
+    display:inline-block;
+    *display:inline;
+    *zoom:1;
+    margin:0 5px 0 0;
+    padding:0;
+    color:#c51883;
+    font:22px/1em ProximaNova-Light, Arial, sans-serif;
+    letter-spacing:-2px;
+    text-transform:uppercase;
+}
+
+
+

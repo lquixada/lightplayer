@@ -1,0 +1,38 @@
+
+/********************************************************
+ * MODULO INFO
+ ********************************************************/
+
+div.lightplayer div.info {
+    display:inline-block;
+    *display:inline;
+    *zoom:1;
+    margin:0;
+    padding: 0 0 20px 28px;
+    width:430px;
+    height:70px;
+    vertical-align:top;
+}
+
+div.lightplayer div.info h6 {
+    display:block;
+    margin: 0 5px 0 0;
+    color:#533475;
+    font:bold 24px/26px Arial, sans-serif;
+    letter-spacing:-2px;
+}
+
+div.lightplayer div.info span.chapeu {
+    display: block;
+    color:#666;
+    font:12px ProximaNova-Light, Arial, sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+div.lightplayer div.info span.numero {
+    font-family:ProximaNova-Bold, Arial, sans-serif;
+}
+
+
+
