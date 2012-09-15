@@ -193,20 +193,11 @@ Para rodar os testes jasmine no phantom:
 
 ### Build
 
-O lightplayer está dividido em modulos, para unificá-los em um arquivo só,
-segue o comando:
-
-    $ grunt concat
-
-Para além de unificar, minificar, rode o seguinte:
-
-    $ grunt min
-
-Para buildar o projeto, faça
+Quando terminar o desenvolvimento, é preciso buildar o projeto.
 
     $ grunt build
 
-Esse comando executa várias operações na sequencia:
+Esse comando executa várias operações na seqüência:
 
     1. Roda testes jasmine no terminal
     2. Linta os javascripts
@@ -216,8 +207,17 @@ Esse comando executa várias operações na sequencia:
     4. Minifica:
         * src.js em min.js
         * src.css em min.css
-    5. Jogar src.js, min.js, src.css e min.css em build/
+    5. Joga:
+        * src.js e min.js em build/
+        * src.css e min.css em build/
 
 Caso haja algum problema em qualquer ponto, o processo é parado.
 
 
+### Ajuda
+
+Se precisar de ajuda, rode
+
+    $ grunt --help
+
+Isso listará todas as tasks disponíveis.
