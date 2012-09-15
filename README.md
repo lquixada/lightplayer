@@ -8,9 +8,9 @@ Rode o comando abaixo para instalar a app.
 
 Na página em que o lightplayer vai rodar, adicionar as tags:
 
-    <link href="/media/lightplayer/src.css" rel="stylesheet" />
+    <link href="/media/lightplayer/build/src.css" rel="stylesheet" />
 
-    <script src="/media/lightplayer/src.js"></script>
+    <script src="/media/lightplayer/build/src.js"></script>
 
 
 ## QuickStart
@@ -165,12 +165,30 @@ instância de LightPlayer() será utilizada.
 
 ## Desenvolvimento
 
-### Instalação de dependências
+Todos os comandos abaixo devem ser rodados no root do projeto, ou seja,
+no mesmo diretorio do arquivo grunt.js.
 
+
+### Instalação
+
+O projeto precisa de alguns pacotes para instalar as ferramentas de
+desenvolvimento. Para instalá-los, basta para rodar:
 
     $ npm install --dev
 
-Isso irá instalar os pacotes necessários localmente no root deste projeto.
+
+### Testes
+
+Para rodar os testes jasmine no browser
+
+    $ grunt test browser
+
+Se o browser não carregar de primero, dê reload para dar tempo
+do servidor rodar.
+
+Para rodar os testes jasmine no phantom:
+
+    $ grunt test phantom
 
 
 ### Build
@@ -188,20 +206,18 @@ Para buildar o projeto, faça
 
     $ grunt build
 
-Isso linta, concatena e minifica os sources. Caso o lint acuse algum problema,
-ele não vai gerar o build.
+Esse comando executa várias operações na sequencia:
 
+    1. Roda testes jasmine no terminal
+    2. Linta os javascripts
+    3. Concatena:
+        * Javascripts em src.js
+        * Stylesheets em src.css
+    4. Minifica:
+        * src.js em min.js
+        * src.css em min.css
+    5. Jogar src.js, min.js, src.css e min.css em build/
 
-### Testes
+Caso haja algum problema em qualquer ponto, o processo é parado.
 
-Para rodar os testes jasmine no browser
-
-    $ grunt test browser
-
-Se o browser não carregar de primero, dê reload para dar tempo
-do servidor rodar.
-
-Para rodar os testes jasmine no phantom:
-
-    $ grunt test phantom
 
