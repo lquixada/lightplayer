@@ -60,22 +60,23 @@ module.exports = function ( grunt ) {
   grunt.registerTask('jslint', 'lint');
   /* Still testing the csslint workflow */
   grunt.registerTask('build', 'jasmine jslint concat jsmin cssmin');
-  grunt.registerTask('jasmine', 'test phantom');
-  grunt.registerTask('test', 'server');
+  grunt.registerTask('jasmine', 'jasmine-phantom');
+  grunt.registerTask('jasmine-phantom', 'server phantom');
+  grunt.registerTask('jasmine-browser', 'server browser');
 
-  grunt.registerTask('phantom', function () {
+  grunt.registerTask('phantom', 'Run Jasmine tests on phantomjs. Usage: grunt jasmine-phantom', function () {
     var phantom,
         url = 'http://localhost:8088/media/lightplayer/tests/runner.html',
         done = this.async();
 
-    phantom = grunt.utils.spawn( { cmd : 'phantomjs', args: ['./scripts/jasmine.js', url] }, function ( err, result, code ) {
+    grunt.utils.spawn( { cmd : 'phantomjs', args: ['./scripts/jasmine.js', url] }, function ( err, result, code ) {
         grunt.log.writeln( result.stdout );
         
         done( code>0? false: true );
     });
   });
 
-  grunt.registerTask('browser', function () {
+  grunt.registerTask('browser', 'Run Jasmine tests on default browser. Usage: grunt jasmine-browser', function () {
     var url = 'http://localhost:8088/media/lightplayer/tests/runner.html';
 
     this.async();
