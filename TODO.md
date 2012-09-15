@@ -11,8 +11,6 @@
   do LightPlayer no demo/.
 * Criar tasks grunt:
     * grunt test phantom   - Rodar testes jasmine no phantomjs
-    * grunt doc            - abre documentação
-    * grunt doc --generate - gera documentação
     * grunt deploy         - roda as seguintes tarefas
                                 * faz todos os itens acima (pára se conter erros),
                                 * versiona:
