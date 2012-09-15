@@ -58,25 +58,24 @@ module.exports = function ( grunt ) {
   /* Aliased just for readability purposes on "build" task */
   grunt.registerTask('jsmin', 'min');
   grunt.registerTask('jslint', 'lint');
-
   /* Still testing the csslint workflow */
   grunt.registerTask('build', 'jslint concat jsmin cssmin');
-
+  grunt.registerTask('jasmine', 'test phantom');
   grunt.registerTask('test', 'server');
 
   grunt.registerTask('phantom', function () {
-    var url = 'http://localhost:8088/media/lightplayer/tests/runner.html',
+    var phantom,
+        url = 'http://localhost:8088/media/lightplayer/tests/runner.html',
         done = this.async();
 
-    grunt.utils.spawn( { cmd : 'phantomjs', args: ['./scripts/jasmine.js', url] }, function ( err, result, code ) {
-        grunt.log.writeln( err );
-        grunt.log.writeln( result );
+    phantom = grunt.utils.spawn( { cmd : 'phantomjs', args: ['./scripts/jasmine.js', url] }, function ( err, result, code ) {
+        grunt.log.writeln( result.stdout );
         
-        if ( code ) {
-            grunt.warn( 'erro', code );
-        }
+        //if ( code ) {
+            //grunt.warn( 'erro', code );
+        //}
 
-        done();
+        done( code );
     });
   });
 
