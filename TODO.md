@@ -1,7 +1,7 @@
 
 # TODO
 
-* Modularizar CSS
+* Modularizar specs
 * Colocar funções construtoras debaixo de um mesmo namespace
 * Passar parametros para a função construtora do LightPlayer
   e poder fazer override no open().
