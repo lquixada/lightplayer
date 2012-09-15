@@ -9,6 +9,7 @@
 * Criar specs para Playlist, ItemManager e PubSub
 * Criar versão BBB do Lightplayer para exemplificar extensão
   do LightPlayer no demo/.
+* Criar template para gerar estrutura 
 * Criar tasks grunt:
     * grunt test phantom   - Rodar testes jasmine no phantomjs
     * grunt deploy         - roda as seguintes tarefas
