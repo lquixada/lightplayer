@@ -11,16 +11,13 @@
   do LightPlayer no demo/.
 * Criar template para gerar estrutura 
 * Criar tasks grunt:
-    * grunt test phantom   - Rodar testes jasmine no phantomjs
+    * grunt version        - mostrar versão do lightplayer
+    * grunt version 1.0    - seta versão do player
+                                * cria uma tag do git
+                                * altera a versão no setup.py
     * grunt deploy         - roda as seguintes tarefas
-                                * faz todos os itens acima (pára se conter erros),
+                                * roda grunt build
                                 * versiona:
-                                    * atualiza versão do package
                                     * atualiza versão do setup.py
                                     * gera tag no git com versão
                                 * pusha para o repositório
-    * grunt version        - mostrar versão do lightplayer
-    * grunt version 1.0    - seta versão do player
-                                * criauma tag do git
-                                * altera a versão no setup.py
-    * grunt help           - mostrar todos os comandos disponíveis
