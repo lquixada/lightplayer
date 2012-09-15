@@ -10,13 +10,9 @@
 * Criar versão BBB do Lightplayer para exemplificar extensão
   do LightPlayer no demo/.
 * Criar tasks grunt:
-    * grunt test browser   - Rodar testes jasmine no browser
     * grunt test phantom   - Rodar testes jasmine no phantomjs
     * grunt doc            - abre documentação
     * grunt doc --generate - gera documentação
-    * grunt lint           - rodar lint em todo os srcs
-    * grunt concat         - concatenar srcs
-    * grunt min            - contatenar e minificar srcs
     * grunt deploy         - roda as seguintes tarefas
                                 * faz todos os itens acima (pára se conter erros),
                                 * versiona:
