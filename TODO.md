@@ -1,7 +1,7 @@
 
 # TODO
 
-* Modularizar specs
+* Ver possibilidade de se livrar do runner.html
 * Colocar funções construtoras debaixo de um mesmo namespace
 * Passar parametros para a função construtora do LightPlayer
   e poder fazer override no open().
@@ -9,9 +9,11 @@
 * Criar specs para Playlist, ItemManager e PubSub
 * Criar versão BBB do Lightplayer para exemplificar extensão
   do LightPlayer no demo/.
+* Criar tasks para mover imagens
 * Criar template para gerar estrutura 
 * Criar tasks grunt:
     * grunt version        - mostrar versão do lightplayer
+                             que estao no setup.py
     * grunt version 1.0    - seta versão do player
                                 * cria uma tag do git
                                 * altera a versão no setup.py
