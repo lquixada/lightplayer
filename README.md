@@ -44,68 +44,108 @@ O LightPlayer permite vários níveis de customização. Veja a seguir vários d
 var lightplayer = new LightPlayer();
 
 lightplayer.open( {
-  // Seta o titulo do lightplayer
+  /*
+   * Seta o titulo do lightplayer
+   * Default: '<span>mais</span> videos'
+   */
   title: 'capítulo de <span>ontem</span>',
 
-  // Seta o subtitulo do lightplayer
+  /*
+   * Seta o subtitulo do lightplayer
+   * Default: ''
+   */
   subtitle: 'ter 24',
   
-  // Adiciona uma classe extra ao div raiz do lightplayer
+  /*
+   * Adiciona uma classe extra ao div raiz do lightplayer
+   * Default: ''
+   */
   htmlClass: 'bbb',
 
-  // Indica a dimensão dos videos no lightplayer.
-  // Default: 'sd'
-  // Valores:
-  // 'sd' (480x360)
-  // 'hd' (640x360)
+  /*
+   * Indica a dimensão dos videos no lightplayer.
+   * Default: 'sd'
+   * Valores: 'sd' (480x360) ou 'hd' (640x360)
+   */
   mode: 'hd',
   
-  // Sitepage que será repassado para os videos
+  /*
+   * Sitepage que será repassado para os videos
+   * Default: ''
+   */
   sitePage: 'exemplo/bbb',
 
-  // Indica se o video vai ser tocado automaticamente ao
-  // abrir o lightplayer, ao navegar no palco ou no clique
-  // da playlist. Default: true
+  /*
+   * Indica se o video vai ser tocado automaticamente ao
+   * abrir o lightplayer, ao navegar no palco ou no clique
+   * da playlist.
+   * Default: false
+   */
   autoPlay: true,
 
-  // Indica se, ao término do video, o próximo vídeo da lista
-  // será tocado automaticamente. Default: false
+  /*
+   * Indica se, ao término do video, o próximo vídeo da lista
+   * será tocado automaticamente.
+   * Default: false
+   */
   autoNext: true,
 
-  // Indica a partir de qual host que o LightPlayer vai exibir
-  // os thumbs da playlist. Default: 'http://img.video.globoi.com'
+  /*
+   * Indica a partir de qual host que o LightPlayer vai exibir
+   * os thumbs da playlist.
+   * Default: 'http://img.video.globoi.com'
+   */
   thumbHost: 'http://img.video.qa01.globoi.com',
 
-  // Lista com todas as informações de todos os videos que
-  // irão constar na playlist. Se houver só um, a playlista não
-  // aparece. Parâmetro obrigatório
+  /*
+   * Lista com todas as informações de todos os videos que
+   * irão constar na playlist. Se houver só um, a playlista não
+   * aparece.
+   * Parâmetro obrigatório
+   */
   itens: [
       {
-          // Id do video. Serve tanto para embedar o player, como para
-          // exibir seu thumb na playlist
+          /*
+           * Id do video. Serve tanto para embedar o player, como para
+           * exibir seu thumb na playlist
+           */
           id: 1673168,
 
-          // Chapeu que aparecerar acima do titulo do vídeo tanto na
-          // playlist como acima do palco
+          /*
+           * Chapeu que aparecerar acima do titulo do vídeo tanto na
+           * playlist como acima do palco
+           */
           hat: 'cena <span class="numero">1</span> de <span class="numero">23</span>',
 
-          // Titulo do vídeo
+          /*
+           * Titulo do vídeo
+           */
           title: 'Maurício anuncia os últimos dias de inscrições para o BBB12',
 
-          // Não aparece em lugar nenhum (por ora)
+          /*
+           * Não aparece em lugar nenhum (por ora)
+           */
           description: 'O ex-BBB alerta os condidatos para os últimos momentos das inscrições',
 
-          // Url que servirá para fins de compartilhamento
+          /*
+           * Url que servirá para fins de compartilhamento
+           */
           url: 'http://www.globo.com',
 
-          // Se uma url encurtada for fornecida, essa será preferida
-          // para fins de compartilhamento
+          /*
+           * Se uma url encurtada for fornecida, essa será preferida
+           * para fins de compartilhamento
+           */
           shortUrl: 'http://bit.ly/HGhkj',
 
-          // Quantidade de visualizações que o video obteve
+          /*
+           * Quantidade de visualizações que o video obteve
+           */
           views: 3412,
 
-          // Indica que este video será o primeiro que será exibido no lightplauer
+          /*
+           * Indica que este video será o primeiro que será exibido no lightplayer
+           */
           current: true
       },
       {
@@ -121,7 +161,9 @@ lightplayer.open( {
   ]
 } );
 
-// Fecha o lightplayer
+/*
+ * Fecha o lightplayer
+ */
 lightplayer.close();
 ```
 
@@ -181,14 +223,14 @@ desenvolvimento. Para instalá-los, basta para rodar:
 
 Para rodar os testes jasmine no browser
 
-    $ grunt test browser
+    $ grunt jasmine-browser
 
 Se o browser não carregar de primero, dê reload para dar tempo
 do servidor rodar.
 
 Para rodar os testes jasmine no phantom:
 
-    $ grunt test phantom
+    $ grunt jasmine-phantom
 
 
 ### Build
@@ -211,7 +253,8 @@ Esse comando executa várias operações na seqüência:
         * src.js e min.js em build/
         * src.css e min.css em build/
 
-Caso haja algum problema em qualquer ponto, o processo é parado.
+Caso haja algum problema em qualquer ponto, o processo é
+interrompido.
 
 
 ### Ajuda
