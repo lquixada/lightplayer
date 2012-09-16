@@ -174,7 +174,7 @@ no mesmo diretorio do arquivo grunt.js.
 O projeto precisa de alguns pacotes para instalar as ferramentas de
 desenvolvimento. Para instalá-los, basta para rodar:
 
-    $ npm install --dev
+    $ npm install grunt grunt-css
 
 
 ### Testes
