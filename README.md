@@ -241,8 +241,9 @@ Quando terminar o desenvolvimento, é preciso buildar o projeto.
 
 Esse comando executa várias operações na seqüência:
 
-    1. Roda testes jasmine no terminal
-    2. Linta os javascripts
+    1. Roda testes jasmine com phantomjs
+    2. Linta:
+        * Javascripts
     3. Concatena:
         * Javascripts em src.js
         * Stylesheets em src.css
