@@ -271,7 +271,11 @@ lightplayer.open( {
 } );
 ```
 
-Voilá! :)
+Voilá!
+
+
+Top tip: Rode "grunt jasmine-browser" no terminal e teste você mesmo a
+estensão funcionando! ;)
 
 
 ### Interface jQuery
