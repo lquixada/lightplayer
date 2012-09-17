@@ -12,8 +12,9 @@ Na página em que o lightplayer vai rodar, adicionar as tags:
 
     <script src="/media/lightplayer/build/src.js"></script>
 
+## Uso
 
-## QuickStart
+### QuickStart
 
 Para ver o LightPlayer funcionando rapidamente na sua página, o set mais básico
 é o seguinte:
@@ -36,7 +37,7 @@ lightplayer.open( {
 ```
 
 
-## Exemplo de uso mais avançado
+### Parâmetros
 
 O LightPlayer permite vários níveis de customização. Veja a seguir vários deles.
 
@@ -171,7 +172,107 @@ Para ver o funcionamento do lightplayer, rode os testes, veja o
 código no runner.html e clique nos botões da tela.
 
 
-## Interface jQuery
+### Estendendo o LightPlayer
+
+O LightPlayer é um plugin extensível e modularizado. Isso significa que você pode
+customizá-lo de acordo com as necessidades do seu produto, tanto de visual quanto
+de funcionalidade. Vamos ver um exemplo de como isso acontece.
+
+Suponha que o seu PO quer um LightPlayer específico para o BBB. Nele, além da
+personalização visual, ele quer incluir um banner wide. Para isso, estenda o
+LightPlayer, crie um módulo novo e adicione no LightPlayer.
+
+Primeiro instale o widget no seu projeto e inclua os arquivos na sua página.
+Agora crie o módulo do Banner.
+
+```
+BannerBBB = function () {};
+
+BannerBBB.protoype = $.extend( new Mod(), {
+    init: function ( bus, json ) {
+        this.name = 'banner-bbb';
+        this.bus = bus;
+        this.json = json;
+
+        this._render();
+        this._addEvents();
+        
+        return this.domRoot;
+    },
+
+    // private
+
+    _addEvents: function () {
+        // não tem
+    },
+
+    _render: function () {
+        this.domRoot = $( [
+            '<div class="banner">',
+                '<img src="http://www.placehold.it/350x100" />',
+            '</div>'
+        ].join( '' ) ); 
+    }
+} );
+```
+
+Depois estenda e sobrescreva o método do LightPlayer que adiciona todos
+os módulos. 
+
+```
+LightPlayerBBB = function () {};
+
+LightPlayerBBB.prototype = $.extend( new LightPlayer(), {
+    _addMods: function () {
+        this.add( new Header() );
+        this.add( new Info() );
+        this.add( new Social() );
+        this.add( new Banner() );
+        this.add( new Stage() );
+        this.add( new Playlist() );
+    },
+} );
+```
+
+E adicione o modulo novo:
+
+```
+LightPlayerBBB = function () {};
+
+LightPlayerBBB.prototype = $.extend( new LightPlayer(), {
+    _addMods: function () {
+        this.add( new Header() );
+        this.add( new Info() );
+        this.add( new Social() );
+        this.add( new BannerBBB() ); // <-- aqui ó!
+        this.add( new Stage() );
+        this.add( new Playlist() );
+    },
+} );
+```
+
+Isso vai fazer com que o html do banner seja inserido logo após o
+módulo Social! Faça o teste:
+
+```
+var lightplayer = new LightPlayerBBB();
+
+lightplayer.open( {
+  itens: [
+      {
+          id: 1991493,
+          hat: 'cena <span class="numero">1</span> de <span class="numero">6</span>',
+          title: 'Rosário se emociona com o quartinho reformado por Inácio',
+          url: 'http://www.globo.com',
+          views: 3412,
+          current: true
+      }
+  ]
+} );
+```
+
+
+### Interface jQuery
 
 Para você, meu amigo, que é preguiçoso (e de mau gosto, diga-se de passagem),
 existe a opção de usar a interface jquery também. Neste formato, você só
@@ -214,7 +315,13 @@ no mesmo diretorio do arquivo grunt.js.
 ### Instalação
 
 O projeto precisa de alguns pacotes para instalar as ferramentas de
-desenvolvimento. Para instalá-los, basta para rodar:
+desenvolvimento. Antes de instalá-los, certifique-se de que você tenha
+o nodejs e o npm mais atualizados.
+
+    $ sudo brew install node
+    $ curl https://npmjs.org/install.sh | sh
+
+Para instalar as ferramentas, basta para rodar no root do projeto:
 
     $ npm install grunt grunt-css
 
