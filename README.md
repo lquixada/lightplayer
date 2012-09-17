@@ -230,7 +230,7 @@ LightPlayerBBB.prototype = $.extend( new LightPlayer(), {
         this.add( new Banner() );
         this.add( new Stage() );
         this.add( new Playlist() );
-    },
+    }
 } );
 ```
 
@@ -244,10 +244,10 @@ LightPlayerBBB.prototype = $.extend( new LightPlayer(), {
         this.add( new Header() );
         this.add( new Info() );
         this.add( new Social() );
-        this.add( new BannerBBB() ); // <-- aqui ó!
         this.add( new Stage() );
+        this.add( new BannerBBB() ); // <-- aqui ó!
         this.add( new Playlist() );
-    },
+    }
 } );
 ```
 
@@ -270,6 +270,8 @@ lightplayer.open( {
   ]
 } );
 ```
+
+Voilá! :)
 
 
 ### Interface jQuery
