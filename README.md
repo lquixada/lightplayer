@@ -188,7 +188,7 @@ Agora crie o módulo do Banner.
 ```
 BannerBBB = function () {};
 
-BannerBBB.protoype = $.extend( new Mod(), {
+BannerBBB.prototype = $.extend( new Mod(), {
     init: function ( bus, json ) {
         this.name = 'banner-bbb';
         this.bus = bus;
@@ -209,7 +209,7 @@ BannerBBB.protoype = $.extend( new Mod(), {
     _render: function () {
         this.domRoot = $( [
             '<div class="banner">',
-                '<img src="http://www.placehold.it/350x100" />',
+                '<img src="http://www.placehold.it/770x100" style="margin:0 20px 20px;" />',
             '</div>'
         ].join( '' ) ); 
     }
