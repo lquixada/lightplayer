@@ -324,7 +324,7 @@ O projeto precisa de alguns pacotes para instalar as ferramentas de
 desenvolvimento. Antes de instalá-los, certifique-se de que você tenha
 o nodejs e o npm mais atualizados.
 
-    $ sudo brew install node
+    $ sudo brew install node phantomjs
     $ curl https://npmjs.org/install.sh | sh
 
 Para instalar as ferramentas, basta para rodar no root do projeto:
