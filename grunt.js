@@ -53,7 +53,7 @@ module.exports = function ( grunt ) {
       }
     });
 
-  grunt.loadNpmTasks('grunt-css')
+  grunt.loadNpmTasks('grunt-css');
 
   /* Aliased just for readability purposes on "build" task */
   grunt.registerTask('jsmin', 'min');
