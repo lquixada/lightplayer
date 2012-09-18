@@ -52,7 +52,6 @@ module.exports = function ( grunt ) {
       dest: path+'/build'
     },
     server: {
-      debug: true,
       port: 8088,
       base: './lightplayer'
     }
