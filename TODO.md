@@ -8,7 +8,6 @@
 * Criar specs para Playlist, ItemManager e PubSub
 * Criar versão BBB do Lightplayer para exemplificar extensão
   do LightPlayer no demo/.
-* Criar tasks para mover imagens
 * Criar template para gerar estrutura 
 * Criar tasks grunt:
     * grunt version        - mostrar versão do lightplayer

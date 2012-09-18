@@ -1,57 +1,62 @@
 
 module.exports = function ( grunt ) {
-    var path = 'lightplayer/media/lightplayer';
+  var path = 'lightplayer/media/lightplayer',
+      url = 'http://localhost:8088/media/lightplayer/tests/runner.html';
 
-    grunt.initConfig({
-      concat: {
-        dist: {
-          src: [path+'/js/*.js'],
-          dest: path+'/build/src.js'
-        },
-
-        css: {
-          src: [path+'/css/*.css'],
-          dest: path+'/build/src.css'
-        }
+  grunt.initConfig({
+    concat: {
+      dist: {
+        src: [path+'/js/*.js'],
+        dest: path+'/build/src.js'
       },
 
-      lint: {
-        files: [path+'/js/*.js']
-      },
-
-      csslint: {
-        dist: {
-          src: path+'/css/*.css',
-          rules: {
-            "import": false,
-            "overqualified-elements": false,
-            "star-property-hack": false,
-            "box-model": false,
-            "adjoining-classes": false
-          }
-        }
-      },
-
-      min: {
-        dist: {
-          src: [path+'/build/src.js'],
-          dest: path+'/build/min.js'
-        }
-      },
-
-      cssmin: {
-        dist: {
-          src: [path+'/build/src.css'],
-          dest: path+'/build/min.css'
-        }
-      },
-
-      server: {
-        debug: true,
-        port: 8088,
-        base: './lightplayer'
+      css: {
+        src: [path+'/css/*.css'],
+        dest: path+'/build/src.css'
       }
-    });
+    },
+
+    lint: {
+      files: [path+'/js/*.js']
+    },
+
+    csslint: {
+      dist: {
+        src: path+'/css/*.css',
+        rules: {
+          "import": false,
+          "overqualified-elements": false,
+          "star-property-hack": false,
+          "box-model": false,
+          "adjoining-classes": false
+        }
+      }
+    },
+
+    min: {
+      dist: {
+        src: [path+'/build/src.js'],
+        dest: path+'/build/min.js'
+      }
+    },
+
+    cssmin: {
+      dist: {
+        src: [path+'/build/src.css'],
+        dest: path+'/build/min.css'
+      }
+    },
+    
+    imagescopy: {
+      src: path+'/imgs',
+      dest: path+'/build'
+    },
+    server: {
+      debug: true,
+      port: 8088,
+      base: './lightplayer'
+    }
+  });
 
   grunt.loadNpmTasks('grunt-css');
 
@@ -59,17 +64,36 @@ module.exports = function ( grunt ) {
   grunt.registerTask('jsmin', 'min');
   grunt.registerTask('jslint', 'lint');
   /* Still testing the csslint workflow */
-  grunt.registerTask('build', 'jasmine jslint concat jsmin cssmin');
+  grunt.registerTask('build', 'jasmine jslint concat jsmin cssmin imagescopy');
+
   grunt.registerTask('jasmine', 'jasmine-phantom');
   grunt.registerTask('jasmine-phantom', 'server phantom');
   grunt.registerTask('jasmine-browser', 'server browser');
 
-  grunt.registerTask('phantom', 'Run Jasmine tests on phantomjs. Usage: grunt jasmine-phantom', function () {
-    var phantom,
-        url = 'http://localhost:8088/media/lightplayer/tests/runner.html',
-        done = this.async();
+  grunt.registerTask('imagescopy', 'Copy images to the build/', function () {
+      var done = this.async(),
+          src = grunt.config('imagescopy.src'),
+          dest = grunt.config('imagescopy.dest');
 
-    grunt.utils.spawn( { cmd : 'phantomjs', args: ['./scripts/jasmine.js', url] }, function ( err, result, code ) {
+      grunt.utils.spawn( { cmd: 'cp', args: ['-R', src, dest] }, function ( err, result, code ) {
+          if ( result.stderr ) {
+              grunt.log.writeln( '\n'+result.stderr+'\n' );
+          } else {
+              grunt.log.writeln( 'Image files copied on "'+dest+'/".' );
+          }
+          
+          done( code>0? false: true );
+      } );
+  } );
+
+  grunt.registerTask('phantom', 'Run Jasmine tests on phantomjs. Usage: grunt jasmine-phantom', function () {
+    var done;
+
+    this.requires( 'server' );
+
+    done = this.async();
+
+    grunt.utils.spawn( { cmd: 'phantomjs', args: ['./scripts/jasmine.js', url] }, function ( err, result, code ) {
         grunt.log.writeln( result.stdout );
         
         done( code>0? false: true );
@@ -77,11 +101,11 @@ module.exports = function ( grunt ) {
   });
 
   grunt.registerTask('browser', 'Run Jasmine tests on default browser. Usage: grunt jasmine-browser', function () {
-    var url = 'http://localhost:8088/media/lightplayer/tests/runner.html';
+    this.requires( 'server' );
 
     this.async();
 
-    grunt.utils.spawn( { cmd : 'open', args: [ url ] }, function ( err, result, code ) {
+    grunt.utils.spawn( { cmd: 'open', args: [ url ] }, function ( err, result, code ) {
         grunt.log.writeln( 'Opening browser to run the test suite.' );
         
         if ( code ) {
