@@ -1,6 +1,8 @@
 
 # TODO
 
+* Colocar no ci (fazer task grunt ci?)
+* Criar hook no git para rodar grunt build?
 * Colocar funções construtoras debaixo de um mesmo namespace
 * Passar parametros para a função construtora do LightPlayer
   e poder fazer override no open().
