@@ -86,13 +86,17 @@ module.exports = function ( grunt ) {
   } );
 
   grunt.registerTask('phantom', 'Run Jasmine tests on phantomjs. Usage: grunt jasmine-phantom', function () {
-    var done;
+    var done, args = ['./scripts/jasmine.js', url];
 
     this.requires( 'server' );
 
+    if ( grunt.option('no-color') ) {
+        args.splice( 1, 0, '--no-color' );
+    }
+
     done = this.async();
 
-    grunt.utils.spawn( { cmd: 'phantomjs', args: ['./scripts/jasmine.js', url] }, function ( err, result, code ) {
+    grunt.utils.spawn( { cmd: 'phantomjs', args: args }, function ( err, result, code ) {
         grunt.log.writeln( result.stdout );
         
         done( code>0? false: true );
