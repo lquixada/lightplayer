@@ -325,7 +325,7 @@ desenvolvimento. Antes de instalá-los, certifique-se de que você tenha
 o nodejs e o npm mais atualizados.
 
     $ sudo brew install node phantomjs
-    $ curl https://npmjs.org/install.sh | sh
+    $ curl https://npmjs.org/install.sh | sudo sh
 
 Para instalar as ferramentas, basta para rodar no root do projeto:
 
