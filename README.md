@@ -345,6 +345,10 @@ Para rodar os testes jasmine no phantom:
 
     $ grunt jasmine-phantom
 
+Ou mais abreviado:
+
+    $ grunt jasmine
+
 
 ### Build
 

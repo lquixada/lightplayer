@@ -96,11 +96,18 @@ module.exports = function ( grunt ) {
 
     done = this.async();
 
-    grunt.utils.spawn( { cmd: 'phantomjs', args: args }, function ( err, result, code ) {
-        grunt.log.writeln( result.stdout );
-        
-        done( code>0? false: true );
-    });
+    grunt.utils.spawn( { cmd: 'phantomjs', args: [ '--version' ] }, function ( err, result, code ) {
+        if ( code>0 ) {
+            grunt.warn( 'phantomjs not found. Run: brew install phantomjs.', code );
+            done( false );
+        }
+
+        grunt.utils.spawn( { cmd: 'phantomjs', args: args }, function ( err, result, code ) {
+            grunt.log.writeln( result.stdout );
+            
+            done( code>0? false: true );
+        });
+    } );
   });
 
   grunt.registerTask('browser', 'Run Jasmine tests on default browser. Usage: grunt jasmine-browser', function () {
