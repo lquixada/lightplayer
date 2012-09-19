@@ -117,4 +117,13 @@ module.exports = function ( grunt ) {
     });
   });
 
+  grunt.registerTask('version', 'Show the app version.', function () {
+      var found, output, content = grunt.file.read( './setup.py' );
+
+      found = content.match( /version *= *["'](.*?)["']/ );
+    
+      output = found? 'Version '+found[1]: 'Version not found.';
+
+      grunt.log.writeln( output );
+  });
 };

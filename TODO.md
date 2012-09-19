@@ -12,8 +12,6 @@
   do LightPlayer no demo/.
 * Criar template para gerar estrutura 
 * Criar tasks grunt:
-    * grunt version        - mostrar versão do lightplayer
-                             que estao no setup.py
     * grunt version 1.0    - seta versão do player
                                 * cria uma tag do git
                                 * altera a versão no setup.py
