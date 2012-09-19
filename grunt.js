@@ -117,13 +117,26 @@ module.exports = function ( grunt ) {
     });
   });
 
-  grunt.registerTask('version', 'Show the app version.', function () {
-      var found, output, content = grunt.file.read( './setup.py' );
-
-      found = content.match( /version *= *["'](.*?)["']/ );
+  grunt.registerTask('version', 'Show/set the app version. Usage: grunt version or grunt version:1.7.2', function () {
+    var content, found, output,
+      version = this.args[0],
+      regex = /(version *= *["'])(.*?)(["'])/,
+      filepath = './setup.py';
     
-      output = found? 'Version '+found[1]: 'Version not found.';
+    content = grunt.file.read( filepath );
 
-      grunt.log.writeln( output );
+    if ( version ) {
+      content = content.replace( regex, '$1'+version+'$3' ) 
+
+      grunt.file.write( filepath, content );
+
+      output = 'Version set to '+version;
+    } else {
+      found = content.match( regex );
+      
+      output = found? 'Version '+found[2]: 'Version not found.';
+    }
+
+    grunt.log.writeln( output );
   });
 };
