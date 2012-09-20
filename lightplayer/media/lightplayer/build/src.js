@@ -189,7 +189,7 @@ LightPlayer.prototype = {
     },
 
     _getTransitionEndEvent: function () {
-        if ( $.browser.webkit ) {
+        if ( $.browser.webkit || $.browser.chrome ) {
             return 'webkitTransitionEnd';
         }
         
