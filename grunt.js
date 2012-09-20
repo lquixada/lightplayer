@@ -86,17 +86,28 @@ module.exports = function ( grunt ) {
   } );
 
   grunt.registerTask('phantom', 'Run Jasmine tests on phantomjs. Usage: grunt jasmine-phantom', function () {
-    var done;
+    var done, args = ['./scripts/jasmine.js', url];
 
     this.requires( 'server' );
 
+    if ( grunt.option('no-color') ) {
+        args.splice( 1, 0, '--no-color' );
+    }
+
     done = this.async();
 
-    grunt.utils.spawn( { cmd: 'phantomjs', args: ['./scripts/jasmine.js', url] }, function ( err, result, code ) {
-        grunt.log.writeln( result.stdout );
-        
-        done( code>0? false: true );
-    });
+    grunt.utils.spawn( { cmd: 'phantomjs', args: [ '--version' ] }, function ( err, result, code ) {
+        if ( code>0 ) {
+            grunt.warn( 'phantomjs not found. Run: brew install phantomjs.', code );
+            done( false );
+        }
+
+        grunt.utils.spawn( { cmd: 'phantomjs', args: args }, function ( err, result, code ) {
+            grunt.log.writeln( result.stdout );
+            
+            done( code>0? false: true );
+        });
+    } );
   });
 
   grunt.registerTask('browser', 'Run Jasmine tests on default browser. Usage: grunt jasmine-browser', function () {
@@ -113,4 +124,26 @@ module.exports = function ( grunt ) {
     });
   });
 
+  grunt.registerTask('version', 'Show/set the app version. Usage: grunt version or grunt version:1.7.2', function () {
+    var content, found, output,
+      version = this.args[0],
+      regex = /(version *= *["'])(.*?)(["'])/,
+      filepath = './setup.py';
+    
+    content = grunt.file.read( filepath );
+
+    if ( version ) {
+      content = content.replace( regex, '$1'+version+'$3' ) 
+
+      grunt.file.write( filepath, content );
+
+      output = 'Version set to '+version;
+    } else {
+      found = content.match( regex );
+      
+      output = found? 'Version '+found[2]: 'Version not found.';
+    }
+
+    grunt.log.writeln( output );
+  });
 };
