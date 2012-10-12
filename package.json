@@ -1,7 +1,7 @@
 {
   "name": "lightplayer",
   "version": "1.0.9",
-  "script": {
+  "scripts": {
     "test": "cd lightplayer; testem ci --launch phantomjs"
   },
   "dependencies": {
