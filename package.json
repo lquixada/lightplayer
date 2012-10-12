@@ -1,22 +1,10 @@
 {
   "name": "lightplayer",
-  "author": "Leonardo Quixadá <lquixada@gmail.com>",
-  "description": "Lightbox de videos",
-  "repository": {
-    "type": "git",
-    "url": "git://ngit.globoi.com/lightplayer/lightplayer.git"
-  },
-  "keywords": [
-    "lightbox",
-    "videos",
-    "player",
-    "playlist"
-  ],
+  "version": "1.0.9",
   "script": {
     "test": "cd lightplayer; testem ci --launch phantomjs"
   },
   "dependencies": {
     "testem": "*"
-  },
-  "license": "MIT"
+  }
 }
