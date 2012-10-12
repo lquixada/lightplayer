@@ -1,6 +1,6 @@
 # README
 
-![Integração Contínua](https://secure.travis-ci.org/lquixada/lightplayer.png)
+[![Build Status](https://secure.travis-ci.org/lquixada/lightplayer.png)](http://travis-ci.org/lquixada/lightplayer)
 
 ## Instalação
 
