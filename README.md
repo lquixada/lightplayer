@@ -1,5 +1,7 @@
 # README
 
+![Integração Contínua](https://secure.travis-ci.org/lquixada/lightplayer.png)
+
 ## Instalação
 
 Rode o comando abaixo para instalar a app.
