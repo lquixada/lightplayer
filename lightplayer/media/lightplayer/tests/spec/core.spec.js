@@ -68,7 +68,7 @@ describe("Light Player", function() {
         });
 
         it("should have a box", function() {
-            expect( this.lightplayer.domRoot.find( 'div.widget' ).size() ).not.toBe( 1 );
+            expect( this.lightplayer.domRoot.find( 'div.widget' ).size() ).toBe( 1 );
         });
 
         it("should have an overlay", function() {
