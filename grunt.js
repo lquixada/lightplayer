@@ -62,12 +62,8 @@ module.exports = function ( grunt ) {
   /* Aliased just for readability purposes on "build" task */
   grunt.registerTask('jsmin', 'min');
   grunt.registerTask('jslint', 'lint');
-  /* Still testing the csslint workflow */
-  grunt.registerTask('build', 'jasmine jslint concat jsmin cssmin imagescopy');
-
-  grunt.registerTask('jasmine', 'jasmine-phantom');
-  grunt.registerTask('jasmine-phantom', 'server phantom');
-  grunt.registerTask('jasmine-browser', 'server browser');
+  grunt.registerTask('build', 'testem jslint concat jsmin cssmin imagescopy');
+  grunt.registerTask('jasmine:browser', 'server browser');
 
   grunt.registerTask('imagescopy', 'Copy images to the build/', function () {
       var done = this.async(),
@@ -85,7 +81,7 @@ module.exports = function ( grunt ) {
       } );
   } );
 
-  grunt.registerTask('testem', 'Run testem on command line.', function () {
+  grunt.registerTask('testem', 'Run testem on command line using phantomjs.', function () {
     var done = this.async();
 
     grunt.utils.spawn( { cmd: 'testem', args: [ 'ci', '--launch', 'phantomjs' ] }, function ( err, result, code ) {
@@ -111,28 +107,5 @@ module.exports = function ( grunt ) {
         grunt.warn( 'erro', code );
       }
     });
-  });
-
-  grunt.registerTask('version', 'Show/set the app version. Usage: grunt version or grunt version:1.7.2', function () {
-    var content, found, output,
-      version = this.args[0],
-      regex = /(version *= *["'])(.*?)(["'])/,
-      filepath = './setup.py';
-    
-    content = grunt.file.read( filepath );
-
-    if ( version ) {
-      content = content.replace( regex, '$1'+version+'$3' ) 
-
-      grunt.file.write( filepath, content );
-
-      output = 'Version set to '+version;
-    } else {
-      found = content.match( regex );
-      
-      output = found? 'Version '+found[2]: 'Version not found.';
-    }
-
-    grunt.log.writeln( output );
   });
 };
