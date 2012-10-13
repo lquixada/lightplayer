@@ -9,3 +9,5 @@
 * Criar versão BBB do Lightplayer para exemplificar extensão
   do LightPlayer no demo/.
 * Criar template para gerar estrutura 
+* Esquema de teste por widget/plugin
+* ESquema de teste por app
