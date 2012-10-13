@@ -10,4 +10,8 @@
   do LightPlayer no demo/.
 * Criar template para gerar estrutura 
 * Esquema de teste por widget/plugin
-* ESquema de teste por app
+* Esquema de teste por app
+* Task para rodar testem multi-browser
+* Task para rodar jshint com complexidade ciclomática
+* Juntar arquivos de configuração em pasta config/
+
