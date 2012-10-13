@@ -85,28 +85,17 @@ module.exports = function ( grunt ) {
       } );
   } );
 
-  grunt.registerTask('phantom', 'Run Jasmine tests on phantomjs. Usage: grunt jasmine-phantom', function () {
-    var done, args = ['./scripts/jasmine.js', url];
+  grunt.registerTask('testem', 'Run testem on command line.', function () {
+    var done = this.async();
 
-    this.requires( 'server' );
+    grunt.utils.spawn( { cmd: 'testem', args: [ 'ci', '--launch', 'phantomjs' ] }, function ( err, result, code ) {
+        grunt.log.writeln( result.stdout );
 
-    if ( grunt.option('no-color') ) {
-        args.splice( 1, 0, '--no-color' );
-    }
-
-    done = this.async();
-
-    grunt.utils.spawn( { cmd: 'phantomjs', args: [ '--version' ] }, function ( err, result, code ) {
-        if ( code>0 ) {
-            grunt.warn( 'phantomjs not found. Run: brew install phantomjs.', code );
+        if ( result.stdout.search(/# ok/) > -1 ) {
+            done( true );
+        } else {
             done( false );
         }
-
-        grunt.utils.spawn( { cmd: 'phantomjs', args: args }, function ( err, result, code ) {
-            grunt.log.writeln( result.stdout );
-            
-            done( code>0? false: true );
-        });
     } );
   });
 
@@ -116,11 +105,11 @@ module.exports = function ( grunt ) {
     this.async();
 
     grunt.utils.spawn( { cmd: 'open', args: [ url ] }, function ( err, result, code ) {
-        grunt.log.writeln( 'Opening browser to run the test suite.' );
-        
-        if ( code ) {
-            grunt.warn( 'erro', code );
-        }
+      grunt.log.writeln( 'Opening browser to run the test suite.' );
+      
+      if ( code ) {
+        grunt.warn( 'erro', code );
+      }
     });
   });
 
