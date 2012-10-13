@@ -59,6 +59,7 @@ module.exports = function ( grunt ) {
 
   grunt.loadNpmTasks('grunt-css');
 
+  grunt.registerTask('ci', 'testem');
   /* Aliased just for readability purposes on "build" task */
   grunt.registerTask('jsmin', 'min');
   grunt.registerTask('jslint', 'lint');
