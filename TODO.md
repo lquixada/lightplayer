@@ -1,9 +1,6 @@
 
 # TODO
 
-* Colocar no ci (fazer task grunt ci?)
-* Colocar instrução para brew install phantomjs
-* Criar hook no git para rodar grunt build?
 * Colocar funções construtoras debaixo de um mesmo namespace
 * Passar parametros para a função construtora do LightPlayer
   e poder fazer override no open().
@@ -12,9 +9,3 @@
 * Criar versão BBB do Lightplayer para exemplificar extensão
   do LightPlayer no demo/.
 * Criar template para gerar estrutura 
-* Criar task grunt deploy
-    * roda grunt build
-    * versiona:
-        * atualiza versão do setup.py
-        * gera tag no git com versão
-    * pusha para o repositório
