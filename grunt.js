@@ -59,11 +59,11 @@ module.exports = function ( grunt ) {
 
   grunt.loadNpmTasks('grunt-css');
 
-  grunt.registerTask('ci', 'testem');
   /* Aliased just for readability purposes on "build" task */
+  grunt.registerTask('build', 'testem jslint concat jsmin cssmin imagescopy');
+  grunt.registerTask('ci', 'testem');
   grunt.registerTask('jsmin', 'min');
   grunt.registerTask('jslint', 'lint');
-  grunt.registerTask('build', 'testem jslint concat jsmin cssmin imagescopy');
   grunt.registerTask('jasmine:browser', 'server browser');
 
   grunt.registerTask('imagescopy', 'Copy images to the build/', function () {
