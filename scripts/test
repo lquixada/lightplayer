@@ -1,5 +1,0 @@
-#!/bin/bash
-
-cd lightplayer &&
-open http://localhost:8088/media/lightplayer/runner.html &&
-python -m SimpleHTTPServer 8088
