@@ -2,7 +2,7 @@
   "name": "lightplayer",
   "version": "1.0.9",
   "scripts": {
-    "test": "cd lightplayer; testem ci --launch phantomjs"
+    "test": "cd lightplayer; testem ci --launch phantomjs | grep \"# fail\""
   },
   "dependencies": {
     "testem": "*"
