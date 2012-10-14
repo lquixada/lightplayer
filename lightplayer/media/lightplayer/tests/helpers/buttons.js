@@ -82,7 +82,8 @@ $( document ).ready( function () {
     $( 'body' ).prepend( [
         '<div id="buttons">',
             '<button onclick="abrir()">abrir</button>',
-            '<button onclick="abrir1item()">abrir com 1 item</button>',
+            '<button onclick="abrir1item()">abrir com um item</button>',
+            '<button onclick="alert(\'em construção!\')">abrir versão extendida</button>',
         '</div>'
     ].join('') );
 } );

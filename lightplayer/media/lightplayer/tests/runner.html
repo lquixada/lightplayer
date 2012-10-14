@@ -9,7 +9,6 @@
 
   <!-- dependencies -->
   <link href="lib/jasmine-1.2.0/jasmine.css" rel="stylesheet" />
-  <link href="helpers/runner.css" rel="stylesheet" />
 
   <!-- source code -->
   <link href="../css/core.css" rel="stylesheet" />
@@ -23,9 +22,8 @@
   <!-- dependencies -->
   <script src="lib/jasmine-1.2.0/jasmine.js"></script>
   <script src="lib/jasmine-1.2.0/jasmine-html.js"></script>
-  <script src="/testem.js"></script>
   <script src="lib/jquery-1.4.3.min.js"></script>
-  <script src="lib/json2.js"></script>
+  <script src="/testem.js"></script>
   <script src="helpers/buttons.js"></script>
   <script src="http://s.videos.globo.com/p2/j/api.min.js"></script>
 
@@ -43,6 +41,36 @@
   <script src="spec/info.spec.js"></script>
   <script src="spec/social.spec.js"></script>
   <script src="spec/stage.spec.js"></script>
+
+  <!-- run tests -->
+  <script>
+    (function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var htmlReporter = new jasmine.HtmlReporter();
+
+      jasmineEnv.addReporter(htmlReporter);
+
+      jasmineEnv.specFilter = function(spec) {
+        return htmlReporter.specFilter(spec);
+      };
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function() {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+
+      function execJasmine() {
+        jasmineEnv.execute();
+      }
+
+    })();
+  </script>
 </head>
 
 <body>
@@ -50,19 +78,6 @@
 <div id="main">
   <!-- HTML fixtures -->
 </div>
-
-<script>
-var reporter = new jasmine.TrivialReporter,
-    env = jasmine.getEnv();
-
-env.specFilter = function(spec){
-    return reporter.specFilter(spec)
-}
-
-env.addReporter(reporter)
-env.execute()
-</script>
-
 
 </body>
 
