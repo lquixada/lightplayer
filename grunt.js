@@ -1,7 +1,7 @@
 
 module.exports = function ( grunt ) {
   var path = 'lightplayer/media/lightplayer',
-      url = 'http://localhost:8088/media/lightplayer/tests/runner.html';
+      url = 'http://localhost:8088/media/lightplayer/specs/runner.html';
 
   grunt.initConfig({
     concat: {

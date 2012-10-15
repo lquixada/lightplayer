@@ -1,2 +1,2 @@
 framework: jasmine
-test_page: lightplayer/media/lightplayer/tests/runner.html
+test_page: lightplayer/media/lightplayer/specs/runner.html
