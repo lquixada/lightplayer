@@ -1,0 +1,23 @@
+{
+  "author": "Leonardo T Quixada <lquixada@gmail.com>",
+  "name": "lightplayer",
+  "description": "Lightbox for Video visualization and playlist!",
+  "version": "0.1.5",
+  "homepage": "https://github.com/lquixada/lightplayer",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lquixada/lightplayer.git"
+  },
+  "scripts": {
+    "test": "ophantom"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "grunt": "*",
+    "grunt-css": "*",
+    "o-jasmine": "*",
+    "o-phantom": "*"
+  }
+}
