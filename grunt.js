@@ -38,9 +38,10 @@ module.exports = function ( grunt ) {
       }
     },
 
+    // Task com problemas!!!
     cssmin: {
       dist: {
-        src: ['build/src.css'],
+        src: 'build/src.css',
         dest: 'build/min.css'
       }
     },
@@ -56,7 +57,7 @@ module.exports = function ( grunt ) {
   /* Aliased just for readability purposes on "build" task */
   grunt.registerTask('jsmin', 'min');
   grunt.registerTask('jslint', 'lint');
-  grunt.registerTask('build', 'testem jslint concat jsmin cssmin imagescopy');
+  grunt.registerTask('build', 'test jslint concat jsmin imagescopy');
 
   grunt.registerTask('imagescopy', 'Copy images to the build/', function () {
       var done = this.async(),
@@ -69,6 +70,17 @@ module.exports = function ( grunt ) {
           } else {
               grunt.log.writeln( 'Image files copied on "'+dest+'/".' );
           }
+          
+          done( code>0? false: true );
+      } );
+  } );
+
+  grunt.registerTask('test', 'Run specs using npm test', function () {
+      var done = this.async();
+
+      grunt.utils.spawn( { cmd: 'npm', args: ['test'] }, function ( err, result, code ) {
+          var output = result.stderr? result.stderr: result.stdout;
+          grunt.log.writeln( '\n'+output+'\n' );
           
           done( code>0? false: true );
       } );
