@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "grunt": "*",
-    "grunt-css": "*",
+    "grunt-css": "<0.5",
     "o-jasmine": "*",
     "o-phantom": "*"
   }
