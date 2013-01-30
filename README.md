@@ -19,7 +19,7 @@ Na página em que o lightplayer vai rodar, adicionar as tags:
 Para ver o LightPlayer funcionando rapidamente na sua página, o set mais básico
 é o seguinte:
 
-```
+```javascript
 var lightplayer = new LightPlayer();
 
 lightplayer.open( {
@@ -41,7 +41,7 @@ lightplayer.open( {
 
 O LightPlayer permite vários níveis de customização. Veja a seguir vários deles.
 
-```
+```javascript
 var lightplayer = new LightPlayer();
 
 lightplayer.open( {
@@ -185,7 +185,7 @@ LightPlayer, crie um módulo novo e adicione no LightPlayer.
 Primeiro instale o widget no seu projeto e inclua os arquivos na sua página.
 Agora crie o módulo do Banner.
 
-```
+```javascript
 BannerBBB = function () {};
 
 BannerBBB.prototype = $.extend( new Mod(), {
@@ -219,7 +219,7 @@ BannerBBB.prototype = $.extend( new Mod(), {
 Depois estenda e sobrescreva o método do LightPlayer que adiciona todos
 os módulos. 
 
-```
+```javascript
 LightPlayerBBB = function () {};
 
 LightPlayerBBB.prototype = $.extend( new LightPlayer(), {
@@ -236,7 +236,7 @@ LightPlayerBBB.prototype = $.extend( new LightPlayer(), {
 
 E adicione o modulo novo:
 
-```
+```javascript
 LightPlayerBBB = function () {};
 
 LightPlayerBBB.prototype = $.extend( new LightPlayer(), {
@@ -254,7 +254,7 @@ LightPlayerBBB.prototype = $.extend( new LightPlayer(), {
 Isso vai fazer com que o html do banner seja inserido logo após o
 módulo Social! Faça o teste:
 
-```
+```javascript
 var lightplayer = new LightPlayerBBB();
 
 lightplayer.open( {
@@ -287,7 +287,7 @@ passaria para o lightplayer.open do exemplo anterior.
 
 Neste caso, você não precisa fazer a instanciação. Isso é feito internamente.
 
-```
+```javascript
 $.lightplayer.open( {
   itens: [
       {
@@ -304,7 +304,7 @@ $.lightplayer.open( {
 
 Para fechar, o sistema é o mesmo.
 
-```
+```javascript
 $.lightplayer.close();
 ```
 
@@ -324,37 +324,47 @@ O projeto precisa de alguns pacotes para instalar as ferramentas de
 desenvolvimento. Antes de instalá-los, certifique-se de que você tenha
 o nodejs e o npm mais atualizados.
 
-    $ sudo brew install node phantomjs
-    $ curl https://npmjs.org/install.sh | sudo sh
+```bash
+$ sudo brew install node phantomjs
+$ curl https://npmjs.org/install.sh | sudo sh
+```
 
 Para instalar as ferramentas, basta para rodar no root do projeto:
 
-    $ npm install grunt grunt-css
-
+```bash
+$ npm install grunt grunt-css
+```
 
 ### Testes
 
 Para rodar os testes jasmine no browser
 
-    $ grunt jasmine-browser
+```bash
+$ grunt jasmine-browser
+```
 
 Se o browser não carregar de primero, dê reload para dar tempo
 do servidor rodar.
 
 Para rodar os testes jasmine no phantom:
 
-    $ grunt jasmine-phantom
+```bash
+$ grunt jasmine-phantom
+```
 
 Ou mais abreviado:
 
-    $ grunt jasmine
-
+```bash
+$ grunt jasmine
+```
 
 ### Build
 
 Quando terminar o desenvolvimento, é preciso buildar o projeto.
 
-    $ grunt build
+```bash
+$ grunt build
+```
 
 Esse comando executa várias operações na seqüência:
 
@@ -379,6 +389,8 @@ interrompido.
 
 Se precisar de ajuda, rode
 
-    $ grunt --help
+```bash
+$ grunt --help
+```
 
 Isso listará todas as tasks disponíveis.
