@@ -1,18 +1,16 @@
-# README
+# LightPlayer
 
 [![Build Status](https://secure.travis-ci.org/lquixada/lightplayer.png)](http://travis-ci.org/lquixada/lightplayer)
 
 ## Instalação
 
-Rode o comando abaixo para instalar a app.
-
-    $ pip install lightplayer --extra-index-url=http://ipypi.globoi.com/simple/
-
 Na página em que o lightplayer vai rodar, adicionar as tags:
 
-    <link href="/media/lightplayer/build/src.css" rel="stylesheet" />
+```html
+<link href="/path/to/lightplayer.min.css" rel="stylesheet" />
 
-    <script src="/media/lightplayer/build/src.js"></script>
+<script src="/path/to/lightplayer.min.js"></script>
+```
 
 ## Uso
 
