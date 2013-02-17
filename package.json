@@ -9,7 +9,7 @@
     "url": "git://github.com/lquixada/lightplayer.git"
   },
   "scripts": {
-    "test": "ophantom"
+    "test": "o-phantom"
   },
   "engines": {
     "node": "*"
