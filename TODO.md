@@ -1,6 +1,8 @@
-
 # TODO
 
+* Instalar o.clazz
+* Instalar o.events
+* Simplificar comentarios
 * Colocar funções construtoras debaixo de um mesmo namespace
 * Passar parametros para a função construtora do LightPlayer
   e poder fazer override no open().
@@ -13,5 +15,4 @@
 * Esquema de teste por app
 * Task para rodar testem multi-browser
 * Task para rodar jshint com complexidade ciclomática
-* Juntar arquivos de configuração em pasta config/
 
