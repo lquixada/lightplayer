@@ -22,9 +22,7 @@ LightPlayer = o.clazz({
     },
 
     add: function ( mod ) {
-        var json = $.extend( true, {}, this.json );
-
-        this.domRoot.find( 'div.widget' ).append( mod.boot( this.bus, json ) ); 
+        this.domRoot.find( 'div.widget' ).append( mod.domRoot ); 
     },
 
     // private
@@ -50,11 +48,13 @@ LightPlayer = o.clazz({
     },
     
     _addMods: function () {
-        this.add( new Header() );
-        this.add( new Info() );
-        this.add( new Social() );
-        this.add( new Stage() );
-        this.add( new Playlist() );
+        var json = $.extend( true, {}, this.json );
+
+        this.add( new Header(this.bus, json) );
+        this.add( new Info(this.bus, json) );
+        this.add( new Social(this.bus, json) );
+        this.add( new Stage(this.bus, json) );
+        this.add( new Playlist(this.bus, json) );
     },
 
     _animateIn: function ( callback ) {
@@ -302,12 +302,12 @@ Mod = o.clazz({
     /**
      * Inicializa o módulo com o barramento e o json
      *
-     * @method boot
+     * @method init
      * @param bus {Object} O barramento com o qual o módulo vai se comunicar
      * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
      * @return {Object} O nó raiz da subárvore DOM do módulo
      */
-    boot: function ( bus, json ) {
+    init: function ( bus, json ) {
         this.name = 'mod-name';
         this.bus = bus;
         this.json = json;

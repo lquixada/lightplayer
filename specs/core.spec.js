@@ -220,8 +220,7 @@ describe("Module: Mod", function() {
             ]
         };
 
-        this.mod = new Mod();
-        this.mod.boot( this.bus, this.json );
+        this.mod = new Mod( this.bus, this.json );
     });
 
     it("should have a name", function() {
@@ -246,8 +245,7 @@ describe("Module: Mod", function() {
             this.json.itens[1].current = false;
             this.json.itens[2].current = true;
 
-            this.mod = new Mod();
-            this.mod.boot( null, this.json );
+            this.mod = new Mod( null, this.json );
 
             expect( $.isEmptyObject( this.mod._getItem( 'next' ) ) ).toBe( true );
         });
@@ -260,8 +258,7 @@ describe("Module: Mod", function() {
             this.json.itens[1].current = false;
             this.json.itens[0].current = true;
 
-            this.mod = new Mod();
-            this.mod.boot( null, this.json );
+            this.mod = new Mod( null, this.json );
 
             expect( $.isEmptyObject( this.mod._getItem( 'prev' ) ) ).toBe( true );
         });

@@ -3,12 +3,12 @@ Header = o.clazz({
     /**
      * Inicializa o Header com o barramento e o json
      *
-     * @method boot
+     * @method init
      * @param bus {Object} O barramento com o qual o módulo vai se comunicar
      * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
      * @return {Object} O nó raiz da subárvore DOM do módulo
      */
-    boot: function ( bus, json ) {
+    init: function ( bus, json ) {
         this.name = 'header';
         this.bus = bus;
         this.json = json;
