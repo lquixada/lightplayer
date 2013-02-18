@@ -41,7 +41,7 @@ module.exports = function ( grunt ) {
     // Task com problemas!!!
     cssmin: {
       dist: {
-        src: 'build/src.css',
+        src: 'css/*.css',
         dest: 'build/min.css'
       }
     },
