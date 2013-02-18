@@ -12,7 +12,9 @@ beforeEach(function() {
 
     // Prevents css3 animations on open
     spyOn( LightPlayer.prototype, '_animateIn' ).andCallFake( function ( callback ) {
-        callback && callback();
+        if (callback) {
+					callback();
+				}
     });
 
     // Prevents css3 animations on close
