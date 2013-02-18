@@ -1,6 +1,7 @@
 title: "Light Player Test Runner"
 css:
   - css/core.src.css
+  - css/header.src.css
   - css/info.src.css
   - css/playlist.src.css
   - css/social.src.css
