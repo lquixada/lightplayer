@@ -15,11 +15,11 @@ describe("Module: Header", function() {
         };
 
         this.header = new Header();
-        this.header.init( this.bus, this.json );
+        this.header.boot( this.bus, this.json );
     });
     
     it("should have a name", function() {
-        this.header.init( this.bus, this.json );
+        this.header.boot( this.bus, this.json );
 
         expect( this.header.name ).toBe( 'header' );
     });
@@ -37,7 +37,7 @@ describe("Module: Header", function() {
         this.json.title = 'ultimos videos da semana';
 
         this.header = new Header();
-        this.header.init( this.bus, this.json );
+        this.header.boot( this.bus, this.json );
 
         expect( this.header.domRoot.find( 'h5' ).text() ).toBe( this.json.title );
     });
@@ -46,7 +46,7 @@ describe("Module: Header", function() {
         this.json.subtitle = 'melhores videos do mesmo tema';
 
         this.header = new Header();
-        this.header.init( this.bus, this.json );
+        this.header.boot( this.bus, this.json );
 
         expect( this.header.domRoot.find( 'em.subtitulo' ).text() ).toBe( this.json.subtitle );
     });

@@ -7,34 +7,7 @@
  * @constructor
  */
 
-LightPlayer = function () {};
-
-LightPlayer.prototype = {
-
-    /**
-     * Abre o LightPlayer
-     *
-     * @method open
-     * @param json {Object} A config object
-     * @example
-     *  var lightplayer = new LightPlayer();
-     *
-     *  lightplayer.open( {
-     *      title: 'capitulo de <span>ontem</span>',
-     *      subtitle: 'qua 13',
-     *      mode: 'hd',
-     *      itens: [
-     *          {
-     *              id: 1991493,
-     *              hat: 'cena <span class="numero">1</span> de <span class="numero">6</span>',
-     *              title: 'Rosário se emociona com o quartinho reformado por Inácio',
-     *              url: 'http://www.globo.com',
-     *              views: 3412,
-     *              current: true
-     *          }
-     *      ]
-     *  } );
-     */
+LightPlayer = o.clazz({
     open: function ( json ) {
         // Barramento principal pela qual todos os modulos se comunicam
         this.bus  = $( {} );
@@ -47,11 +20,6 @@ LightPlayer.prototype = {
         this._animateIn( this.json.onOpen );
     },
 
-    /**
-     * Fecha o LightPlayer
-     *
-     * @method close
-     */
     close: function () {
         var that = this;
 
@@ -65,7 +33,7 @@ LightPlayer.prototype = {
     add: function ( mod ) {
         var json = $.extend( true, {}, this.json );
 
-        this.domRoot.find( 'div.widget' ).append( mod.init( this.bus, json ) ); 
+        this.domRoot.find( 'div.widget' ).append( mod.boot( this.bus, json ) ); 
     },
 
     // private
@@ -232,7 +200,8 @@ LightPlayer.prototype = {
 
         this.domRoot.appendTo( 'body' );
     }
-};
+});
+
 
 jQuery.lightplayer = {
     _instance: new LightPlayer(),
@@ -246,8 +215,6 @@ jQuery.lightplayer = {
     }
 };
 
-
-/* Lightplayer embedded dependency */
 
 jQuery.extend( jQuery.easing, {
     easeOutBounce: function (x, t, b, c, d) {
@@ -264,15 +231,7 @@ jQuery.extend( jQuery.easing, {
 });
 
 
-
-/**
- * @class PubSub
- * @constructor
- */ 
-
-PubSub = function () {};
-
-PubSub.prototype = {
+PubSub = o.clazz({
     pub: function ( eventName, json ) {
         this.bus.trigger( {
             type: eventName,
@@ -291,17 +250,12 @@ PubSub.prototype = {
             }
         } );
     }
-};
+});
 
 
-/**
- * @class ItensManager
- * @constructor
- */ 
+ItensManager = o.clazz({
+		extend: PubSub,
 
-ItensManager = function () {};
-
-ItensManager.prototype = {
     _getItem: function ( position ) {
         var chosen,
             itens = this.json.itens,
@@ -348,18 +302,12 @@ ItensManager.prototype = {
 
         chosen.current = true;
     }
-};
+});
 
 
+Mod = o.clazz({
+		extend: ItensManager,
 
-/**
- * @class Mod
- * @constructor
- */ 
-
-Mod = function () {};
-
-Mod.prototype = $.extend( new PubSub(), new ItensManager(), {
     /**
      * Inicializa o módulo com o barramento e o json
      *
@@ -368,23 +316,9 @@ Mod.prototype = $.extend( new PubSub(), new ItensManager(), {
      * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
      * @return {Object} O nó raiz da subárvore DOM do módulo
      */
-    init: function ( bus, json ) {
-        /**
-         * @property name
-         * @type String
-         */
+    boot: function ( bus, json ) {
         this.name = 'mod-name';
-
-        /**
-         * @property bus
-         * @type Object
-         */
         this.bus = bus;
-
-        /**
-         * @property json
-         * @type Object
-         */
         this.json = json;
 
         this._render();

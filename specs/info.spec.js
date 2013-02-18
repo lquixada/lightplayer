@@ -15,7 +15,7 @@ describe("Module: Info", function() {
         };
 
         this.info = new Info();
-        this.info.init( this.bus, this.json );
+        this.info.boot( this.bus, this.json );
     });
 
     it("should have a name", function() {

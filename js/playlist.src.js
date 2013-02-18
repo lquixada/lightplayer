@@ -4,9 +4,9 @@
  * @extends Mod
  */
 
-function Playlist() {}
 
-Playlist.prototype = $.extend( new Mod(), {
+Playlist = o.clazz({
+		extend: Mod,
     /**
      * Inicializa a Playlist com o barramento e o json
      *
@@ -15,7 +15,7 @@ Playlist.prototype = $.extend( new Mod(), {
      * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
      * @return {Object} O nó raiz da subárvore DOM do módulo
      */
-    init: function ( bus, json ) {
+    boot: function ( bus, json ) {
         /**
          * @property name
          * @type String

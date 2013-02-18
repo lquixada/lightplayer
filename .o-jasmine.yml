@@ -7,6 +7,7 @@ css:
   - css/social.src.css
   - css/stage.src.css
 js:
+  - https://raw.github.com/lquixada/o/v0.2.0/o.src.js
   - js/lib/jquery-1.4.3.min.js
   - specs/helpers/buttons.js
   - http://s.videos.globo.com/p2/j/api.min.js

@@ -39,7 +39,7 @@ describe("Module: Social", function() {
         };
 
         this.social = new Social();
-        this.social.init( this.bus, this.json );
+        this.social.boot( this.bus, this.json );
     });
 
     it("should have a name", function() {
@@ -69,7 +69,7 @@ describe("Module: Social", function() {
             delete this.json.itens[0].shortUrl;
 
             this.social = new Social();
-            this.social.init( this.bus, this.json ); 
+            this.social.boot( this.bus, this.json ); 
 
             encodedUrl = encodeURIComponent( this.json.itens[0].url );
 
@@ -103,7 +103,7 @@ describe("Module: Social", function() {
             encodedUrl = encodeURIComponent( this.json.itens[0].url );
 
             this.social = new Social();
-            this.social.init( this.bus, this.json ); 
+            this.social.boot( this.bus, this.json ); 
 
             expect( this.social.domRoot.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });
@@ -133,7 +133,7 @@ describe("Module: Social", function() {
             encodedUrl = encodeURIComponent( this.json.itens[0].url );
 
             this.social = new Social();
-            this.social.init( this.bus, this.json ); 
+            this.social.boot( this.bus, this.json ); 
 
             expect( this.social.domRoot.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( encodedUrl );
         });

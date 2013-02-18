@@ -5,9 +5,8 @@
  * @constructor
  */
 
-Header = function () {};
-
-Header.prototype = $.extend( new Mod(), {
+Header = o.clazz({
+		extend: Mod,
     /**
      * Inicializa o Header com o barramento e o json
      *
@@ -16,23 +15,9 @@ Header.prototype = $.extend( new Mod(), {
      * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
      * @return {Object} O nó raiz da subárvore DOM do módulo
      */
-    init: function ( bus, json ) {
-        /**
-         * @property name
-         * @type String
-         */
+    boot: function ( bus, json ) {
         this.name = 'header';
-
-        /**
-         * @property bus
-         * @type Object
-         */
         this.bus = bus;
-
-        /**
-         * @property json
-         * @type Object
-         */
         this.json = json;
 
         this._render();
