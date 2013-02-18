@@ -1,4 +1,4 @@
-Stage = o.clazz({
+Stage = o.Class({
 	extend: Mod,
 	/**
 	 * Inicializa o Placo com o barramento e o json

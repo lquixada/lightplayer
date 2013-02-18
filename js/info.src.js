@@ -1,4 +1,4 @@
-Info = o.clazz({
+Info = o.Class({
 	extend: Mod,
 	/**
 	 * Inicializa o módulo com o barramento e o json

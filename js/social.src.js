@@ -1,4 +1,4 @@
-Social = o.clazz({
+Social = o.Class({
 	extend: Mod,
 	/**
 	 * Inicializa o Social com o barramento e o json

@@ -1,4 +1,4 @@
-Playlist = o.clazz({
+Playlist = o.Class({
 	extend: Mod,
 	/**
 	 * Inicializa a Playlist com o barramento e o json

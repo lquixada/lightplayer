@@ -1,4 +1,4 @@
-LightPlayer = o.clazz({
+LightPlayer = o.Class({
 	open: function ( json ) {
 		// Barramento principal pela qual todos os modulos se comunicam
 		this.bus	= $( {} );
@@ -222,7 +222,7 @@ jQuery.extend( jQuery.easing, {
 });
 
 
-PubSub = o.clazz({
+PubSub = o.Class({
 	pub: function ( eventName, json ) {
 		this.bus.trigger( {
 			type: eventName,
@@ -244,7 +244,7 @@ PubSub = o.clazz({
 });
 
 
-ItensManager = o.clazz({
+ItensManager = o.Class({
 	extend: PubSub,
 
 	_getItem: function ( position ) {
@@ -296,7 +296,7 @@ ItensManager = o.clazz({
 });
 
 
-Mod = o.clazz({
+Mod = o.Class({
 	extend: ItensManager,
 
 	/**

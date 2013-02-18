@@ -1,4 +1,4 @@
-Header = o.clazz({
+Header = o.Class({
 	extend: Mod,
 	/**
 	 * Inicializa o Header com o barramento e o json
