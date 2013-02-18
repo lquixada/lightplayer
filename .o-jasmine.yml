@@ -11,12 +11,14 @@ js:
   - js/lib/jquery-1.4.3.min.js
   - specs/helpers/buttons.js
   - http://s.videos.globo.com/p2/j/api.min.js
+  
   - js/core.src.js
   - js/header.src.js
   - js/info.src.js
   - js/playlist.src.js
   - js/social.src.js
   - js/stage.src.js
+
   - specs/core.spec.js
   - specs/header.spec.js
   - specs/info.spec.js
