@@ -1,38 +1,16 @@
-
-/**
- * @class Info
- * @extends Mod
- * @constructor
- */
-
-
 Info = o.clazz({
 		extend: Mod,
     /**
      * Inicializa o módulo com o barramento e o json
      *
-     * @method init
+     * @method boot
      * @param bus {Object} O barramento com o qual o módulo vai se comunicar
      * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
      * @return {Object} O nó raiz da subárvore DOM do módulo
      */
     boot: function ( bus, json ) {
-        /**
-         * @property name
-         * @type String
-         */
         this.name = 'info';
-
-        /**
-         * @property bus
-         * @type Object
-         */
         this.bus = bus;
-
-        /**
-         * @property json
-         * @type Object
-         */
         this.json = json;
 
         this._render();

@@ -1,38 +1,16 @@
-
-/**
- * @class Stage
- * @extends Mod
- * @constructor
- */
-
-
 Stage = o.clazz({
 		extend: Mod,
     /**
      * Inicializa o Placo com o barramento e o json
      *
-     * @method init
+     * @method boot
      * @param bus {Object} O barramento com o qual o módulo vai se comunicar
      * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
      * @return {Object} O nó raiz da subárvore DOM do módulo
      */
     boot: function ( bus, json ) {
-        /**
-         * @property name
-         * @type String
-         */
         this.name = 'stage';
-
-        /**
-         * @property bus
-         * @type Object
-         */
         this.bus = bus;
-
-        /**
-         * @property json
-         * @type Object
-         */
         this.json = json;
 
         this.autoPlay = false;

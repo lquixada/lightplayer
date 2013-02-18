@@ -1,12 +1,3 @@
-
-/**
- * Essa é classe que gera o container, fornece o barramento de eventos,
- * atalhos de teclado, etc do LightPlayer.
- *
- * @class LightPlayer
- * @constructor
- */
-
 LightPlayer = o.clazz({
     open: function ( json ) {
         // Barramento principal pela qual todos os modulos se comunicam
@@ -311,7 +302,7 @@ Mod = o.clazz({
     /**
      * Inicializa o módulo com o barramento e o json
      *
-     * @method init
+     * @method boot
      * @param bus {Object} O barramento com o qual o módulo vai se comunicar
      * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
      * @return {Object} O nó raiz da subárvore DOM do módulo
