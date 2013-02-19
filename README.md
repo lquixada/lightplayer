@@ -94,9 +94,9 @@ lightplayer.open( {
   /*
    * Indica a partir de qual host que o LightPlayer vai exibir
    * os thumbs da playlist.
-   * Default: 'http://img.video.globoi.com'
+   * Default: 'http://img.video.globo.com'
    */
-  thumbHost: 'http://img.video.qa01.globoi.com',
+  thumbHost: 'http://img.video.globo.com',
 
   /*
    * Lista com todas as informações de todos os videos que
