@@ -17,7 +17,7 @@ Playlist = o.Class({
 		
 		if ( this.json.itens.length > 1 ) {
 			this._render();
-			this._addEvents();
+			this._addListeners();
 		}
 
 		return this.domRoot;
@@ -25,7 +25,7 @@ Playlist = o.Class({
 
 	// private
 
-	_addEvents: function () {
+	_addListeners: function () {
 		var that = this;
 
 		this.sub( 'video-change', function ( eventName, data ) {

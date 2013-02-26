@@ -16,14 +16,14 @@ Stage = o.Class({
 		this.autoPlay = false;
 
 		this._render();
-		this._addEvents();
+		this._addListeners();
 
 		return this.domRoot;
 	},
 
 	// private
 
-	_addEvents: function () {
+	_addListeners: function () {
 		var that = this;
 		
 		this.sub( 'video-change', function ( evt, data ) {

@@ -195,14 +195,14 @@ BannerBBB.prototype = $.extend( new Mod(), {
         this.json = json;
 
         this._render();
-        this._addEvents();
+        this._addListeners();
         
         return this.domRoot;
     },
 
     // private
 
-    _addEvents: function () {
+    _addListeners: function () {
         // não tem
     },
 

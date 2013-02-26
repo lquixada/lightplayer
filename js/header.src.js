@@ -14,14 +14,14 @@ Header = o.Class({
 		this.json = json;
 
 		this._render();
-		this._addEvents();
+		this._addListeners();
 		
 		return this.domRoot;
 	},
 
 	// private
 
-	_addEvents: function () {
+	_addListeners: function () {
 		var that = this;
 
 		this.domRoot.delegate( 'a.close', 'click', function () {

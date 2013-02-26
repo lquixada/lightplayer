@@ -6,7 +6,7 @@ LightPlayer = o.Class({
 
 		this._render();
 		this._addMods();
-		this._addEvents();
+		this._addListeners();
 		
 		this._animateIn( this.json.onOpen );
 	},
@@ -27,7 +27,7 @@ LightPlayer = o.Class({
 
 	// private
 
-	_addEvents: function () {
+	_addListeners: function () {
 		var that = this;
 
 		this.bus.on( 'lightplayer-close', function () {
@@ -312,7 +312,7 @@ Mod = o.Class({
 		this.json = json;
 
 		this._render();
-		this._addEvents();
+		this._addListeners();
 		
 		return this.domRoot;
 	},
@@ -335,7 +335,7 @@ Mod = o.Class({
 
 	// private
 
-	_addEvents: function () {
+	_addListeners: function () {
 		// Define all events attachments here
 	},
 
