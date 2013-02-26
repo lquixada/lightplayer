@@ -27,7 +27,7 @@ div.lightplayer div.playlist a:hover span.hover-img {
 }
 
 div.lightplayer div.playlist a.next {
-    background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent -28px 0 no-repeat;
+    background:url(/imgs/btn.nav_playlist.png) transparent -28px 0 no-repeat;
     background-color:#c51883;
     position: absolute;
     top: 10px;
@@ -52,7 +52,7 @@ div.lightplayer div.playlist a.next.inativo {
 }
 
 div.lightplayer div.playlist a.prev {
-    background:url(/media/lightplayer/imgs/btn.nav_playlist.png) transparent 0 0 no-repeat;
+    background:url(/imgs/btn.nav_playlist.png) transparent 0 0 no-repeat;
     background-color:#c51883;
     position: absolute;
     top: 10px;

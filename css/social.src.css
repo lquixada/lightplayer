@@ -26,7 +26,7 @@ div.lightplayer div.social a.button {
     text-indent:-5000px;
     *text-indent:0;
     overflow:hidden;
-    background:url(/media/lightplayer/imgs/btn.social.png) transparent 0 0 no-repeat;
+    background:url(/imgs/btn.social.png) transparent 0 0 no-repeat;
 }
 
 div.lightplayer div.social a.button.facebook {

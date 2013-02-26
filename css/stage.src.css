@@ -40,7 +40,7 @@ div.lightplayer div.palco a.nav span.arrow {
     text-indent:-5000px;
     *text-indent:0;
     overflow:hidden;
-    background:url(/media/lightplayer/imgs/btn.sprite.png) transparent 0 0 no-repeat;
+    background:url(/imgs/btn.sprite.png) transparent 0 0 no-repeat;
     -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20); /* IE8 */   
     opacity:.2;
     -webkit-user-select: none;
@@ -104,7 +104,7 @@ div.lightplayer div.palco a.nav.visible span.arrow {
 }
 
 div.lightplayer div.palco a.nav.loading span.arrow {
-    background:url(/media/lightplayer/imgs/ico.loading.gif) transparent 0 0 no-repeat;
+    background:url(/imgs/ico.loading.gif) transparent 0 0 no-repeat;
     cursor:default;
 }
 
@@ -177,7 +177,7 @@ div.lightplayer div.palco ul {
     padding:0;
     height:359px;
     list-style:none;
-    background:url(/media/lightplayer/imgs/bg.png) #000 0 0 repeat-x;
+    background:url(/imgs/bg.png) #000 0 0 repeat-x;
     -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100); /* IE8 */
     filter:alpha(opacity=100); /* IE7- */
     overflow:hidden;
