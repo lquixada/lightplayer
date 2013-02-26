@@ -1,7 +1,5 @@
 # TODO
 
-* Instalar o.clazz
-* Instalar o.events
 * Simplificar comentarios
 * Colocar funções construtoras debaixo de um mesmo namespace
 * Passar parametros para a função construtora do LightPlayer
