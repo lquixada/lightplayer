@@ -7,10 +7,11 @@ css:
   - css/social.src.css
   - css/stage.src.css
 js:
-  - https://raw.github.com/lquixada/o/v0.3.0/o.src.js
+  - js/lib/o.src.js
+  - js/lib/o-events.src.js
   - js/lib/jquery-1.4.3.min.js
+  - js/lib/api.min.js
   - specs/helpers/buttons.js
-  - http://s.videos.globo.com/p2/j/api.min.js
   
   - js/core.src.js
   - js/header.src.js

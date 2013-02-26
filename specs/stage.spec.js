@@ -4,7 +4,7 @@
 
 describe("Module: Stage", function() {
 	beforeEach(function() {
-		this.bus = $( {} );
+		this.bus = new o.Event();
 		this.json = {
 			itens: [
 				{ id: 123, title: 'titulo 1', hat: 'chapeu 1' },
@@ -348,18 +348,18 @@ describe("Module: Stage", function() {
 			});
 
 			it("should trigger video-change from it", function() {
-				var event, callback;
+				var eventData, callback;
 
-				callback = jasmine.createSpy( 'video-change-callback' ).andCallFake( function ( evt ) {
-					event = evt;
+				callback = jasmine.createSpy( 'video-change-callback' ).andCallFake( function ( evt, data ) {
+					eventData = data;
 				} );
 				
 				this.stage = new Stage( this.bus, this.json );
-				this.stage.bus.bind( 'video-change', callback );
+				this.stage.bus.on( 'video-change', callback );
 
 				this.nextButton.click();
 
-				expect( event.origin ).toBe( 'stage' );
+				expect( eventData.origin ).toBe( 'stage' );
 			});
 		});
 		
@@ -390,18 +390,18 @@ describe("Module: Stage", function() {
 			});
 
 			it("should trigger video-change from it", function() {
-				var event, callback;
+				var eventData, callback;
 
-				callback = jasmine.createSpy( 'video-change-callback' ).andCallFake( function ( evt ) {
-					event = evt;
+				callback = jasmine.createSpy( 'video-change-callback' ).andCallFake( function ( evt, data ) {
+					eventData = data;
 				} );
 				
 				this.stage = new Stage( this.bus, this.json );
-				this.stage.bus.bind( 'video-change', callback );
+				this.stage.bus.on( 'video-change', callback );
 
 				this.prevButton.click();
 
-				expect( event.origin ).toBe( 'stage' );
+				expect( eventData.origin ).toBe( 'stage' );
 			});
 		});
 
@@ -427,10 +427,12 @@ describe("Module: Stage", function() {
 
 		describe("Events", function() {
 			it("should change on video-change", function() {
-				this.json.itens[1].current = false;
-				this.json.itens[2].current = true;
+				var json = $.extend(true, {}, this.json);
 				
-				this.bus.trigger( { type:'video-change', origin: 'testsuite', json: this.json } );
+				json.itens[1].current = false;
+				json.itens[2].current = true;
+				
+				this.bus.fire( 'video-change', { origin: 'testsuite', json: json } );
 				
 				expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-789' );
 			});
@@ -440,7 +442,7 @@ describe("Module: Stage", function() {
 				this.json.itens[1].current = false;
 				this.json.itens[2].current = true;
 				
-				this.bus.trigger( { type:'video-change', origin: 'stage' } );
+				this.bus.fire( 'video-change', { origin: 'stage' } );
 				
 				expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-456' );
 			});

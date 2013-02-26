@@ -28,10 +28,10 @@ Playlist = o.Class({
 	_addEvents: function () {
 		var that = this;
 
-		this.sub( 'video-change', function ( event ) {
+		this.sub( 'video-change', function ( eventName, data ) {
 			var a, item;
 
-			that.json = event.json;
+			that.json = data.json;
 
 			item = that._getItem( 'current' );
 

@@ -1,7 +1,7 @@
 LightPlayer = o.Class({
 	open: function ( json ) {
 		// Barramento principal pela qual todos os modulos se comunicam
-		this.bus	= $( {} );
+		this.bus	= new o.Event();
 		this.json = json;
 
 		this._render();
@@ -30,7 +30,7 @@ LightPlayer = o.Class({
 	_addEvents: function () {
 		var that = this;
 
-		this.bus.bind( 'lightplayer-close', function () {
+		this.bus.on( 'lightplayer-close', function () {
 			that.close();
 		} );
 
@@ -70,7 +70,7 @@ LightPlayer = o.Class({
 				/* Firefox bugfix: Flash + css transform doesn't get along very well */
 				divWidget.css( '-moz-transform', 'none' );
 
-				that.bus.trigger( 'lightplayer-opened' );
+				that.bus.fire( 'lightplayer-opened' );
 
 				if ( callback ) {
 					callback.call( that );
@@ -94,7 +94,7 @@ LightPlayer = o.Class({
 			divWidget.css( '-moz-transform', 'none' );
 			divWidget.addClass( 'visible' );
 			
-			this.bus.trigger( 'lightplayer-opened' );
+			this.bus.fire( 'lightplayer-opened' );
 		}
 	},
 
@@ -224,22 +224,21 @@ jQuery.extend( jQuery.easing, {
 
 PubSub = o.Class({
 	pub: function ( eventName, json ) {
-		this.bus.trigger( {
-			type: eventName,
+		this.bus.fire(eventName, {
 			origin: this.name,
 			// Create a deep copy of json object
 			json: $.extend(true, {}, json)
-		} );
+		});
 	},
 
 	sub: function ( eventName, callback ) {
 		var that = this;
 
-		this.bus.bind( eventName, function ( event ) {
-			if ( event.origin !== that.name ) {
-				callback( event );
+		this.bus.on(eventName, function (evt, data) {
+			if ( data.origin !== that.name ) {
+				callback( evt, data );
 			}
-		} );
+		});
 	}
 });
 

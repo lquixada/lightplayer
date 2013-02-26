@@ -24,8 +24,8 @@ Social = o.Class({
 	_addEvents: function () {
 		var that = this;
 
-		this.sub( 'video-change', function ( evt ) {
-			that.json = evt.json;
+		this.sub( 'video-change', function ( evt, data ) {
+			that.json = data.json;
 			that._update();
 		} );
 	},

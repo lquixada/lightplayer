@@ -5,7 +5,7 @@
 
 describe("Module: Social", function() {
 	beforeEach(function() {
-		this.bus = $({});
+		this.bus = new o.Event();
 		this.json = {
 			itens: [
 				{
@@ -148,7 +148,7 @@ describe("Module: Social", function() {
 			this.json.itens[0].current = false;
 			this.json.itens[2].current = true;
 			
-			this.bus.trigger( { type:'video-change', origin: 'testsuite', json: this.json } );
+			this.bus.fire( 'video-change', { origin: 'testsuite', json: this.json } );
 		});
 		
 		it("should change twitter button url on video-change", function() {

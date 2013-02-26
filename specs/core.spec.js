@@ -135,7 +135,7 @@ describe("Light Player", function() {
 		});
 
 		it("should close on close event", function() {
-			this.lightplayer.bus.trigger( 'lightplayer-close' );
+			this.lightplayer.bus.fire( 'lightplayer-close' );
 			
 			expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
 		});
@@ -211,7 +211,7 @@ describe("jQuery interface", function() {
 
 describe("Module: Mod", function() {
 	beforeEach(function() {
-		this.bus = $( {} );
+		this.bus = new o.Event();
 		this.json = {
 			itens: [
 				{ id: 123, title: 'titulo 1', description: 'desc 1', views: 1000 },
@@ -283,7 +283,7 @@ describe("Module: Mod", function() {
 		it("should publish an event", function() {
 			var callback = jasmine.createSpy();
 
-			this.mod.bus.bind( 'some-event', callback );
+			this.mod.bus.on( 'some-event', callback );
 
 			this.mod.pub( 'some-event' );
 
@@ -291,28 +291,28 @@ describe("Module: Mod", function() {
 		});
 
 		it("should publish a json copy", function() {
-			var event;
+			var eventData;
 			
-			this.mod.bus.bind( 'some-event', function ( evt ) {
-				event = evt;
+			this.mod.bus.on( 'some-event', function ( evt, data ) {
+				eventData = data;
 			} );
 
 			this.mod.pub( 'some-event', this.json );
 
-			expect( JSON.stringify(event.json) ).toBe( JSON.stringify(this.mod.json) );
-			expect( event.json ).not.toBe( this.mod.json );
+			expect( JSON.stringify(eventData.json) ).toBe( JSON.stringify(this.mod.json) );
+			expect( eventData.json ).not.toBe( this.mod.json );
 		});
 
 		it("should indicate the event publisher", function() {
-			var event;
+			var eventData;
 			
-			this.mod.bus.bind( 'some-event', function ( evt ) {
-				event = evt;
+			this.mod.bus.on( 'some-event', function ( evt, data ) {
+				eventData = data;
 			} );
 
 			this.mod.pub( 'some-event', {} );
 
-			expect( event.origin ).toBe( this.mod.name );
+			expect( eventData.origin ).toBe( this.mod.name );
 		});
 	});
 
@@ -324,7 +324,9 @@ describe("Module: Mod", function() {
 		it("should subscribe to an event", function() {
 			this.mod.sub( 'some-event', this.callback );
 
-			this.mod.bus.trigger( 'some-event' );
+			this.mod.bus.fire( 'some-event', {
+				origin: 'other-publisher'
+			});
 
 			expect( this.callback ).toHaveBeenCalled();
 		}); 
@@ -332,8 +334,7 @@ describe("Module: Mod", function() {
 		it("should not execute callback if published from itself", function() {
 			this.mod.sub( 'some-event', this.callback );
 
-			this.mod.bus.trigger( {
-				type: 'some-event',
+			this.mod.bus.fire( 'some-event', {
 				origin: this.mod.name
 			} );
 
@@ -343,8 +344,7 @@ describe("Module: Mod", function() {
 		it("should execute callback if not published from itself", function() {
 			this.mod.sub( 'some-event', this.callback );
 
-			this.mod.bus.trigger( {
-				type: 'some-event',
+			this.mod.bus.fire( 'some-event', {
 				origin: 'test-suite'
 			} );
 

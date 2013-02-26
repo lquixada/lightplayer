@@ -26,12 +26,12 @@ Stage = o.Class({
 	_addEvents: function () {
 		var that = this;
 		
-		this.sub( 'video-change', function ( evt ) {
+		this.sub( 'video-change', function ( evt, data ) {
 			var current, currentNew, item;
 
 			current = that._getItem( 'current' );
 
-			that.json = evt.json;
+			that.json = data.json;
 
 			currentNew = that._getItem( 'current' );
 			

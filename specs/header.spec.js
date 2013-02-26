@@ -5,7 +5,7 @@
 
 describe("Module: Header", function() {
 	beforeEach(function() {
-		this.bus = $({});
+		this.bus = new o.Event();
 		this.json = {
 			itens: [
 				{ id: 123, title: 'titulo 1' },
@@ -55,7 +55,7 @@ describe("Module: Header", function() {
 	it("should close when close button clicked", function() {
 		var callback = jasmine.createSpy( 'lightplayer-close-callback' );
 		
-		this.header.bus.bind( 'lightplayer-close', callback );
+		this.header.bus.on( 'lightplayer-close', callback );
 		this.header.domRoot.find( 'a.close' ).click();
 		
 		expect( callback ).toHaveBeenCalled();
