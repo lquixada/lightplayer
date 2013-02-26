@@ -1,5 +1,6 @@
 # TODO
 
+* Traduzir app para o inglês
 * Simplificar comentarios
 * Colocar funções construtoras debaixo de um mesmo namespace
 * Passar parametros para a função construtora do LightPlayer
