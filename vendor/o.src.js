@@ -1,76 +1,106 @@
 
-var o = {};
+var o = {
+	version: '0.3.2',
 
-o.Object = function () {};
+	extend: function (target, source) {
+		for (var key in source) {
+			if (source.hasOwnProperty(key)) {
+				target[key] = source[key];
+			}
+		}
 
-o.Object.prototype = {
-	init: function (options) {
-		o.add(this, options);
+		return target;
 	},
 
-	_super: function () {
-		// Get the caller function reference
-		var caller = arguments.callee.caller,
-			// Go to the bottom of the prototype chain
-			proto  = this.constructor.prototype;
-		
-		// Iterate through the prototype chain
-		while (proto) {
-			// Iterate through the properties of this prototype
-			for (var prop in proto) {
-				// Check if the caller is right in this prototype
-				if (proto.hasOwnProperty(prop)) {
-					if (proto[prop] === caller) {
-						// If it is, we've found the prototype.
-						// Now go to the next prototype in the chain and
-						//call the method with the same name from
-						return proto.constructor.prototype[prop].apply(this, arguments);
-					}
-				}
-			}
-			
-			proto = proto.constructor.prototype;
-		}
+	extendClass: function (Class, source) {
+		this.extend(Class, source);
+	},
+
+	extendInstances: function (Class, source) {
+		this.extend(Class.prototype, source);
 	}
 };
 
-// This is a wrapper for the constructor function
+o.Object = function () {
+	this.Class = o.Object;
+};
+
+o.Object.prototype = {
+	init: function (options) {
+		o.extend(this, options);
+	},
+
+	_super: function () {
+		var result, fn,
+			that = this,
+			args = arguments,
+			// who called the _super() method???
+			caller = arguments.callee.caller;
+
+		// for every property of every prototype, check if the caller is present
+		this._climbPrototypeChain(function (proto, prop) {
+			if (proto[prop] === caller) {
+				// now let the javascript find the upper method from that point on.
+				fn = proto.Class.prototype[prop];
+
+				if (typeof fn === 'function') {
+					result = fn.apply(that, args);
+
+					// break the loop
+					return true;
+				} else {
+					throw 'not implemented error';
+				}
+			}
+		});
+
+		return result;
+	},
+
+	_climbPrototypeChain: function (fn) {
+		var proto = this;
+
+		// iterate through the prototype chain
+		while (proto) {
+			// iterate through the properties of this prototype
+			for (var prop in proto) {
+				if (proto.hasOwnProperty(prop)) {
+					if (fn(proto, prop)) {
+						return;
+					}
+				} // end if
+			} // enf for
+
+			proto = proto.Class.prototype;
+		} // end while
+	} // end function
+};
+
+// this is a wrapper for the constructor function
 o.Class = function (options) {
 	var Superclass;
 	
 	options = options || {};
-	Superclass = options.extend;
 
-	// Let's build the constructor function
-	var constructor = function () {
-		this.constructor = constructor;
+	// let's build the constructor function
+	function Constructor() {
+		var options, Superclass;
 
-		// if extending class (need better work here)
-		if (arguments[0] === o) {
-			return;
+		this.Class = Constructor;
+
+		// if not instatiating from the o.Class function
+		if (this.Class.caller !== o.Class) {
+			this.init.apply(this, arguments);
 		}
-
-		this.init.apply(this, arguments);
-	};
-	
-	// Use Superclass as prototype, otherwise use the default: o.Object
-	constructor.prototype = Superclass
-			? new Superclass(o)
-			: new o.Object();
-
-	// Add all properties and methods to the prototype.
-	// This way, they can be shadowed on subclasses
-	for (var prop in options) {
-		constructor.prototype[prop] = options[prop];
 	}
 
-	return constructor;
-};
+	Superclass = options.extend || o.Object;
 
-o.add = function (target, source) {
-	for (var key in source) {
-		target[key] = source[key];
-	}
+	// Constructor prototype will be an instance of superclass
+	// with the properties provided.
+	Constructor.prototype = o.extend(new Superclass(), options);
+
+	return Constructor;
 };
 
 if (typeof module === 'object') {

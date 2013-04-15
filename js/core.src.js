@@ -1,7 +1,7 @@
 LightPlayer = o.Class({
 	open: function ( json ) {
 		// Barramento principal pela qual todos os modulos se comunicam
-		this.bus	= new o.Event();
+		this.client = new LiteMQ.Client();
 		this.json = json;
 
 		this._render();
@@ -30,7 +30,7 @@ LightPlayer = o.Class({
 	_addListeners: function () {
 		var that = this;
 
-		this.bus.on( 'lightplayer-close', function () {
+		this.client.sub( 'lightplayer-close', function () {
 			that.close();
 		} );
 
@@ -50,11 +50,11 @@ LightPlayer = o.Class({
 	_addMods: function () {
 		var json = $.extend( true, {}, this.json );
 
-		this.add( new Header(this.bus, json) );
-		this.add( new Info(this.bus, json) );
-		this.add( new Social(this.bus, json) );
-		this.add( new Stage(this.bus, json) );
-		this.add( new Playlist(this.bus, json) );
+		this.add( new Header(json) );
+		this.add( new Info(json) );
+		this.add( new Social(json) );
+		this.add( new Stage(json) );
+		this.add( new Playlist(json) );
 	},
 
 	_animateIn: function ( callback ) {
@@ -70,7 +70,7 @@ LightPlayer = o.Class({
 				/* Firefox bugfix: Flash + css transform doesn't get along very well */
 				divWidget.css( '-moz-transform', 'none' );
 
-				that.bus.fire( 'lightplayer-opened' );
+				that.client.pub( 'lightplayer-opened' );
 
 				if ( callback ) {
 					callback.call( that );
@@ -94,7 +94,7 @@ LightPlayer = o.Class({
 			divWidget.css( '-moz-transform', 'none' );
 			divWidget.addClass( 'visible' );
 			
-			this.bus.fire( 'lightplayer-opened' );
+			this.bus.pub( 'lightplayer-opened' );
 		}
 	},
 
@@ -222,30 +222,7 @@ jQuery.extend( jQuery.easing, {
 });
 
 
-PubSub = o.Class({
-	pub: function ( eventName, json ) {
-		this.bus.fire(eventName, {
-			origin: this.name,
-			// Create a deep copy of json object
-			json: $.extend(true, {}, json)
-		});
-	},
-
-	sub: function ( eventName, callback ) {
-		var that = this;
-
-		this.bus.on(eventName, function (evt, data) {
-			if ( data.origin !== that.name ) {
-				callback( evt, data );
-			}
-		});
-	}
-});
-
-
 ItensManager = o.Class({
-	extend: PubSub,
-
 	_getItem: function ( position ) {
 		var chosen,
 			itens = this.json.itens,
@@ -306,9 +283,9 @@ Mod = o.Class({
 	 * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
 	 * @return {Object} O nó raiz da subárvore DOM do módulo
 	 */
-	init: function ( bus, json ) {
+	init: function ( json ) {
 		this.name = 'mod-name';
-		this.bus = bus;
+		this.client = new LiteMQ.Client();
 		this.json = json;
 
 		this._render();

@@ -5,7 +5,7 @@
 
 describe("Module: Header", function() {
 	beforeEach(function() {
-		this.bus = new o.Event();
+		this.client = new LiteMQ.Client();
 		this.json = {
 			itens: [
 				{ id: 123, title: 'titulo 1' },
@@ -14,11 +14,11 @@ describe("Module: Header", function() {
 			]
 		};
 
-		this.header = new Header( this.bus, this.json );
+		this.header = new Header( this.json );
 	});
 	
 	it("should have a name", function() {
-		this.header = new Header( this.bus, this.json );
+		this.header = new Header( this.json );
 
 		expect( this.header.name ).toBe( 'header' );
 	});
@@ -35,7 +35,7 @@ describe("Module: Header", function() {
 	it("show customize the lightbox title", function() {
 		this.json.title = 'ultimos videos da semana';
 
-		this.header = new Header( this.bus, this.json );
+		this.header = new Header( this.json );
 
 		expect( this.header.domRoot.find( 'h5' ).text() ).toBe( this.json.title );
 	});
@@ -43,7 +43,7 @@ describe("Module: Header", function() {
 	it("should show the lightbox subtitle", function() {
 		this.json.subtitle = 'melhores videos do mesmo tema';
 
-		this.header = new Header( this.bus, this.json );
+		this.header = new Header( this.json );
 
 		expect( this.header.domRoot.find( 'em.subtitulo' ).text() ).toBe( this.json.subtitle );
 	});
@@ -55,7 +55,7 @@ describe("Module: Header", function() {
 	it("should close when close button clicked", function() {
 		var callback = jasmine.createSpy( 'lightplayer-close-callback' );
 		
-		this.header.bus.on( 'lightplayer-close', callback );
+		this.client.sub( 'lightplayer-close', callback );
 		this.header.domRoot.find( 'a.close' ).click();
 		
 		expect( callback ).toHaveBeenCalled();

@@ -4,13 +4,12 @@ Header = o.Class({
 	 * Inicializa o Header com o barramento e o json
 	 *
 	 * @method init
-	 * @param bus {Object} O barramento com o qual o módulo vai se comunicar
 	 * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
 	 * @return {Object} O nó raiz da subárvore DOM do módulo
 	 */
-	init: function ( bus, json ) {
+	init: function ( json ) {
 		this.name = 'header';
-		this.bus = bus;
+		this.client = new LiteMQ.Client();
 		this.json = json;
 
 		this._render();
@@ -23,9 +22,9 @@ Header = o.Class({
 
 	_addListeners: function () {
 		var that = this;
-
+		
 		this.domRoot.delegate( 'a.close', 'click', function () {
-			that.pub( 'lightplayer-close' );
+			that.client.pub( 'lightplayer-close' );
 		});
 	},
 

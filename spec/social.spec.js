@@ -5,7 +5,7 @@
 
 describe("Module: Social", function() {
 	beforeEach(function() {
-		this.bus = new o.Event();
+		this.client = new LiteMQ.Client();
 		this.json = {
 			itens: [
 				{
@@ -38,11 +38,11 @@ describe("Module: Social", function() {
 			]
 		};
 
-		this.social = new Social( this.bus, this.json );
+		this.social = new Social( this.json );
 	});
 
 	it("should have a name", function() {
-		this.social.init( this.bus, this.json );
+		this.social.init( this.json );
 
 		expect( this.social.name ).toBe( 'social' );
 	});
@@ -67,7 +67,7 @@ describe("Module: Social", function() {
 			
 			delete this.json.itens[0].shortUrl;
 
-			this.social = new Social( this.bus, this.json ); 
+			this.social = new Social( this.json ); 
 
 			encodedUrl = encodeURIComponent( this.json.itens[0].url );
 
@@ -100,7 +100,7 @@ describe("Module: Social", function() {
 
 			encodedUrl = encodeURIComponent( this.json.itens[0].url );
 
-			this.social = new Social( this.bus, this.json ); 
+			this.social = new Social( this.json ); 
 
 			expect( this.social.domRoot.find( 'a.facebook.button' ).attr( 'href' ) ).toContain( encodedUrl );
 		});
@@ -129,7 +129,7 @@ describe("Module: Social", function() {
 
 			encodedUrl = encodeURIComponent( this.json.itens[0].url );
 
-			this.social = new Social( this.bus, this.json ); 
+			this.social = new Social( this.json ); 
 
 			expect( this.social.domRoot.find( 'a.orkut.button' ).attr( 'href' ) ).toContain( encodedUrl );
 		});
@@ -148,7 +148,7 @@ describe("Module: Social", function() {
 			this.json.itens[0].current = false;
 			this.json.itens[2].current = true;
 			
-			this.bus.fire( 'video-change', { origin: 'testsuite', json: this.json } );
+			this.client.pub( 'video-change', this.json );
 		});
 		
 		it("should change twitter button url on video-change", function() {

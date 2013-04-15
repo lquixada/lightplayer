@@ -4,13 +4,12 @@ Stage = o.Class({
 	 * Inicializa o Placo com o barramento e o json
 	 *
 	 * @method init
-	 * @param bus {Object} O barramento com o qual o módulo vai se comunicar
 	 * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
 	 * @return {Object} O nó raiz da subárvore DOM do módulo
 	 */
-	init: function ( bus, json ) {
+	init: function ( json ) {
 		this.name = 'stage';
-		this.bus = bus;
+		this.client = new LiteMQ.Client({name:'stage'});
 		this.json = json;
 
 		this.autoPlay = false;
@@ -26,12 +25,12 @@ Stage = o.Class({
 	_addListeners: function () {
 		var that = this;
 		
-		this.sub( 'video-change', function ( evt, data ) {
+		this.client.sub( 'video-change', function ( msg ) {
 			var current, currentNew, item;
 
 			current = that._getItem( 'current' );
 
-			that.json = data.json;
+			that.json = msg.body;
 
 			currentNew = that._getItem( 'current' );
 			
@@ -42,7 +41,7 @@ Stage = o.Class({
 			}
 		} );
 
-		this.sub( 'lightplayer-opened', function () {
+		this.client.sub( 'lightplayer-opened', function () {
 			if ( that.json.autoPlay ) {
 				that.autoPlay = true;
 				that.domRoot.find( 'li.current div.video-player' ).playerApiCaller( 'playVideo' );
@@ -138,7 +137,7 @@ Stage = o.Class({
 		this._updateArrows();
 		this._updateItem( item );
 
-		this.pub( 'video-change', this.json );
+		this.client.pub( 'video-change', this.json );
 	},
 
 	_goPrev: function () {
@@ -149,7 +148,7 @@ Stage = o.Class({
 		this._updateArrows();
 		this._updateItem( item );
 
-		this.pub( 'video-change', this.json );
+		this.client.pub( 'video-change', this.json );
 	},
 
 	_onVideoCompleted: function () {

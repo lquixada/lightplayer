@@ -4,13 +4,12 @@ Social = o.Class({
 	 * Inicializa o Social com o barramento e o json
 	 *
 	 * @method init
-	 * @param bus {Object} O barramento com o qual o módulo vai se comunicar
 	 * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
 	 * @return {Object} O nó raiz da subárvore DOM do módulo
 	 */
-	init: function ( bus, json ) {
+	init: function ( json ) {
 		this.name = 'social';
-		this.bus = bus;
+		this.client = new LiteMQ.Client();
 		this.json = json;
 
 		this._render();
@@ -24,8 +23,8 @@ Social = o.Class({
 	_addListeners: function () {
 		var that = this;
 
-		this.sub( 'video-change', function ( evt, data ) {
-			that.json = data.json;
+		this.client.sub( 'video-change', function ( msg ) {
+			that.json = msg.body;
 			that._update();
 		} );
 	},

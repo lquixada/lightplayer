@@ -32,6 +32,7 @@ beforeEach(function() {
 		 }
 	});
 
+	LiteMQ.DefaultBus._listeners = {};
 	this.lightplayer = new LightPlayer();
 });
 
@@ -48,6 +49,7 @@ afterEach(function() {
 
 describe("Light Player", function() {
 	beforeEach(function() {
+		this.client = new LiteMQ.Client();
 		this.json = {
 			itens: [
 				{
@@ -135,7 +137,7 @@ describe("Light Player", function() {
 		});
 
 		it("should close on close event", function() {
-			this.lightplayer.bus.pub( 'lightplayer-close' );
+			this.client.pub( 'lightplayer-close' );
 			
 			expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
 		});
@@ -211,7 +213,7 @@ describe("jQuery interface", function() {
 
 describe("Module: Mod", function() {
 	beforeEach(function() {
-		this.bus = new o.Event();
+		this.client = new LiteMQ.Client();
 		this.json = {
 			itens: [
 				{ id: 123, title: 'titulo 1', description: 'desc 1', views: 1000 },
@@ -220,7 +222,7 @@ describe("Module: Mod", function() {
 			]
 		};
 
-		this.mod = new Mod( this.bus, this.json );
+		this.mod = new Mod( this.json );
 	});
 
 	it("should have a name", function() {
@@ -245,7 +247,7 @@ describe("Module: Mod", function() {
 			this.json.itens[1].current = false;
 			this.json.itens[2].current = true;
 
-			this.mod = new Mod( null, this.json );
+			this.mod = new Mod( this.json );
 
 			expect( $.isEmptyObject( this.mod._getItem( 'next' ) ) ).toBe( true );
 		});
@@ -258,7 +260,7 @@ describe("Module: Mod", function() {
 			this.json.itens[1].current = false;
 			this.json.itens[0].current = true;
 
-			this.mod = new Mod( null, this.json );
+			this.mod = new Mod( this.json );
 
 			expect( $.isEmptyObject( this.mod._getItem( 'prev' ) ) ).toBe( true );
 		});
@@ -277,80 +279,6 @@ describe("Module: Mod", function() {
 			expect( this.json.itens[0].current ).toBeFalsy();
 			expect( this.json.itens[1].current ).toBeFalsy();
 		});
-	});
-
-	describe("pub", function() {
-		it("should publish an event", function() {
-			var callback = jasmine.createSpy();
-
-			this.mod.bus.on( 'some-event', callback );
-
-			this.mod.pub( 'some-event' );
-
-			expect( callback ).toHaveBeenCalled();
-		});
-
-		it("should publish a json copy", function() {
-			var eventData;
-			
-			this.mod.bus.on( 'some-event', function ( evt, data ) {
-				eventData = data;
-			} );
-
-			this.mod.pub( 'some-event', this.json );
-
-			expect( JSON.stringify(eventData.json) ).toBe( JSON.stringify(this.mod.json) );
-			expect( eventData.json ).not.toBe( this.mod.json );
-		});
-
-		it("should indicate the event publisher", function() {
-			var eventData;
-			
-			this.mod.bus.on( 'some-event', function ( evt, data ) {
-				eventData = data;
-			} );
-
-			this.mod.pub( 'some-event', {} );
-
-			expect( eventData.origin ).toBe( this.mod.name );
-		});
-	});
-
-	describe("sub", function () {
-		beforeEach(function() {
-			this.callback = jasmine.createSpy();
-		});
-		
-		it("should subscribe to an event", function() {
-			this.mod.sub( 'some-event', this.callback );
-
-			this.mod.bus.fire( 'some-event', {
-				origin: 'other-publisher'
-			});
-
-			expect( this.callback ).toHaveBeenCalled();
-		}); 
-
-		it("should not execute callback if published from itself", function() {
-			this.mod.sub( 'some-event', this.callback );
-
-			this.mod.bus.fire( 'some-event', {
-				origin: this.mod.name
-			} );
-
-			expect( this.callback ).not.toHaveBeenCalled();
-		});
-
-		it("should execute callback if not published from itself", function() {
-			this.mod.sub( 'some-event', this.callback );
-
-			this.mod.bus.fire( 'some-event', {
-				origin: 'test-suite'
-			} );
-
-			expect( this.callback ).toHaveBeenCalled();
-		});
-		
 	});
 });
 

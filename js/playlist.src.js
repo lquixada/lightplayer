@@ -4,13 +4,12 @@ Playlist = o.Class({
 	 * Inicializa a Playlist com o barramento e o json
 	 *
 	 * @method init
-	 * @param bus {Object} O barramento com o qual o módulo vai se comunicar
 	 * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
 	 * @return {Object} O nó raiz da subárvore DOM do módulo
 	 */
-	init: function ( bus, json ) {
+	init: function ( json ) {
 		this.name = 'playlist';
-		this.bus = bus;
+		this.client = new LiteMQ.Client();
 		this.json = json;
 		this.thumbHost = json.thumbHost || 'http://img.video.globo.com';
 		this.offset = 0; 
@@ -28,10 +27,10 @@ Playlist = o.Class({
 	_addListeners: function () {
 		var that = this;
 
-		this.sub( 'video-change', function ( eventName, data ) {
+		this.client.sub( 'video-change', function ( msg ) {
 			var a, item;
 
-			that.json = data.json;
+			that.json = msg.body;
 
 			item = that._getItem( 'current' );
 
@@ -50,7 +49,7 @@ Playlist = o.Class({
 				var item = that._getItemById( $( this ).attr( 'item-id' ) );
 
 				that._setItemAsCurrent( item );
-				that.pub( 'video-change', that.json );
+				that.client.pub( 'video-change', that.json );
 
 				that._setAsWatching( $( this ).parent() );
 

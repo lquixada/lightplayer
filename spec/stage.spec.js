@@ -4,7 +4,7 @@
 
 describe("Module: Stage", function() {
 	beforeEach(function() {
-		this.bus = new o.Event();
+		this.client = new LiteMQ.Client({name: 'test-suite'});
 		this.json = {
 			itens: [
 				{ id: 123, title: 'titulo 1', hat: 'chapeu 1' },
@@ -19,7 +19,7 @@ describe("Module: Stage", function() {
 	});
 
 	it("should have a name", function() {
-		this.stage = new Stage( this.bus, this.json );
+		this.stage = new Stage( this.json );
 
 		expect( this.stage.name ).toBe( 'stage' );
 	});
@@ -34,13 +34,13 @@ describe("Module: Stage", function() {
 		});
 		
 		it("should not have arrows visible", function() {
-			this.stage = new Stage( this.bus, this.json );
+			this.stage = new Stage( this.json );
 
 			expect( this.stage.domRoot.find( 'a.nav.visible' ).size() ).toBe( 0 );
 		});
 
 		it("should add some margin at the bottom", function() {
-			this.stage = new Stage( this.bus, this.json );
+			this.stage = new Stage( this.json );
 
 			expect( this.stage.domRoot.css( 'margin-bottom' ) ).not.toBe( '' );
 		});
@@ -50,7 +50,7 @@ describe("Module: Stage", function() {
 		beforeEach(function() {
 			this.json.itens[0].current = true;
 
-			this.stage = new Stage( this.bus, this.json );
+			this.stage = new Stage( this.json );
 
 			this.liCurrent = this.stage.domRoot.find( 'ul li.current' );
 		});
@@ -69,7 +69,7 @@ describe("Module: Stage", function() {
 		beforeEach(function() {
 			this.json.itens[1].current = true;
 
-			this.stage = new Stage( this.bus, this.json );
+			this.stage = new Stage( this.json );
 
 			this.liCurrent = this.stage.domRoot.find( 'ul li.current' );
 		});
@@ -89,7 +89,7 @@ describe("Module: Stage", function() {
 		beforeEach(function() {
 			this.json.itens[0].current = true;
 
-			this.stage = new Stage( this.bus, this.json );
+			this.stage = new Stage( this.json );
 
 			this.liCurrent = this.stage.domRoot.find( 'ul li.current' );
 		});
@@ -114,7 +114,7 @@ describe("Module: Stage", function() {
 
 			this.json.mode = 'sd';
 
-			this.stage = new Stage( this.bus, this.json );
+			this.stage = new Stage( this.json );
 
 			div = this.stage.domRoot.find( 'li.current div.video-player' );
 
@@ -132,7 +132,7 @@ describe("Module: Stage", function() {
 
 		it("should configure the sitepage", function() {
 			this.json.sitePage = 'exemplo/de/sitepage';
-			this.stage = new Stage( this.bus, this.json );
+			this.stage = new Stage( this.json );
 
 			expect( this.playerParams.sitePage ).toBe( this.json.sitePage );
 		});
@@ -162,7 +162,7 @@ describe("Module: Stage", function() {
 		it("should enable autoNext", function() {
 			this.json.autoNext = true;
 			
-			this.stage = new Stage( this.bus, this.json );
+			this.stage = new Stage( this.json );
 
 			spyOn( this.stage, '_goNext' );
 
@@ -176,7 +176,7 @@ describe("Module: Stage", function() {
 		beforeEach(function() {
 			this.json.itens[1].current = true;
 
-			this.stage = new Stage( this.bus, this.json );
+			this.stage = new Stage( this.json );
 		});
 
 		describe("NEXT button", function() {
@@ -222,7 +222,7 @@ describe("Module: Stage", function() {
 			beforeEach(function() {
 				this.json.itens[0].current = true;
 
-				this.stage = new Stage( this.bus, this.json );
+				this.stage = new Stage( this.json );
 
 				this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
 				this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
@@ -250,7 +250,7 @@ describe("Module: Stage", function() {
 			beforeEach(function() {
 				this.json.itens[1].current = true;
 
-				this.stage = new Stage( this.bus, this.json );
+				this.stage = new Stage( this.json );
 
 				this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
 				this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
@@ -279,7 +279,7 @@ describe("Module: Stage", function() {
 			beforeEach(function() {
 				this.json.itens[2].current = true;
 
-				this.stage = new Stage( this.bus, this.json );
+				this.stage = new Stage( this.json );
 
 				this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
 				this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
@@ -308,7 +308,7 @@ describe("Module: Stage", function() {
 		beforeEach(function() {
 			this.json.itens[1].current = true;
 			
-			this.stage = new Stage( this.bus, this.json );
+			this.stage = new Stage( this.json );
 
 			this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
 			this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
@@ -350,12 +350,12 @@ describe("Module: Stage", function() {
 			it("should trigger video-change from it", function() {
 				var eventData, callback;
 
-				callback = jasmine.createSpy( 'video-change-callback' ).andCallFake( function ( evt, data ) {
-					eventData = data;
+				callback = jasmine.createSpy( 'video-change-callback' ).andCallFake( function ( msg ) {
+					eventData = msg;
 				} );
 				
-				this.stage = new Stage( this.bus, this.json );
-				this.stage.bus.on( 'video-change', callback );
+				this.stage = new Stage( this.json );
+				this.client.sub( 'video-change', callback );
 
 				this.nextButton.click();
 
@@ -392,12 +392,12 @@ describe("Module: Stage", function() {
 			it("should trigger video-change from it", function() {
 				var eventData, callback;
 
-				callback = jasmine.createSpy( 'video-change-callback' ).andCallFake( function ( evt, data ) {
-					eventData = data;
+				callback = jasmine.createSpy( 'video-change-callback' ).andCallFake( function ( msg ) {
+					eventData = msg;
 				} );
 				
-				this.stage = new Stage( this.bus, this.json );
-				this.stage.bus.on( 'video-change', callback );
+				this.stage = new Stage( this.json );
+				this.client.sub( 'video-change', callback );
 
 				this.prevButton.click();
 
@@ -432,20 +432,11 @@ describe("Module: Stage", function() {
 				json.itens[1].current = false;
 				json.itens[2].current = true;
 				
-				this.bus.fire( 'video-change', { origin: 'testsuite', json: json } );
+				this.client.pub( 'video-change', json );
 				
 				expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-789' );
 			});
 
-
-			it("should not change on video-change from same source", function() {
-				this.json.itens[1].current = false;
-				this.json.itens[2].current = true;
-				
-				this.bus.fire( 'video-change', { origin: 'stage' } );
-				
-				expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-456' );
-			});
 		});
 	}); // describe( "interaction" )
 	

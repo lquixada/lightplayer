@@ -5,7 +5,7 @@
 
 describe("Module: Info", function() {
 	beforeEach(function() {
-		this.bus = new o.Event();
+		this.client = new LiteMQ.Client();
 		this.json = {
 			itens: [
 				{ id: 123, title: 'titulo 1', description: 'desc 1', hat: 'chapeu 1', views: 1000 },
@@ -14,7 +14,7 @@ describe("Module: Info", function() {
 			]
 		};
 
-		this.info = new Info( this.bus, this.json );
+		this.info = new Info( this.json );
 	});
 
 	it("should have a name", function() {
@@ -36,7 +36,7 @@ describe("Module: Info", function() {
 		this.json.itens[1].current = false;
 		this.json.itens[2].current = true;
 
-		this.info.bus.fire( 'video-change', { json: this.json } );
+		this.client.pub( 'video-change', this.json );
 		
 		expect( div.find( 'h6' ).text() ).toBe( current.title );
 		expect( div.find( 'span.chapeu' ).text() ).toBe( current.hat );
