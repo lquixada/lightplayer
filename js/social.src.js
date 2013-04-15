@@ -9,7 +9,7 @@ Social = o.Class({
 	 */
 	init: function ( json ) {
 		this.name = 'social';
-		this.client = new LiteMQ.Client();
+		this.client = new LiteMQ.Client({name:this.name});
 		this.json = json;
 
 		this._render();

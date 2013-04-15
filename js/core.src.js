@@ -1,7 +1,7 @@
 LightPlayer = o.Class({
 	open: function ( json ) {
 		// Barramento principal pela qual todos os modulos se comunicam
-		this.client = new LiteMQ.Client();
+		this.client = new LiteMQ.Client({name: 'core'});
 		this.json = json;
 
 		this._render();

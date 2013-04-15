@@ -9,7 +9,7 @@ Stage = o.Class({
 	 */
 	init: function ( json ) {
 		this.name = 'stage';
-		this.client = new LiteMQ.Client({name:'stage'});
+		this.client = new LiteMQ.Client({name:this.name});
 		this.json = json;
 
 		this.autoPlay = false;

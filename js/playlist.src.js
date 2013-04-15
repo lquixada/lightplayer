@@ -9,7 +9,7 @@ Playlist = o.Class({
 	 */
 	init: function ( json ) {
 		this.name = 'playlist';
-		this.client = new LiteMQ.Client();
+		this.client = new LiteMQ.Client({name:this.name});
 		this.json = json;
 		this.thumbHost = json.thumbHost || 'http://img.video.globo.com';
 		this.offset = 0; 

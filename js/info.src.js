@@ -9,7 +9,7 @@ Info = o.Class({
 	 */
 	init: function ( json ) {
 		this.name = 'info';
-		this.client = new LiteMQ.Client();
+		this.client = new LiteMQ.Client({name:this.name});
 		this.json = json;
 
 		this._render();

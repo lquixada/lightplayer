@@ -9,7 +9,7 @@ Header = o.Class({
 	 */
 	init: function ( json ) {
 		this.name = 'header';
-		this.client = new LiteMQ.Client();
+		this.client = new LiteMQ.Client({name:this.name});
 		this.json = json;
 
 		this._render();
