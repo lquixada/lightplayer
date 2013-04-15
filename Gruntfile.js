@@ -5,7 +5,6 @@ module.exports = function (grunt) {
 		jasmine: {
 			pivotal: {
 				options: {
-					styles: ['style/**/*.src.css'],
 					vendor: [
 						'vendor/o.src.js',
 						'vendor/litemq.min.js',
