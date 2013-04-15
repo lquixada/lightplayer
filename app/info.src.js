@@ -26,7 +26,6 @@ Info = o.Class({
 		this.client.sub( 'video-change', function ( msg ) {
 			that.json = msg.body;
 			that._updateItem();
-			//debugger;
 		} );
 	},
 
