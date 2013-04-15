@@ -135,7 +135,7 @@ describe("Light Player", function() {
 		});
 
 		it("should close on close event", function() {
-			this.lightplayer.bus.fire( 'lightplayer-close' );
+			this.lightplayer.bus.pub( 'lightplayer-close' );
 			
 			expect( $( 'div.lightplayer' ).size() ).toBe( 0 );
 		});

@@ -13,10 +13,12 @@
 .pydevproject
 .DS_Store
 report.html
+runner.html
 *.egg-info/
 .ropeproject/
 .sass-cache/
 .settings/
+.grunt/
 dist/
 node_modules/
 tmp/

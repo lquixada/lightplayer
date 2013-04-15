@@ -1,7 +1,7 @@
 
 // Running on node.js enviroment
 if (typeof module === 'object') {
-	var o = require('./js/lib/o.min.js');
+	var o = require('./vendor/o.min.js');
 }
 
 o.Event = o.Class({

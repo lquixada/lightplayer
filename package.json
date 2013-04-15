@@ -9,15 +9,14 @@
     "url": "git://github.com/lquixada/lightplayer.git"
   },
   "scripts": {
-    "test": "o-phantom"
+    "test": "grunt o:ci"
   },
   "engines": {
     "node": "*"
   },
   "dependencies": {
+    "grunt-cli": "*",
     "grunt": "*",
-    "grunt-css": "<0.4",
-    "o-jasmine": "*",
-    "o-phantom": "*"
+    "grunt-o-bundle": "*"
   }
 }
