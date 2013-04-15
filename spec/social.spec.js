@@ -5,7 +5,7 @@
 
 describe("Module: Social", function() {
 	beforeEach(function() {
-		this.client = new LiteMQ.Client();
+		this.client = new LiteMQ.Client({name:'test-suite'});
 		this.json = {
 			itens: [
 				{

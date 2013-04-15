@@ -49,7 +49,7 @@ afterEach(function() {
 
 describe("Light Player", function() {
 	beforeEach(function() {
-		this.client = new LiteMQ.Client();
+		this.client = new LiteMQ.Client({name:'test-suite'});
 		this.json = {
 			itens: [
 				{
@@ -213,7 +213,7 @@ describe("jQuery interface", function() {
 
 describe("Module: Mod", function() {
 	beforeEach(function() {
-		this.client = new LiteMQ.Client();
+		this.client = new LiteMQ.Client({name:'test-suite'});
 		this.json = {
 			itens: [
 				{ id: 123, title: 'titulo 1', description: 'desc 1', views: 1000 },
