@@ -32,7 +32,8 @@ beforeEach(function() {
 		 }
 	});
 
-	LiteMQ.DefaultBus._listeners = {};
+	LiteMQ.DefaultBus.clear();
+
 	this.lightplayer = new LightPlayer();
 });
 
