@@ -1,10 +1,11 @@
+/*globals Info */
 
 /***********************************************
  * MODULO INFO
  ***********************************************/
 
-describe("Module: Info", function() {
-	beforeEach(function() {
+describe("Module: Info", function () {
+	beforeEach(function () {
 		this.client = new LiteMQ.Client({name:'test-suite'});
 		this.json = {
 			itens: [
@@ -14,32 +15,32 @@ describe("Module: Info", function() {
 			]
 		};
 
-		this.info = new Info( this.json );
+		this.info = new Info(this.json);
 	});
 
-	it("should have a name", function() {
-		expect( this.info.name ).toBe( 'info' );
+	it("should have a name", function () {
+		expect(this.info.name).toBe('info');
 	});
 	
-	it("should have a default title", function() {
-		expect( this.info.domRoot.find( 'h6' ).html() ).toBe( this.json.itens[1].title );
+	it("should have a default title", function () {
+		expect(this.info.domRoot.find('h6').html()).toBe(this.json.itens[1].title);
 	});
 
-	it("should have views count", function() {
-		expect( this.info.domRoot.find( 'span.chapeu' ).text() ).toBe( this.json.itens[1].hat );
+	it("should have views count", function () {
+		expect(this.info.domRoot.find('span.chapeu').text()).toBe(this.json.itens[1].hat);
 	});
 
-	it("should update on new current item", function() {
+	it("should update on new current item", function () {
 		var div = this.info.domRoot,
 			current = this.json.itens[2];
 		
 		this.json.itens[1].current = false;
 		this.json.itens[2].current = true;
 
-		this.client.pub( 'video-change', this.json );
+		this.client.pub('video-change', this.json);
 		
-		expect( div.find( 'h6' ).text() ).toBe( current.title );
-		expect( div.find( 'span.chapeu' ).text() ).toBe( current.hat );
+		expect(div.find('h6').text()).toBe(current.title);
+		expect(div.find('span.chapeu').text()).toBe(current.hat);
 	});
 	
 });

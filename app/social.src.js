@@ -1,4 +1,4 @@
-Social = o.Class({
+var Social = o.Class({
 	extend: Mod,
 	/**
 	 * Inicializa o Social com o barramento e o json
@@ -7,7 +7,7 @@ Social = o.Class({
 	 * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
 	 * @return {Object} O nó raiz da subárvore DOM do módulo
 	 */
-	init: function ( json ) {
+	init: function (json) {
 		this.name = 'social';
 		this.client = new LiteMQ.Client({name:this.name});
 		this.json = json;
@@ -23,14 +23,14 @@ Social = o.Class({
 	_addListeners: function () {
 		var that = this;
 
-		this.client.sub( 'video-change', function ( msg ) {
+		this.client.sub('video-change', function (msg) {
 			that.json = msg.body;
 			that._update();
-		} );
+		});
 	},
 
 	_clear: function () {
-		this.domRoot.html( '' );
+		this.domRoot.html('');
 	},
 
 	_render: function () {
@@ -39,10 +39,10 @@ Social = o.Class({
 	},
 
 	_renderContainer: function () {
-		this.domRoot = $( [
+		this.domRoot = $([
 			'<div class="social">',
 			'</div>'
-		].join( '' ) );
+		].join(''));
 	},
 
 	_renderContent: function () {
@@ -53,64 +53,64 @@ Social = o.Class({
 	},
 
 	_renderFacebookButton: function () {
-		var item = this._getItem( 'current' ),
+		var item = this._getItem('current'),
 			url = item.shortUrl || item.url;
 
-		$( '<a></a>', {
+		$('<a></a>', {
 			'href': 'http://www.facebook.com/share.php?t='+encodeURIComponent(item.title)+'&u='+encodeURIComponent(url),
 			'class': 'facebook button',
 			'target': '_blank',
 			'title': 'Compartilhe no Facebook'
-		}).appendTo( this.domRoot );
+		}).appendTo(this.domRoot);
 	},
 
 	_renderTitle: function () {
-		this.domRoot.append( [
+		this.domRoot.append([
 			'<span class="label">compartilhe este vídeo</span>'
-		].join( '' ) );
+		].join(''));
 	},
 
 	_renderOrkutButton: function () {
-		var item = this._getItem( 'current' ),
+		var item = this._getItem('current'),
 			url = item.shortUrl || item.url;
 
-		$( '<a></a>', {
+		$('<a></a>', {
 			'href': 'http://promote.orkut.com/preview?nt=orkut.com&tt='+encodeURI(item.title)+'&cn='+encodeURI(item.description)+'&du='+encodeURIComponent(url)+'&tn='+item.thumbUrl,
 			'class': 'orkut button',
 			'target': '_blank',
 			'title': 'Compartilhe no Orkut'
-		}).appendTo( this.domRoot );
+		}).appendTo(this.domRoot);
 	},
 
 	_renderTwitterButton: function () {
-		var item = this._getItem( 'current' ),
+		var item = this._getItem('current'),
 			url = item.shortUrl || item.url;
 
-		$( '<a></a>', {
+		$('<a></a>', {
 			'href': 'http://twitter.com?status='+encodeURIComponent(url+' '+item.title),
 			'class': 'twitter button',
 			'target': '_blank',
 			'title': 'Compartilhe no Twitter'
-		}).appendTo( this.domRoot );
+		}).appendTo(this.domRoot);
 	},
 
 	_renderGloboInput: function () {
-		var item = this._getItem( 'current' );
+		var item = this._getItem('current');
 
-		if ( !item.shortUrl ) {
+		if (!item.shortUrl) {
 			return;
 		}
 
-		$( '<input />', {
+		$('<input />', {
 			type: 'text',
 			value: item.shortUrl,
 			readonly: 'readonly',
 			'class': 'globo-url'
-		}).appendTo( this.domRoot );
+		}).appendTo(this.domRoot);
 	},
 
 	_update: function () {
-		var item = this._getItem( 'current' );
+		var item = this._getItem('current');
 
 		this._clear();
 		this._renderContent();

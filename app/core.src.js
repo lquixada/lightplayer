@@ -1,5 +1,7 @@
-LightPlayer = o.Class({
-	open: function ( json ) {
+/*globals Header, Info, Playlist, Stage, Social */
+
+var LightPlayer = o.Class({
+	open: function (json) {
 		// Barramento principal pela qual todos os modulos se comunicam
 		this.client = new LiteMQ.Client({name: 'core'});
 		this.json = json;
@@ -8,21 +10,21 @@ LightPlayer = o.Class({
 		this._addMods();
 		this._addListeners();
 		
-		this._animateIn( this.json.onOpen );
+		this._animateIn(this.json.onOpen);
 	},
 
 	close: function () {
 		var that = this;
 
-		this._animateOut( function () {
+		this._animateOut(function () {
 			that.domRoot.remove(); 
 		});
 
-		$( document ).unbind( 'keydown.lightplayer' );
+		$(document).unbind('keydown.lightplayer');
 	},
 
-	add: function ( mod ) {
-		this.domRoot.find( 'div.widget' ).append( mod.domRoot ); 
+	add: function (mod) {
+		this.domRoot.find('div.widget').append(mod.domRoot); 
 	},
 
 	// private
@@ -30,166 +32,166 @@ LightPlayer = o.Class({
 	_addListeners: function () {
 		var that = this;
 
-		this.client.sub( 'lightplayer-close', function () {
+		this.client.sub('lightplayer-close', function () {
 			that.close();
-		} );
+		});
 
-		this.domRoot.delegate( 'div.widget-container', 'click', function ( evt ) {
-			if ( evt.target === this ) {
+		this.domRoot.delegate('div.widget-container', 'click', function (evt) {
+			if (evt.target === this) {
 				that.close();
 			}
-		} );
+		});
 
-		$( document ).bind( 'keydown.lightplayer', function ( evt ) {
-			if ( evt.which === 27 ) {
+		$(document).bind('keydown.lightplayer', function (evt) {
+			if (evt.which === 27) {
 				that.close();
 			}
-		} );
+		});
 	},
 	
 	_addMods: function () {
-		var json = $.extend( true, {}, this.json );
+		var json = $.extend(true, {}, this.json);
 
-		this.add( new Header(json) );
-		this.add( new Info(json) );
-		this.add( new Social(json) );
-		this.add( new Stage(json) );
-		this.add( new Playlist(json) );
+		this.add(new Header(json));
+		this.add(new Info(json));
+		this.add(new Social(json));
+		this.add(new Stage(json));
+		this.add(new Playlist(json));
 	},
 
-	_animateIn: function ( callback ) {
+	_animateIn: function (callback) {
 		var that = this,
 			onTransitionEnd = this._getTransitionEndEvent(),
-			divOverlay = this.domRoot.find( 'div.widget-overlay' ),
-			divWidget = this.domRoot.find( 'div.widget' );
+			divOverlay = this.domRoot.find('div.widget-overlay'),
+			divWidget = this.domRoot.find('div.widget');
 
 		this._disablePageScroll();
 
-		divOverlay.bind( onTransitionEnd, function () {
-			divWidget.bind( onTransitionEnd, function () {
+		divOverlay.bind(onTransitionEnd, function () {
+			divWidget.bind(onTransitionEnd, function () {
 				/* Firefox bugfix: Flash + css transform doesn't get along very well */
-				divWidget.css( '-moz-transform', 'none' );
+				divWidget.css('-moz-transform', 'none');
 
-				that.client.pub( 'lightplayer-opened' );
+				that.client.pub('lightplayer-opened');
 
-				if ( callback ) {
-					callback.call( that );
+				if (callback) {
+					callback.call(that);
 				}
 
-				divWidget.unbind( onTransitionEnd );
-			} );
+				divWidget.unbind(onTransitionEnd);
+			});
 
-			divWidget.addClass( 'visible' );
+			divWidget.addClass('visible');
 			
-			divOverlay.unbind( onTransitionEnd );
-		} );
+			divOverlay.unbind(onTransitionEnd);
+		});
 		
 		// CSS3 has problems with recentlya added dom elements
 		// Needs to call .width() to force reflow.
 		divOverlay.width();
-		divOverlay.addClass( 'visible' );
+		divOverlay.addClass('visible');
 		
 		// For browsers (IEs and FF3.6) that doesn't support css3 animations, just call the callback
-		if ( !that._hasTransitionSupport() ) {
-			divWidget.css( '-moz-transform', 'none' );
-			divWidget.addClass( 'visible' );
+		if (!that._hasTransitionSupport()) {
+			divWidget.css('-moz-transform', 'none');
+			divWidget.addClass('visible');
 			
-			this.bus.pub( 'lightplayer-opened' );
+			this.bus.pub('lightplayer-opened');
 		}
 	},
 
-	_animateOut: function ( callback ) {
+	_animateOut: function (callback) {
 		var that = this,
 			onTransitionEnd = this._getTransitionEndEvent(),
-			divOverlay = this.domRoot.find( 'div.widget-overlay' ),
-			divWidget = this.domRoot.find( 'div.widget' );
+			divOverlay = this.domRoot.find('div.widget-overlay'),
+			divWidget = this.domRoot.find('div.widget');
 
-		divWidget.bind( onTransitionEnd, function () {
-			divOverlay.bind( onTransitionEnd, function () {
+		divWidget.bind(onTransitionEnd, function () {
+			divOverlay.bind(onTransitionEnd, function () {
 				callback();
 				that._enablePageScroll();
 			});
 
-			divOverlay.removeClass( 'visible' );
-		} );
+			divOverlay.removeClass('visible');
+		});
 
 		// Firefox: remove bugfix
-		divWidget.css( '-moz-transform', '' );
+		divWidget.css('-moz-transform', '');
 
 		// For browsers (IEs and FF3.6) that doesn't support css3 animations, just call the callback
-		if ( !this._hasTransitionSupport() ) {
+		if (!this._hasTransitionSupport()) {
 			callback();
 			this._enablePageScroll();
 		}
 
-		divWidget.removeClass( 'visible' );
+		divWidget.removeClass('visible');
 	},
 
 	_disablePageScroll: function () {
-		if ( $.browser.msie && $.browser.version < 8 ) {
-			$( 'html' ).css( 'overflow', 'hidden' );
+		if ($.browser.msie && $.browser.version < 8) {
+			$('html').css('overflow', 'hidden');
 		}
 
-		$( 'body' ).css( {
+		$('body').css({
 			overflow: 'hidden',
 			paddingRight: '15px'
 		});
 	},
 
 	_enablePageScroll: function () {
-		if ( $.browser.msie && $.browser.version < 8 ) {
-			$( 'html' ).css( 'overflow', '' );
+		if ($.browser.msie && $.browser.version < 8) {
+			$('html').css('overflow', '');
 		}
 
-		$( 'body' ).css( {
+		$('body').css({
 			overflow: '',
 			paddingRight: ''
 		});
 	},
 
 	_getTransitionEndEvent: function () {
-		if ( $.browser.webkit || $.browser.chrome ) {
+		if ($.browser.webkit || $.browser.chrome) {
 			return 'webkitTransitionEnd';
 		}
 		
-		if ( $.browser.opera ) {
+		if ($.browser.opera) {
 			return 'oTransitionEnd';
 		}
 
 		return 'transitionend';
 	},
 
-	_hasTransitionSupport: function() {
-		 var div = document.createElement( 'div' ),
-			 vendors = 'Khtml Ms O Moz Webkit'.split( ' ' );
+	_hasTransitionSupport: function () {
+		var div = document.createElement('div'),
+			vendors = 'Khtml Ms O Moz Webkit'.split(' ');
 
-		 if ( 'transition' in div.style ) {
-			 return true;
-		 }
+		if ('transition' in div.style) {
+			return true;
+		}
 		
-		 for (var i = 0; i < vendors.length; i++) {
-			 if ( vendors[i] + 'Transition' in div.style ) {
-				 return true;
-			 }
-		 }
+		for (var i = 0; i < vendors.length; i++) {
+			if (vendors[i] + 'Transition' in div.style) {
+				return true;
+			}
+		}
 
-		 return false;
+		return false;
 	},
 
 	_render: function () {
 		var htmlClass = this.json.htmlClass || '';
 
-		this.domRoot = $( [
+		this.domRoot = $([
 			'<div class="lightplayer '+htmlClass+'">',
-				'<div class="widget-container">',
-					'<div class="widget"></div>',
-					'&nbsp;', // needed for preventing scrollbar flickering
-				'</div>',
-				'<div class="widget-overlay"></div>',
+			'<div class="widget-container">',
+			'<div class="widget"></div>',
+			'&nbsp;', // needed for preventing scrollbar flickering
+			'</div>',
+			'<div class="widget-overlay"></div>',
 			'</div>'
-		].join( '' ) );
+		].join(''));
 
-		this.domRoot.appendTo( 'body' );
+		this.domRoot.appendTo('body');
 	}
 });
 
@@ -197,8 +199,8 @@ LightPlayer = o.Class({
 jQuery.lightplayer = {
 	_instance: new LightPlayer(),
 
-	open: function ( options ) {
-		this._instance.open( options );
+	open: function (options) {
+		this._instance.open(options);
 	},
 
 	close: function () {
@@ -207,7 +209,7 @@ jQuery.lightplayer = {
 };
 
 
-jQuery.extend( jQuery.easing, {
+jQuery.extend(jQuery.easing, {
 	easeOutBounce: function (x, t, b, c, d) {
 		if ((t/=d) < (1/2.75)) {
 			return c*(7.5625*t*t) + b;
@@ -222,21 +224,21 @@ jQuery.extend( jQuery.easing, {
 });
 
 
-ItensManager = o.Class({
-	_getItem: function ( position ) {
+var ItensManager = o.Class({
+	_getItem: function (position) {
 		var chosen,
 			itens = this.json.itens,
-			choose = function ( i ) {
-				if ( position === 'current' ) { return itens[i];	 }
-				if ( position === 'next' ) {	return itens[i+1]; }
-				if ( position === 'prev' ) {	return itens[i-1]; }
+			choose = function (i) {
+				if (position === 'current') { return itens[i]; }
+				if (position === 'next') { return itens[i+1]; }
+				if (position === 'prev') { return itens[i-1]; }
 			};
 		
-		$.each( itens, function ( i ) {
-			if ( this.current ) {
-				chosen = choose( i );
+		$.each(itens, function (i) {
+			if (this.current) {
+				chosen = choose(i);
 				
-				if ( chosen ) {
+				if (chosen) {
 					chosen.index = i;
 				}
 
@@ -247,11 +249,11 @@ ItensManager = o.Class({
 		return chosen;
 	},
 
-	_getItemById: function ( id ) {
+	_getItemById: function (id) {
 		var chosen;
 
-		$.each( this.json.itens, function () {
-			if ( parseInt( this.id, 10 ) === parseInt( id, 10 ) ) {
+		$.each(this.json.itens, function () {
+			if (parseInt(this.id, 10) === parseInt(id, 10)) {
 				chosen = this;
 				return false;
 			}
@@ -260,10 +262,10 @@ ItensManager = o.Class({
 		return chosen;
 	},
 
-	_setItemAsCurrent: function ( chosen ) {
+	_setItemAsCurrent: function (chosen) {
 		var itens = this.json.itens;
 
-		$.each( itens, function () {
+		$.each(itens, function () {
 			this.current = false;
 		});
 
@@ -272,7 +274,7 @@ ItensManager = o.Class({
 });
 
 
-Mod = o.Class({
+var Mod = o.Class({
 	extend: ItensManager,
 
 	/**
@@ -283,7 +285,7 @@ Mod = o.Class({
 	 * @param json {Object} O json que o módulo vai utilizar para renderizar e se atualizar
 	 * @return {Object} O nó raiz da subárvore DOM do módulo
 	 */
-	init: function ( json ) {
+	init: function (json) {
 		this.name = 'mod-name';
 		this.client = new LiteMQ.Client();
 		this.json = json;
@@ -294,17 +296,17 @@ Mod = o.Class({
 		return this.domRoot;
 	},
 
-	truncate: function ( str, count ) {
+	truncate: function (str, count) {
 		var cutIndex;
 
-		if ( !str ) {
+		if (!str) {
 			return str;
 		}
 
-		if ( str.length > count ) {
+		if (str.length > count) {
 			str = str.substring(0, count);
 			cutIndex = str.lastIndexOf(' ');
-			return str.substring( 0, cutIndex )+'...';
+			return str.substring(0, cutIndex)+'...';
 		}
 
 		return str;

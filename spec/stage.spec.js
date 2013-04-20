@@ -1,9 +1,11 @@
+/*globals Stage */
+
 /***********************************************
  * MODULO STAGE
  ***********************************************/
 
-describe("Module: Stage", function() {
-	beforeEach(function() {
+describe("Module: Stage", function () {
+	beforeEach(function () {
 		this.client = new LiteMQ.Client({name: 'test-suite'});
 		this.json = {
 			itens: [
@@ -14,18 +16,18 @@ describe("Module: Stage", function() {
 		};
 	});
 
-	describe("no item as current", function() {
+	describe("no item as current", function () {
 		// TODO
 	});
 
-	it("should have a name", function() {
-		this.stage = new Stage( this.json );
+	it("should have a name", function () {
+		this.stage = new Stage(this.json);
 
-		expect( this.stage.name ).toBe( 'stage' );
+		expect(this.stage.name).toBe('stage');
 	});
 
-	describe("one item", function() {
-		beforeEach(function() {
+	describe("one item", function () {
+		beforeEach(function () {
 			this.json = {
 				itens: [
 					{ id: 123, title: 'titulo 1' }
@@ -33,412 +35,412 @@ describe("Module: Stage", function() {
 			};
 		});
 		
-		it("should not have arrows visible", function() {
-			this.stage = new Stage( this.json );
+		it("should not have arrows visible", function () {
+			this.stage = new Stage(this.json);
 
-			expect( this.stage.domRoot.find( 'a.nav.visible' ).size() ).toBe( 0 );
+			expect(this.stage.domRoot.find('a.nav.visible').size()).toBe(0);
 		});
 
-		it("should add some margin at the bottom", function() {
-			this.stage = new Stage( this.json );
+		it("should add some margin at the bottom", function () {
+			this.stage = new Stage(this.json);
 
-			expect( this.stage.domRoot.css( 'margin-bottom' ) ).not.toBe( '' );
+			expect(this.stage.domRoot.css('margin-bottom')).not.toBe('');
 		});
 	});
 	
-	describe("first item", function() {
-		beforeEach(function() {
+	describe("first item", function () {
+		beforeEach(function () {
 			this.json.itens[0].current = true;
 
-			this.stage = new Stage( this.json );
+			this.stage = new Stage(this.json);
 
-			this.liCurrent = this.stage.domRoot.find( 'ul li.current' );
+			this.liCurrent = this.stage.domRoot.find('ul li.current');
 		});
 		
-		it("should render", function() {
-			expect( this.liCurrent.size() ).toBe( 1 );
-			expect( this.liCurrent.attr( 'id' ) ).toBe( 'item-123' );
+		it("should render", function () {
+			expect(this.liCurrent.size()).toBe(1);
+			expect(this.liCurrent.attr('id')).toBe('item-123');
 		});
 
-		it("should have a video player div", function() {
-			expect( this.liCurrent.find( 'div.video-player' ).size() ).toBe( 1 );
+		it("should have a video player div", function () {
+			expect(this.liCurrent.find('div.video-player').size()).toBe(1);
 		});
 	});
 
-	describe("second item", function() {
-		beforeEach(function() {
+	describe("second item", function () {
+		beforeEach(function () {
 			this.json.itens[1].current = true;
 
-			this.stage = new Stage( this.json );
+			this.stage = new Stage(this.json);
 
-			this.liCurrent = this.stage.domRoot.find( 'ul li.current' );
+			this.liCurrent = this.stage.domRoot.find('ul li.current');
 		});
 		
-		it("should render", function() {
-			expect( this.liCurrent.size() ).toBe( 1 );
-			expect( this.liCurrent.attr( 'id' ) ).toBe( 'item-456' );
+		it("should render", function () {
+			expect(this.liCurrent.size()).toBe(1);
+			expect(this.liCurrent.attr('id')).toBe('item-456');
 		});
 
-		it("should have a video player div", function() {
-			expect( this.liCurrent.find( 'div.video-player' ).size() ).toBe( 1 );
+		it("should have a video player div", function () {
+			expect(this.liCurrent.find('div.video-player').size()).toBe(1);
 		});
 	});
 
 
-	describe("player", function() {
-		beforeEach(function() {
+	describe("player", function () {
+		beforeEach(function () {
 			this.json.itens[0].current = true;
 
-			this.stage = new Stage( this.json );
+			this.stage = new Stage(this.json);
 
-			this.liCurrent = this.stage.domRoot.find( 'ul li.current' );
+			this.liCurrent = this.stage.domRoot.find('ul li.current');
 		});
 
-		it("should call player", function() {
-			expect( $.fn.player ).toHaveBeenCalled();
+		it("should call player", function () {
+			expect($.fn.player).toHaveBeenCalled();
 		});
 
-		it("should call player with the current item id", function() {
-			expect( this.playerParams.videosIDs ).toBe( this.json.itens[0].id );
+		it("should call player with the current item id", function () {
+			expect(this.playerParams.videosIDs).toBe(this.json.itens[0].id);
 		});
 		
-		it("should show the player with the right width", function() {
-			var div = this.stage.domRoot.find( 'li.current div.video-player' );
+		it("should show the player with the right width", function () {
+			var div = this.stage.domRoot.find('li.current div.video-player');
 
-			expect( this.playerParams.width ).toBe( 640 );
-			expect( div.attr( 'style' ) ).toMatch( /640px/ );
+			expect(this.playerParams.width).toBe(640);
+			expect(div.attr('style')).toMatch(/640px/);
 		});
 
-		it("should adapt the player width on sd mode", function() {
+		it("should adapt the player width on sd mode", function () {
 			var div;
 
 			this.json.mode = 'sd';
 
-			this.stage = new Stage( this.json );
+			this.stage = new Stage(this.json);
 
-			div = this.stage.domRoot.find( 'li.current div.video-player' );
+			div = this.stage.domRoot.find('li.current div.video-player');
 
-			expect( this.playerParams.width ).toBe( 480 );
-			expect( div.attr( 'style' ) ).toMatch( /480px/ );
+			expect(this.playerParams.width).toBe(480);
+			expect(div.attr('style')).toMatch(/480px/);
 		});
 		
-		it("should show the player with the right height", function() {
-			expect( this.playerParams.height ).toBe( 360 );
+		it("should show the player with the right height", function () {
+			expect(this.playerParams.height).toBe(360);
 		});
 
-		it("should use a blank sitepage", function() {
-			expect( this.playerParams.sitePage ).toBe( '' );
+		it("should use a blank sitepage", function () {
+			expect(this.playerParams.sitePage).toBe('');
 		});
 
-		it("should configure the sitepage", function() {
+		it("should configure the sitepage", function () {
 			this.json.sitePage = 'exemplo/de/sitepage';
-			this.stage = new Stage( this.json );
+			this.stage = new Stage(this.json);
 
-			expect( this.playerParams.sitePage ).toBe( this.json.sitePage );
+			expect(this.playerParams.sitePage).toBe(this.json.sitePage);
 		});
 		
 
 		// REVER SPECS DE AUTOPLAY
-		//it("should not enable autoPlay", function() {
-			//expect( this.playerParams.autoPlay ).toBe( false );
+		//it("should not enable autoPlay", function () {
+			//expect(this.playerParams.autoPlay).toBe(false);
 		//});
 
-		//it("should configure the autoPlay", function() {
+		//it("should configure the autoPlay", function () {
 			//this.json.autoPlay = true;
 
-			//this.stage = new Stage( this.bus, this.json );
+			//this.stage = new Stage(this.bus, this.json);
 
-			//expect( this.playerParams.autoPlay ).toBe( true );
+			//expect(this.playerParams.autoPlay).toBe(true);
 		//});
 		
-		it("should not enable autoNext", function() {
-			spyOn( this.stage, '_goNext' );
+		it("should not enable autoNext", function () {
+			spyOn(this.stage, '_goNext');
 
 			this.playerParams.complete();
 
-			expect( this.stage._goNext ).not.toHaveBeenCalled();
+			expect(this.stage._goNext).not.toHaveBeenCalled();
 		});
 
-		it("should enable autoNext", function() {
+		it("should enable autoNext", function () {
 			this.json.autoNext = true;
 			
-			this.stage = new Stage( this.json );
+			this.stage = new Stage(this.json);
 
-			spyOn( this.stage, '_goNext' );
+			spyOn(this.stage, '_goNext');
 
 			this.playerParams.complete();
 
-			expect( this.stage._goNext ).toHaveBeenCalled();
+			expect(this.stage._goNext).toHaveBeenCalled();
 		});
 	});
 
-	describe("arrows", function() {
-		beforeEach(function() {
+	describe("arrows", function () {
+		beforeEach(function () {
 			this.json.itens[1].current = true;
 
-			this.stage = new Stage( this.json );
+			this.stage = new Stage(this.json);
 		});
 
-		describe("NEXT button", function() {
-			beforeEach(function() {
-				this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
+		describe("NEXT button", function () {
+			beforeEach(function () {
+				this.nextButton = this.stage.domRoot.find('a.nav.next');
 			});
 			
-			it("should exist", function() {
-				expect( this.nextButton.size() ).toBe( 1 );
+			it("should exist", function () {
+				expect(this.nextButton.size()).toBe(1);
 			});
 
-			it("should have an arrow", function() {
-				expect( this.nextButton.find( 'span.arrow' ).size() ).toBe( 1 );
+			it("should have an arrow", function () {
+				expect(this.nextButton.find('span.arrow').size()).toBe(1);
 			});
 
-			it("should have an chapeu", function() {
-				expect( this.nextButton.find( 'span.chapeu' ).text() ).toBe( 'chapeu 3' );
+			it("should have an chapeu", function () {
+				expect(this.nextButton.find('span.chapeu').text()).toBe('chapeu 3');
 			});
 		});
 
-		describe("PREV button", function() {
-			beforeEach(function() {
-				this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
+		describe("PREV button", function () {
+			beforeEach(function () {
+				this.prevButton = this.stage.domRoot.find('a.nav.prev');
 			});
 			
-			it("should exist", function() {
-				expect( this.prevButton.size() ).toBe( 1 );
+			it("should exist", function () {
+				expect(this.prevButton.size()).toBe(1);
 			});
 
-			it("should have an arrow", function() {
-				expect( this.prevButton.find( 'span.arrow' ).size() ).toBe( 1 );
+			it("should have an arrow", function () {
+				expect(this.prevButton.find('span.arrow').size()).toBe(1);
 			});
 
-			it("should have an chapeu", function() {
-				expect( this.prevButton.find( 'span.chapeu' ).text() ).toBe( 'chapeu 1' );
+			it("should have an chapeu", function () {
+				expect(this.prevButton.find('span.chapeu').text()).toBe('chapeu 1');
 			});
 		});
 	});
 
-	describe("scenarios", function() {
+	describe("scenarios", function () {
 		
-		describe("beginning", function() {
-			beforeEach(function() {
+		describe("beginning", function () {
+			beforeEach(function () {
 				this.json.itens[0].current = true;
 
-				this.stage = new Stage( this.json );
+				this.stage = new Stage(this.json);
 
-				this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
-				this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
+				this.nextButton = this.stage.domRoot.find('a.nav.next');
+				this.prevButton = this.stage.domRoot.find('a.nav.prev');
 			});
 			
 			it("should have the PREV button not visible", function () {
-				expect( this.prevButton ).not.toHaveClass( 'visible' );
+				expect(this.prevButton).not.toHaveClass('visible');
 			});
 
 			it("should have the PREV button with no title", function () {
-				expect( this.prevButton.find( 'span.titulo' ).text() ).toBe( '' );
+				expect(this.prevButton.find('span.titulo').text()).toBe('');
 			});
 
 			it("should have the NEXT button visible", function () {
-				expect( this.nextButton ).toHaveClass( 'visible' );
+				expect(this.nextButton).toHaveClass('visible');
 			});
 			
 			it("should have the NEXT button with the next item title", function () {
 				var nextTitle = this.json.itens[1].title;
-				expect( this.nextButton.find( 'span.titulo' ).text() ).toBe( nextTitle );
+				expect(this.nextButton.find('span.titulo').text()).toBe(nextTitle);
 			});
 		});
 
-		describe("middle", function() {
-			beforeEach(function() {
+		describe("middle", function () {
+			beforeEach(function () {
 				this.json.itens[1].current = true;
 
-				this.stage = new Stage( this.json );
+				this.stage = new Stage(this.json);
 
-				this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
-				this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
+				this.nextButton = this.stage.domRoot.find('a.nav.next');
+				this.prevButton = this.stage.domRoot.find('a.nav.prev');
 			});
 			
 			it("should have the PREV button visible", function () {
-				expect( this.prevButton ).toHaveClass( 'visible' );
+				expect(this.prevButton).toHaveClass('visible');
 			});
 
 			it("should have the PREV button with the previous item title", function () {
 				var prevTitle = this.json.itens[0].title;
-				expect( this.prevButton.find( 'span.titulo' ).text() ).toBe( prevTitle );
+				expect(this.prevButton.find('span.titulo').text()).toBe(prevTitle);
 			});
 
 			it("should have the NEXT button visible", function () {
-				expect( this.nextButton ).toHaveClass( 'visible' );
+				expect(this.nextButton).toHaveClass('visible');
 			});
 
 			it("should have the NEXT button with the next item title", function () {
 				var nextTitle = this.json.itens[2].title;
-				expect( this.nextButton.find( 'span.titulo' ).text() ).toBe( nextTitle );
+				expect(this.nextButton.find('span.titulo').text()).toBe(nextTitle);
 			});
 		});
 
-		describe("end", function() {
-			beforeEach(function() {
+		describe("end", function () {
+			beforeEach(function () {
 				this.json.itens[2].current = true;
 
-				this.stage = new Stage( this.json );
+				this.stage = new Stage(this.json);
 
-				this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
-				this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
+				this.nextButton = this.stage.domRoot.find('a.nav.next');
+				this.prevButton = this.stage.domRoot.find('a.nav.prev');
 			});
 			
 			it("should have the PREV button visible", function () {
-				expect( this.prevButton ).toHaveClass( 'visible' );
+				expect(this.prevButton).toHaveClass('visible');
 			});
 
 			it("should have the PREV button with the prev item title", function () {
 				var prevTitle = this.json.itens[1].title;
-				expect( this.prevButton.find( 'span.titulo' ).text() ).toBe( prevTitle );
+				expect(this.prevButton.find('span.titulo').text()).toBe(prevTitle);
 			});
 
 			it("should have the NEXT button not visible", function () {
-				expect( this.nextButton ).not.toHaveClass( 'visible' );
+				expect(this.nextButton).not.toHaveClass('visible');
 			});
 			
 			it("should have the NEXT button with no title", function () {
-				expect( this.nextButton.find( 'span.titulo' ).text() ).toBe( '' );
+				expect(this.nextButton.find('span.titulo').text()).toBe('');
 			});
 		}); 
 	}); // describe("scenarios")
 
-	describe("interaction", function() {
-		beforeEach(function() {
+	describe("interaction", function () {
+		beforeEach(function () {
 			this.json.itens[1].current = true;
 			
-			this.stage = new Stage( this.json );
+			this.stage = new Stage(this.json);
 
-			this.nextButton = this.stage.domRoot.find( 'a.nav.next' );
-			this.prevButton = this.stage.domRoot.find( 'a.nav.prev' );
+			this.nextButton = this.stage.domRoot.find('a.nav.next');
+			this.prevButton = this.stage.domRoot.find('a.nav.prev');
 		});
 
-		describe("NEXT button", function() {
-			beforeEach(function() {
+		describe("NEXT button", function () {
+			beforeEach(function () {
 				var that = this;
 
 				$.fn.player = $.fn.player.originalValue;
 				
-				spyOn( $.fn, 'player' ).andCallFake( function ( params ) {
+				spyOn($.fn, 'player').andCallFake(function (params) {
 					that.playerParams = params;
 				});
 
 				this.nextButton.click();
 			});
 			
-			it("should move to the next item", function() {
-				expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-789' );
+			it("should move to the next item", function () {
+				expect(this.stage.domRoot.find('ul li.current').attr('id')).toBe('item-789');
 			});
 
-			it("should update json", function() {
-				expect( this.stage.json.itens[2].current ).toBe( true );
+			it("should update json", function () {
+				expect(this.stage.json.itens[2].current).toBe(true);
 			});
 
-			it("should not be visible", function() {
-				expect( this.nextButton ).not.toHaveClass( 'visible' );
+			it("should not be visible", function () {
+				expect(this.nextButton).not.toHaveClass('visible');
 			});
 
-			it("should call player", function() {
-				expect( $.fn.player ).toHaveBeenCalled();
+			it("should call player", function () {
+				expect($.fn.player).toHaveBeenCalled();
 			});
 
-			it("should call player with the current item id", function() {
-				expect( this.playerParams.videosIDs ).toBe( this.json.itens[2].id );
+			it("should call player with the current item id", function () {
+				expect(this.playerParams.videosIDs).toBe(this.json.itens[2].id);
 			});
 
-			it("should trigger video-change from it", function() {
+			it("should trigger video-change from it", function () {
 				var eventData, callback;
 
-				callback = jasmine.createSpy( 'video-change-callback' ).andCallFake( function ( msg ) {
+				callback = jasmine.createSpy('video-change-callback').andCallFake(function (msg) {
 					eventData = msg;
-				} );
+				});
 				
-				this.stage = new Stage( this.json );
-				this.client.sub( 'video-change', callback );
+				this.stage = new Stage(this.json);
+				this.client.sub('video-change', callback);
 
 				this.nextButton.click();
 
-				expect( eventData.origin ).toBe( 'stage' );
+				expect(eventData.origin).toBe('stage');
 			});
 		});
 		
 
-		describe("PREV button", function() {
-			beforeEach(function() {
+		describe("PREV button", function () {
+			beforeEach(function () {
 				this.prevButton.click();
 			});
 			
-			it("should move to the prev item", function() {
-				expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-123' );
+			it("should move to the prev item", function () {
+				expect(this.stage.domRoot.find('ul li.current').attr('id')).toBe('item-123');
 			});
 
-			it("should update json", function() {
-				expect( this.stage.json.itens[0].current ).toBe( true );
+			it("should update json", function () {
+				expect(this.stage.json.itens[0].current).toBe(true);
 			});
 
-			it("should not be visible", function() {
-				expect( this.prevButton ).not.toHaveClass( 'visible' );
+			it("should not be visible", function () {
+				expect(this.prevButton).not.toHaveClass('visible');
 			});
 
-			it("should call player", function() {
-				expect( $.fn.player ).toHaveBeenCalled();
+			it("should call player", function () {
+				expect($.fn.player).toHaveBeenCalled();
 			});
 
-			it("should call player with the current item id", function() {
-				expect( this.playerParams.videosIDs ).toBe( this.json.itens[0].id );
+			it("should call player with the current item id", function () {
+				expect(this.playerParams.videosIDs).toBe(this.json.itens[0].id);
 			});
 
-			it("should trigger video-change from it", function() {
+			it("should trigger video-change from it", function () {
 				var eventData, callback;
 
-				callback = jasmine.createSpy( 'video-change-callback' ).andCallFake( function ( msg ) {
+				callback = jasmine.createSpy('video-change-callback').andCallFake(function (msg) {
 					eventData = msg;
-				} );
+				});
 				
-				this.stage = new Stage( this.json );
-				this.client.sub( 'video-change', callback );
+				this.stage = new Stage(this.json);
+				this.client.sub('video-change', callback);
 
 				this.prevButton.click();
 
-				expect( eventData.origin ).toBe( 'stage' );
+				expect(eventData.origin).toBe('stage');
 			});
 		});
 
-		describe("Keyboard shortcuts", function() {
-			it("should go to the next item with Right key", function() {
-				var evt = $.Event( 'keydown' );
+		describe("Keyboard shortcuts", function () {
+			it("should go to the next item with Right key", function () {
+				var evt = $.Event('keydown');
 				evt.which = 39;
 				
-				$( document ).trigger( evt );
+				$(document).trigger(evt);
 
-				expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-789' );
+				expect(this.stage.domRoot.find('ul li.current').attr('id')).toBe('item-789');
 			});
 
-			it("should go to the next item with Left key", function() {
-				var evt = $.Event( 'keydown' );
+			it("should go to the next item with Left key", function () {
+				var evt = $.Event('keydown');
 				evt.which = 37;
 				
-				$( document ).trigger( evt );
+				$(document).trigger(evt);
 
-				expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-123' );
+				expect(this.stage.domRoot.find('ul li.current').attr('id')).toBe('item-123');
 			});
 		});
 
-		describe("Events", function() {
-			it("should change on video-change", function() {
+		describe("Events", function () {
+			it("should change on video-change", function () {
 				var json = $.extend(true, {}, this.json);
 				
 				json.itens[1].current = false;
 				json.itens[2].current = true;
 				
-				this.client.pub( 'video-change', json );
+				this.client.pub('video-change', json);
 				
-				expect( this.stage.domRoot.find( 'ul li.current' ).attr( 'id' ) ).toBe( 'item-789' );
+				expect(this.stage.domRoot.find('ul li.current').attr('id')).toBe('item-789');
 			});
 
 		});
-	}); // describe( "interaction" )
+	}); // describe("interaction")
 	
 });
 

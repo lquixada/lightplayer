@@ -1,10 +1,11 @@
+/*globals Header */
 
 /***********************************************
  * MODULO HEADER
  ***********************************************/
 
-describe("Module: Header", function() {
-	beforeEach(function() {
+describe("Module: Header", function () {
+	beforeEach(function () {
 		this.client = new LiteMQ.Client({name:'test-suite'});
 		this.json = {
 			itens: [
@@ -14,51 +15,51 @@ describe("Module: Header", function() {
 			]
 		};
 
-		this.header = new Header( this.json );
+		this.header = new Header(this.json);
 	});
 	
-	it("should have a name", function() {
-		this.header = new Header( this.json );
+	it("should have a name", function () {
+		this.header = new Header(this.json);
 
-		expect( this.header.name ).toBe( 'header' );
+		expect(this.header.name).toBe('header');
 	});
 
-	it("should have a default title", function() {
+	it("should have a default title", function () {
 		// .toLowerCase() to pass on IE7
-		expect( this.header.domRoot.find( 'h5' ).html().toLowerCase() ).toBe( '<span>mais</span> videos' );
+		expect(this.header.domRoot.find('h5').html().toLowerCase()).toBe('<span>mais</span> videos');
 	});
 
-	it("should not have a default subtitle", function() {
-		expect( this.header.domRoot.find( 'em.subtitulo' ).text() ).toBe( '' );
+	it("should not have a default subtitle", function () {
+		expect(this.header.domRoot.find('em.subtitulo').text()).toBe('');
 	});
 
-	it("show customize the lightbox title", function() {
+	it("show customize the lightbox title", function () {
 		this.json.title = 'ultimos videos da semana';
 
-		this.header = new Header( this.json );
+		this.header = new Header(this.json);
 
-		expect( this.header.domRoot.find( 'h5' ).text() ).toBe( this.json.title );
+		expect(this.header.domRoot.find('h5').text()).toBe(this.json.title);
 	});
 	
-	it("should show the lightbox subtitle", function() {
+	it("should show the lightbox subtitle", function () {
 		this.json.subtitle = 'melhores videos do mesmo tema';
 
-		this.header = new Header( this.json );
+		this.header = new Header(this.json);
 
-		expect( this.header.domRoot.find( 'em.subtitulo' ).text() ).toBe( this.json.subtitle );
+		expect(this.header.domRoot.find('em.subtitulo').text()).toBe(this.json.subtitle);
 	});
 
-	it("should show the close button", function() {
-		expect( this.header.domRoot.find( 'a.close' ).size() ).toBe( 1 );
+	it("should show the close button", function () {
+		expect(this.header.domRoot.find('a.close').size()).toBe(1);
 	});
 
-	it("should close when close button clicked", function() {
-		var callback = jasmine.createSpy( 'lightplayer-close-callback' );
+	it("should close when close button clicked", function () {
+		var callback = jasmine.createSpy('lightplayer-close-callback');
 		
-		this.client.sub( 'lightplayer-close', callback );
-		this.header.domRoot.find( 'a.close' ).click();
+		this.client.sub('lightplayer-close', callback);
+		this.header.domRoot.find('a.close').click();
 		
-		expect( callback ).toHaveBeenCalled();
+		expect(callback).toHaveBeenCalled();
 	});
 	
 });
