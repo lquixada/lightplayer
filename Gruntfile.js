@@ -1,7 +1,5 @@
 module.exports = function (grunt) {
 	grunt.initConfig({
-		projectName: 'lightplayer',
-
 		jasmine: {
 			pivotal: {
 				options: {
